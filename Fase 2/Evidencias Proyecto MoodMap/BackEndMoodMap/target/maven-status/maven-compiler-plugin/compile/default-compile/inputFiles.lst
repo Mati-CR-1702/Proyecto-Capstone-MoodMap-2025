@@ -1,0 +1,14 @@
+C:\Users\Socius\Desktop\springboot-chatgpt\src\main\java\com\springboot\springboot_chatgpt\config\OpenApiConfig.java
+C:\Users\Socius\Desktop\springboot-chatgpt\src\main\java\com\springboot\springboot_chatgpt\controller\ChatGPTController.java
+C:\Users\Socius\Desktop\springboot-chatgpt\src\main\java\com\springboot\springboot_chatgpt\controller\UserController.java
+C:\Users\Socius\Desktop\springboot-chatgpt\src\main\java\com\springboot\springboot_chatgpt\dto\request\chatAi\ChatGPTRequest.java
+C:\Users\Socius\Desktop\springboot-chatgpt\src\main\java\com\springboot\springboot_chatgpt\dto\request\chatAi\ChatGPTResponse.java
+C:\Users\Socius\Desktop\springboot-chatgpt\src\main\java\com\springboot\springboot_chatgpt\dto\request\chatAi\PromptRequest.java
+C:\Users\Socius\Desktop\springboot-chatgpt\src\main\java\com\springboot\springboot_chatgpt\entity\User.java
+C:\Users\Socius\Desktop\springboot-chatgpt\src\main\java\com\springboot\springboot_chatgpt\repository\UserRepository.java
+C:\Users\Socius\Desktop\springboot-chatgpt\src\main\java\com\springboot\springboot_chatgpt\security\MyUserDetailsService.java
+C:\Users\Socius\Desktop\springboot-chatgpt\src\main\java\com\springboot\springboot_chatgpt\security\SecurotyConfig.java
+C:\Users\Socius\Desktop\springboot-chatgpt\src\main\java\com\springboot\springboot_chatgpt\security\UserPrincipal.java
+C:\Users\Socius\Desktop\springboot-chatgpt\src\main\java\com\springboot\springboot_chatgpt\service\ChatGPTService.java
+C:\Users\Socius\Desktop\springboot-chatgpt\src\main\java\com\springboot\springboot_chatgpt\service\UserService.java
+C:\Users\Socius\Desktop\springboot-chatgpt\src\main\java\com\springboot\springboot_chatgpt\SpringbootChatgptApplication.java
