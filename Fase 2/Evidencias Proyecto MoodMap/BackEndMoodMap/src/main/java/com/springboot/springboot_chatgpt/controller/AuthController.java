@@ -1,6 +1,7 @@
 package com.springboot.springboot_chatgpt.controller;
 
 import com.springboot.springboot_chatgpt.dto.request.login.LoginRequest;
+import com.springboot.springboot_chatgpt.dto.request.login.ResetPasswordRequest;
 import com.springboot.springboot_chatgpt.dto.response.auth.AuthResponse;
 import com.springboot.springboot_chatgpt.entity.User;
 import com.springboot.springboot_chatgpt.repository.UserRepository;
@@ -9,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -42,4 +40,37 @@ public class AuthController {
         String token = jwtUtil.generateToken(user);
         return ResponseEntity.ok(new AuthResponse(token));
     }
+
+    @GetMapping("/auth/secret-question")
+    public ResponseEntity<String> getSecretQuestion(@RequestParam String username) {
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(user.getSecretQuestion());
+    }
+
+    @PostMapping("/auth/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestBody ResetPasswordRequest request) {
+        User user = userRepository.findByUsername(request.getUsername());
+
+        if (user == null) {
+            return ResponseEntity.status(404).body("Usuario no encontrado");
+        }
+
+        if (!bCryptPasswordEncoder.matches(request.getSecretAnswer(), user.getSecretAnswer())) {
+            return ResponseEntity.status(401).body("Respuesta secreta incorrecta");
+        }
+
+        user.setPassword(bCryptPasswordEncoder.encode(request.getNewPassword()));
+        userRepository.save(user);
+
+        return ResponseEntity.ok("Contraseña actualizada exitosamente");
+    }
+
+
+
+
+
+
 }
