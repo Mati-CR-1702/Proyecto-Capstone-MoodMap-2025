@@ -1,41 +1,78 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const API_URL = 'http://192.168.1.13:9001'; // Asegúrate que coincida con tu backend
+// Asegúrate que esta URL coincida exactamente con tu backend
+const API_URL = 'http://localhost:9001';
 
 interface UserData {
   firstName: string;
   lastName: string;
   username: string;
   password: string;
+  secretQuestion: string;
+  secretAnswer: string;
 }
 
-export const register = async (user: UserData) => {
-  try {
-    console.log(' Intentando registrar:', user);
-    
-    const response = await axios.post(`${API_URL}/register`, user, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+interface LoginResponse {
+  token: string;
+  user: {
+    id: string;
+    username: string;
+  };
+}
 
-    console.log(' Usuario registrado:', response.data);
+const api = axios.create({
+  baseURL: API_URL,
+  timeout: 15000,
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  }
+});
+
+export const register = async (userData: UserData) => {
+  try {
+    console.log('Enviando datos de registro:', JSON.stringify(userData, null, 2));
+    
+    const response = await api.post('/register', userData);
+
+    console.log('Registro exitoso:', response.data);
     return response.data;
   } catch (error: any) {
-    console.error(' Error en register:', error.response?.data?.message || error.message);
-    throw new Error(error.response?.data?.message || 'Error en el registro');
+    console.error('Detalles del error:', {
+      message: error.message,
+      status: error.response?.status,
+      data: error.response?.data
+    });
+    
+    if (error.response) {
+      // Manejo específico de errores
+      switch (error.response.status) {
+        case 400:
+          if (error.response.data === 'El nombre de usuario ya existe') {
+            throw new Error('Este nombre de usuario ya está registrado. Por favor elige otro.');
+          } else {
+            throw new Error('Datos inválidos. Verifica la información ingresada.');
+          }
+        case 500:
+          throw new Error('Error interno del servidor. Intenta nuevamente más tarde.');
+        default:
+          throw new Error(error.response.data?.message || `Error en el registro (${error.response.status})`);
+      }
+    } else if (error.request) {
+      throw new Error('No se pudo conectar al servidor. Verifica tu conexión a internet.');
+    } else {
+      throw new Error('Error al configurar la petición: ' + error.message);
+    }
   }
 };
 
-export const login = async (username: string, password: string) => {
+export const login = async (username: string, password: string): Promise<LoginResponse> => {
   try {
-    console.log(' Haciendo login con:', username, password);
     const response = await axios.post(`${API_URL}/login`, { username, password });
-    console.log(' Respuesta del backend:', response.data);
-    return response.data;
+    return response.data; // <<< Solo retorna el resultado
   } catch (error: any) {
-    console.error(' Error en login:', error.message);
+    console.error('Error en login:', error.response?.data?.message || error.message);
     throw new Error(error.response?.data?.message || 'Error en el login');
   }
 };

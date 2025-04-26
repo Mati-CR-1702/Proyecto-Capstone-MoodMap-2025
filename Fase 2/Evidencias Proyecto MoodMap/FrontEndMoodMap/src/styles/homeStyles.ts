@@ -4,56 +4,31 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#FFFFFF'
   },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 20
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#333333'
+    marginBottom: 20,
   },
-  welcomeText: {
-    fontSize: 16,
-    color: '#666666',
-    marginBottom: 30
-  },
-  card: {
-    backgroundColor: '#F8F9FA',
-    borderRadius: 10,
-    padding: 15,
-    marginBottom: 15,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3
-  },
-  cardTitle: {
+  userText: {
     fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 5,
-    color: '#2C3E50'
-  },
-  cardText: {
-    fontSize: 14,
-    color: '#7F8C8D'
+    marginBottom: 10,
   },
   logoutButton: {
-    backgroundColor: '#E74C3C',
-    padding: 12,
-    borderRadius: 8,
+    marginTop: 30,
+    backgroundColor: '#ff5252',
+    padding: 15,
+    borderRadius: 10,
     alignItems: 'center',
-    marginTop: 20
   },
-  buttonText: {
-    color: '#FFFFFF',
-    fontWeight: '600'
-  }
+  logoutButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
 });
-
-export type HomeStyles = typeof styles;

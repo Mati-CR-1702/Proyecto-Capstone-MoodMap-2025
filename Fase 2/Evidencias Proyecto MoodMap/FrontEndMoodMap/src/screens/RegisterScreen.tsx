@@ -1,58 +1,86 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Alert,
-  ActivityIndicator,
-} from 'react-native';
-import { useForm, Controller } from 'react-hook-form';
+import { View, Text, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
+import { useForm, Controller, FieldError } from 'react-hook-form';
 import { styles } from '../styles/registerStyles';
 import { register as registerUser } from '../services/authService';
-import { useNavigation } from '@react-navigation/native';
+import { RegisterScreenProps } from '../types/react-navigation.d';
 
-export default function RegisterScreen() {
-  const { control, handleSubmit, formState: { errors, isSubmitting } } = useForm();
-  const navigation = useNavigation();
+interface FormData {
+  firstName: string;
+  lastName: string;
+  username: string;
+  password: string;
+  secretQuestion: string;
+  secretAnswer: string;
+}
 
-  const onSubmit = async (data: any) => {
+type FormFields = keyof FormData;
+
+export default function RegisterScreen({ navigation }: RegisterScreenProps) {
+  const { control, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormData>({
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      username: '',
+      password: '',
+      secretQuestion: '',
+      secretAnswer: ''
+    }
+  });
+
+  const onSubmit = async (data: FormData) => {
     try {
-      const response = await registerUser(data);
-      Alert.alert('¡Registro exitoso!', 'Ahora puedes iniciar sesión', [
-        { text: 'OK', onPress: () => navigation.navigate('LoginScreen') },
-      ]);
+      await registerUser(data);
+      Alert.alert('¡Registro exitoso!', 'Ahora puedes iniciar sesión');
+      navigation.navigate('Login');
     } catch (error: any) {
       Alert.alert('Error', error.message);
     }
   };
+  
+  const fields: { name: FormFields; placeholder: string; secure?: boolean }[] = [
+    { name: 'firstName', placeholder: 'Nombre' },
+    { name: 'lastName', placeholder: 'Apellido' },
+    { name: 'username', placeholder: 'Usuario' },
+    { name: 'password', placeholder: 'Contraseña', secure: true },
+    { name: 'secretQuestion', placeholder: 'Pregunta secreta (ej. Nombre de tu mascota)' },
+    { name: 'secretAnswer', placeholder: 'Respuesta secreta', secure: true }
+  ];
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Crear Cuenta</Text>
 
-      {['firstName', 'lastName', 'username', 'password'].map((field, idx) => (
+      {fields.map(({ name, placeholder, secure }) => (
         <Controller
-          key={field}
+          key={name}
           control={control}
-          name={field}
+          name={name}
           rules={{
-            required: `${field} requerido`,
-            ...(field === 'password' && { minLength: { value: 6, message: 'Mínimo 6 caracteres' } }),
+            required: `${placeholder} es requerido`,
+            ...(name === 'password' && {
+              minLength: {
+                value: 6,
+                message: 'Mínimo 6 caracteres'
+              }
+            }),
           }}
-          render={({ field: { onChange, value } }) => (
-            <>
+          render={({ field: { onChange, onBlur, value } }) => (
+            <View>
               <TextInput
-                style={[styles.input, errors[field] && { borderColor: 'red' }]}
-                placeholder={field === 'firstName' ? 'Nombre' :
-                            field === 'lastName' ? 'Apellido' :
-                            field === 'username' ? 'Usuario' : 'Contraseña'}
+                style={[styles.input, errors[name] && { borderColor: 'red' }]}
+                placeholder={placeholder}
                 value={value}
                 onChangeText={onChange}
-                secureTextEntry={field === 'password'}
+                onBlur={onBlur}
+                secureTextEntry={!!secure}
               />
-              {errors[field] && <Text style={{ color: 'red' }}>{errors[field]?.message}</Text>}
-            </>
+              {errors[name] && (
+                <Text style={{ color: 'red' }}>
+                  {(errors[name] as FieldError)?.message}
+                </Text>
+              )}
+            </View>
           )}
         />
       ))}

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+// LoginScreen.tsx
+import React, { useState, useContext } from 'react';
 import { View, TextInput, TouchableOpacity, Text, ActivityIndicator, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { login } from '../services/authService';
+import { AuthContext } from '../context/AuthContext';
+import { login as loginService } from '../services/authService';
 import { styles } from '../styles/loginStyles';
 
 export default function LoginScreen() {
@@ -10,6 +11,7 @@ export default function LoginScreen() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
+  const { login } = useContext(AuthContext);
 
   const handleLogin = async () => {
     if (!username || !password) {
@@ -19,13 +21,14 @@ export default function LoginScreen() {
 
     setLoading(true);
     try {
-      const token = await login(username, password);
+      const response = await loginService(username, password);
+      
+      await login(response.token, response.user); // <<< LOGIN del Contexto
+      
       Alert.alert('Éxito', 'Inicio de sesión exitoso');
-
-      // Ir a pantalla protegida
-      // navigation.navigate('Home'); <- Asegurate de tener esa ruta
+      
     } catch (error: any) {
-      Alert.alert('Error', error.message);
+      Alert.alert('Error', error.message || 'Error al iniciar sesión');
     } finally {
       setLoading(false);
     }
@@ -37,7 +40,7 @@ export default function LoginScreen() {
       
       <TextInput
         style={styles.input}
-        placeholder="Username"
+        placeholder="Nombre de usuario"
         placeholderTextColor="#999999"
         value={username}
         onChangeText={setUsername}
@@ -64,6 +67,13 @@ export default function LoginScreen() {
         ) : (
           <Text style={styles.buttonText}>Iniciar Sesión</Text>
         )}
+      </TouchableOpacity>
+
+      <TouchableOpacity 
+        onPress={() => navigation.navigate('ForgotPassword')}
+        style={{ marginTop: 10 }}
+      >
+        <Text style={styles.linkText}>¿Olvidaste tu contraseña?</Text>
       </TouchableOpacity>
 
       <View style={styles.footer}>

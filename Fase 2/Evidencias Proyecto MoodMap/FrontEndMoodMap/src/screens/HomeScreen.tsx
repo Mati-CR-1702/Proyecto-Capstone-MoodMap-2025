@@ -1,13 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
+// HomeScreen.tsx
+import React, { useEffect, useState, useContext } from 'react';
+import { View, Text, ActivityIndicator, TouchableOpacity, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import { AuthContext } from '../context/AuthContext';
+import { styles } from '../styles/homeStyles';
 
 const API_URL = 'http://localhost:9001';
 
+interface User {
+  username: string;
+  // Puedes agregar más propiedades si quieres
+}
+
 export default function HomeScreen() {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
+  const { logout } = useContext(AuthContext); // usamos el logout del contexto
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -15,9 +24,9 @@ export default function HomeScreen() {
       if (!token) return;
 
       try {
-        const response = await axios.get(`${API_URL}/users`, {
+        const response = await axios.get<User[]>(`${API_URL}/users`, { 
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization:`Bearer ${token}`,
           },
         });
         setUsers(response.data);
@@ -31,13 +40,24 @@ export default function HomeScreen() {
     fetchUsers();
   }, []);
 
-  if (loading) return <ActivityIndicator size="large" />;
+  if (loading) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
 
   return (
-    <View>
+    <View style={styles.container}>
+      <Text style={styles.title}>Usuarios:</Text>
       {users.map((user, index) => (
-        <Text key={index}>{user.username}</Text>
+        <Text key={index} style={styles.userText}>{user.username}</Text>
       ))}
+
+      <TouchableOpacity style={styles.logoutButton} onPress={logout}>
+        <Text style={styles.logoutButtonText}>Cerrar Sesión</Text>
+      </TouchableOpacity>
     </View>
   );
 }
