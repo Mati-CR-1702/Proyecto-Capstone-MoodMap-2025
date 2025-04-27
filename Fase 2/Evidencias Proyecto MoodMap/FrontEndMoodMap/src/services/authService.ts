@@ -75,4 +75,6 @@ export const login = async (username: string, password: string): Promise<LoginRe
     console.error('Error en login:', error.response?.data?.message || error.message);
     throw new Error(error.response?.data?.message || 'Error en el login');
   }
+
+  
 };

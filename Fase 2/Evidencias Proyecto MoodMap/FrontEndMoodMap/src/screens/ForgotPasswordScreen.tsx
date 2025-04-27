@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { ForgotPasswordScreenProps } from '../types/react-navigation.d';
 import axios from 'axios';
 import { styles } from '../styles/forgotPasswordStyles';
+import { Ionicons } from '@expo/vector-icons';
 
 const API_URL = 'http://localhost:9001';
 
@@ -25,9 +26,7 @@ export default function ForgotPasswordScreen() {
     setLoading(true);
     try {
       const response = await axios.get(`${API_URL}/auth/secret-question`, {
-        params: {
-          username: username
-        }
+        params: { username }
       });
       setSecretQuestion(response.data.secretQuestion);
       setStep(2);
@@ -43,18 +42,16 @@ export default function ForgotPasswordScreen() {
       Alert.alert('Error', 'Por favor ingresa la respuesta secreta');
       return;
     }
-  
     if (!newPassword || newPassword.length < 6) {
       Alert.alert('Error', 'La contraseña debe tener al menos 6 caracteres');
       return;
     }
-  
     setLoading(true);
     try {
       await axios.post(`${API_URL}/auth/reset-password`, {
-        username: username,
-        secretAnswer: secretAnswer,
-        newPassword: newPassword
+        username,
+        secretAnswer,
+        newPassword
       });
       Alert.alert('Éxito', 'Contraseña actualizada correctamente', [
         { text: 'OK', onPress: () => navigation.navigate('Login') }
@@ -68,93 +65,92 @@ export default function ForgotPasswordScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Recuperar Contraseña</Text>
+      {/* Header */}
+      <View style={styles.headerBackground}>
+        <Text style={styles.title}>MOODMAP</Text>
+      </View>
 
-      {step === 1 && (
-        <>
-          <TextInput
-            style={styles.input}
-            placeholder="Nombre de usuario"
-            value={username}
-            onChangeText={setUsername}
-            autoCapitalize="none"
-          />
-          <TouchableOpacity
-            style={styles.primaryButton}
-            onPress={handleCheckUser}
-            disabled={loading}
-          >
-            {loading ? (
-              <ActivityIndicator color="#FFFFFF" />
-            ) : (
-              <Text style={styles.buttonText}>Continuar</Text>
-            )}
-          </TouchableOpacity>
-        </>
-      )}
+      {/* Card */}
+      <View style={styles.card}>
+        <Text style={styles.cardTitle}>Recuperar Contraseña</Text>
 
-    {step === 2 && (
-  <>
-    <Text style={styles.questionText}>{secretQuestion}</Text>
-    
-    <TextInput
-      style={styles.input}
-      placeholder="Tu respuesta secreta"
-      value={secretAnswer}
-      onChangeText={setSecretAnswer}
-    />
-    
-    <TextInput
-      style={styles.input}
-      placeholder="Nueva contraseña"
-      value={newPassword}
-      onChangeText={setNewPassword}
-      secureTextEntry
-    />
-    
-    <TouchableOpacity
-      style={styles.primaryButton}
-      onPress={handleResetPassword}
-      disabled={loading}
-    >
-      {loading ? (
-        <ActivityIndicator color="#FFFFFF" />
-      ) : (
-        <Text style={styles.buttonText}>Actualizar Contraseña</Text>
-      )}
-    </TouchableOpacity>
-  </>
-  )}
+        {step === 1 && (
+          <>
+            <View style={styles.inputWrapper}>
+              <Ionicons name="person-outline" size={24} color="#000" style={styles.icon} />
+              <TextInput
+                style={styles.input}
+                placeholder="Usuario"
+                value={username}
+                onChangeText={setUsername}
+                autoCapitalize="none"
+                placeholderTextColor="#A0A0A0"
+              />
+            </View>
 
-      {step === 3 && (
-        <>
-          <TextInput
-            style={styles.input}
-            placeholder="Nueva contraseña"
-            value={newPassword}
-            onChangeText={setNewPassword}
-            secureTextEntry
-          />
-          <TouchableOpacity
-            style={styles.primaryButton}
-            onPress={handleResetPassword}
-            disabled={loading}
-          >
-            {loading ? (
-              <ActivityIndicator color="#FFFFFF" />
-            ) : (
-              <Text style={styles.buttonText}>Actualizar Contraseña</Text>
-            )}
-          </TouchableOpacity>
-        </>
-      )}
+            <TouchableOpacity
+              style={styles.primaryButton}
+              onPress={handleCheckUser}
+              disabled={loading}
+            >
+              {loading ? (
+                <ActivityIndicator color="#FFFFFF" />
+              ) : (
+                <Text style={styles.buttonText}>Continuar</Text>
+              )}
+            </TouchableOpacity>
+          </>
+        )}
 
-      <TouchableOpacity
-        style={styles.backButton}
-        onPress={() => navigation.goBack()}
-      >
-        <Text style={styles.linkText}>Volver al inicio de sesión</Text>
-      </TouchableOpacity>
+        {step === 2 && (
+          <>
+            <Text style={styles.secretQuestion}>{secretQuestion}</Text>
+
+            <View style={styles.inputWrapper}>
+              <Ionicons name="help-outline" size={24} color="#000" style={styles.icon} />
+              <TextInput
+                style={styles.input}
+                placeholder="Respuesta secreta"
+                value={secretAnswer}
+                onChangeText={setSecretAnswer}
+                placeholderTextColor="#A0A0A0"
+              />
+            </View>
+
+            <View style={styles.inputWrapper}>
+              <Ionicons name="lock-closed-outline" size={24} color="#000" style={styles.icon} />
+              <TextInput
+                style={styles.input}
+                placeholder="Nueva contraseña"
+                value={newPassword}
+                onChangeText={setNewPassword}
+                secureTextEntry
+                placeholderTextColor="#A0A0A0"
+              />
+            </View>
+
+            <TouchableOpacity
+              style={styles.primaryButton}
+              onPress={handleResetPassword}
+              disabled={loading}
+            >
+              {loading ? (
+                <ActivityIndicator color="#FFFFFF" />
+              ) : (
+                <Text style={styles.buttonText}>Actualizar Contraseña</Text>
+              )}
+            </TouchableOpacity>
+          </>
+        )}
+
+        {/* Botón volver */}
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+        >
+          <Text style={styles.backButtonText}>Volver al inicio de sesión</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }

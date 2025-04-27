@@ -8,6 +8,7 @@ import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
 import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
 import HomeScreen from './src/screens/HomeScreen';
+import ChatScreen from './src/screens/ChatScreen';
 import { RootStackParamList } from './src/types/react-navigation.d';
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -28,16 +29,21 @@ function AppStack() {
       <Stack.Screen 
         name="Home" 
         component={HomeScreen} 
-        options={{ title: 'Inicio', headerLeft: () => null }}
+        options={{ headerShown: false }}
       />
-    </Stack.Navigator>
+      <Stack.Screen 
+        name="ChatAi" 
+        component={ChatScreen} 
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>   
   );
 }
 
 function MainNavigator() {
   const { isLoggedIn, isLoading } = React.useContext(AuthContext);
 
-  if (isLoading) { // <<< antes era isLoggedIn === null
+  if (isLoading) { 
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <ActivityIndicator size="large" />

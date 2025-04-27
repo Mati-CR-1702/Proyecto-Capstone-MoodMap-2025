@@ -11,9 +11,11 @@ export type RootStackParamList = {
   Register: undefined;
   ForgotPassword: undefined;
   Home: undefined;
+  ChatAi:undefined
 };
 
 export type LoginScreenProps = NativeStackScreenProps<RootStackParamList, 'Login'>;
 export type RegisterScreenProps = NativeStackScreenProps<RootStackParamList, 'Register'>;
 export type ForgotPasswordScreenProps = NativeStackScreenProps<RootStackParamList, 'ForgotPassword'>;
 export type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
+export type ChatScreenProps = NativeStackScreenProps<RootStackParamList, 'ChatAi'>;

@@ -61,4 +61,6 @@ export const logout = async () => {
     console.error('Error al cerrar sesión:', error);
     throw error;
   }
+
+  
 };

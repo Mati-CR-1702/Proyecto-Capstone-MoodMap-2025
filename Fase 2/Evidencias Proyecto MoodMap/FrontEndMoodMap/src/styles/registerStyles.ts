@@ -3,48 +3,88 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#FDF7F2',
+  },
+  headerBackground: {
+    height: '30%',
+    backgroundColor: '#E7B58F',
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40,
     justifyContent: 'center',
-    padding: 24,
-    backgroundColor: '#FFFFFF'
+    alignItems: 'center',
   },
   title: {
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 24,
-    color: '#333333'
+    color: '#FFFFFF',
+  },
+  registerCard: {
+    backgroundColor: '#FFFBF5',
+    marginHorizontal: 20,
+    marginTop: -60,
+    borderRadius: 30,
+    padding: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 5,
+  },
+  registerTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#2D2D2D',
+    marginBottom: 20,
+    textAlign: 'left',
+  },
+  inputWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    borderColor: '#D9D9D9',
+    borderWidth: 1,
+    borderRadius: 15,
+    paddingHorizontal: 12,
+    marginBottom: 20,
+    height: 50,
+  },
+  icon: {
+    marginRight: 8,
   },
   input: {
-    height: 50,
-    borderWidth: 1,
-    borderColor: '#CCCCCC',
-    borderRadius: 8,
-    paddingHorizontal: 16,
-    marginBottom: 16,
-    backgroundColor: '#FFFFFF'
+    flex: 1,
+    fontSize: 16,
+    color: '#000',
   },
-  primaryButton: {
-    backgroundColor: '#4A90E2',
-    padding: 16,
-    borderRadius: 8,
+  errorText: {
+    color: 'red',
+    fontSize: 12,
+    marginBottom: 10,
+    marginLeft: 12,
+  },
+  registerButton: {
+    backgroundColor: '#2D2D2D',
+    paddingVertical: 15,
+    borderRadius: 20,
     alignItems: 'center',
-    marginTop: 8
+    marginBottom: 20,
   },
-  buttonText: {
-    color: '#FFFFFF',
-    fontWeight: '600',
-    fontSize: 16
+  registerButtonText: {
+    color: '#FFF',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
-  footer: {
+  loginLinkContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 24
   },
-  footerText: {
-    color: '#666666'
+  loginLinkText: {
+    color: '#6C6C6C',
+    fontSize: 14,
   },
-  linkText: {
-    color: '#4A90E2',
-    fontWeight: '600'
-  }
+  loginLinkButton: {
+    color: '#2D2D2D',
+    fontWeight: 'bold',
+    fontSize: 14,
+  },
 });

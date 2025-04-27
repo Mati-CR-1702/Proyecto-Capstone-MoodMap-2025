@@ -3,32 +3,60 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    backgroundColor: '#FDF7F2',
+    paddingHorizontal: 20,
+    paddingTop: 50,
   },
-  centered: {
-    flex: 1,
-    justifyContent: 'center',
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
+    marginBottom: 30,
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
+  faceEmoji: {
+    fontSize: 28,
+  },
+  content: {
+    flex: 1,
+  },
+  card: {
+    height: 120,
+    borderRadius: 20,
+    padding: 20,
     marginBottom: 20,
+    justifyContent: 'center',
+    overflow: 'hidden',
   },
-  userText: {
-    fontSize: 18,
-    marginBottom: 10,
+  cardOrange: {
+    backgroundColor: '#E7B58F',
+  },
+  cardGreen: {
+    backgroundColor: '#A6D6A7',
+  },
+  cardBlue: {
+    backgroundColor: '#B3CCE6',
+  },
+  cardTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#2D2D2D',
+    fontFamily: 'sans-serif',
+  },
+  cardIcon: {
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
   },
   logoutButton: {
-    marginTop: 30,
-    backgroundColor: '#ff5252',
-    padding: 15,
-    borderRadius: 10,
+    backgroundColor: '#FF5252',
+    paddingVertical: 15,
+    borderRadius: 20,
     alignItems: 'center',
+    marginVertical: 20,
   },
   logoutButtonText: {
-    color: '#ffffff',
-    fontSize: 16,
+    color: '#FFFFFF',
     fontWeight: 'bold',
+    fontSize: 16,
   },
 });
