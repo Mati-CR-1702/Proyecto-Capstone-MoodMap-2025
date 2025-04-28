@@ -33,7 +33,7 @@ public class ChatGPTService {
                 model,
                 List.of(
                         new ChatGPTRequest.Message("system", systemPrompt),
-                        new ChatGPTRequest.Message("user", promptRequest.prompt())
+                        new ChatGPTRequest.Message("user", promptRequest.getMessages().get(0).getContent()) 
                 )
         );
 
@@ -46,5 +46,6 @@ public class ChatGPTService {
 
         return response.choices().get(0).message().content();
     }
+
 }
 

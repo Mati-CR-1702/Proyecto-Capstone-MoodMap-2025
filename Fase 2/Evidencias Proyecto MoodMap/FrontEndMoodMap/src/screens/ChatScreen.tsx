@@ -12,13 +12,19 @@ interface Message {
   timestamp: string;
 }
 
-const API_URL = 'http://localhost:9001/api/chat'; // Ajusta si tu endpoint cambia
+const API_URL = 'http://192.168.0.9:9001/api/chat'; // Ajusta si tu endpoint cambia
 
 export default function ChatScreen({ navigation }: any) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');
   const [loadingResponse, setLoadingResponse] = useState(false);
   const flatListRef = useRef<FlatList>(null);
+
+  // Mueve la función getTimeNow aquí
+  const getTimeNow = () => {
+    const date = new Date();
+    return `${date.getHours()}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()} am`;
+  };
 
   const sendMessage = async () => {
     if (!inputText.trim()) return;
@@ -27,7 +33,7 @@ export default function ChatScreen({ navigation }: any) {
       id: Date.now(),
       text: inputText,
       sender: 'user',
-      timestamp: getTimeNow(),
+      timestamp: getTimeNow(), // Ahora no hay problema al usar getTimeNow
     };
 
     setMessages(prev => [...prev, newUserMessage]);
@@ -36,6 +42,12 @@ export default function ChatScreen({ navigation }: any) {
 
     try {
       const token = await AsyncStorage.getItem('token');
+      console.log('TOKEN:', token);
+
+      if (!token) {
+        console.error("Token no encontrado, debes hacer login primero");
+        return;
+      }
 
       const response = await axios.post(API_URL,
         {
@@ -56,14 +68,19 @@ export default function ChatScreen({ navigation }: any) {
         }
       );
 
+      console.log('Respuesta completa del backend:', response.data);
+
+      const botResponseText = response.data;
+
       const botMessage: Message = {
         id: Date.now() + 1,
-        text: response.data.reply || 'Lo siento, no entendí eso.',
+        text: botResponseText || 'Lo siento, no entendí eso.',
         sender: 'bot',
         timestamp: getTimeNow(),
       };
 
       setMessages(prev => [...prev, botMessage]);
+
     } catch (error) {
       console.error('Error al enviar mensaje:', error);
       const errorBotMessage: Message = {
@@ -77,11 +94,6 @@ export default function ChatScreen({ navigation }: any) {
       setLoadingResponse(false);
       setTimeout(() => flatListRef.current?.scrollToEnd({ animated: true }), 300);
     }
-  };
-
-  const getTimeNow = () => {
-    const date = new Date();
-    return `${date.getHours()}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()} am`;
   };
 
   const renderItem = ({ item }: { item: Message }) => (

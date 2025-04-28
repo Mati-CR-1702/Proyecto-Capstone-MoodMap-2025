@@ -12,6 +12,9 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 @RestController
 public class AuthController {
@@ -38,7 +41,16 @@ public class AuthController {
         }
 
         String token = jwtUtil.generateToken(user);
-        return ResponseEntity.ok(new AuthResponse(token));
+
+        // Incluye información del usuario en la respuesta
+        Map<String, Object> response = new HashMap<>();
+        response.put("token", token);
+        response.put("user", Map.of(
+                "id", user.getId(),
+                "username", user.getUsername()
+        ));
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/auth/secret-question")

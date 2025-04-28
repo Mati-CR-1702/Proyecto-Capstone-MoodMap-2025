@@ -30,6 +30,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const login = async (token: string, user: any) => {
+    if (!token || !user) {
+      console.error('Token o usuario inválido:', { token, user });
+      return;
+    }
+  
     await AsyncStorage.setItem('token', token);
     await AsyncStorage.setItem('user', JSON.stringify(user));
     setIsLoggedIn(true);

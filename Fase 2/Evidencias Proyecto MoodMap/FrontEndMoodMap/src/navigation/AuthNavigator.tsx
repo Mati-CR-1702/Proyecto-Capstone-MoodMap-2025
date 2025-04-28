@@ -1,7 +1,7 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const API_URL = 'http://localhost:9001'; // Asegúrate que coincida con tu backend
+const API_URL = 'http://192.168.0.9:9001'; // Asegúrate que coincida con tu backend
 
 interface UserData {
   firstName: string;
@@ -40,13 +40,19 @@ export const register = async (user: UserData) => {
 export const login = async (username: string, password: string): Promise<LoginResponse> => {
   try {
     const response = await axios.post(`${API_URL}/login`, { username, password });
-    
+
+    // Verifica si el token está presente en la respuesta
     if (response.data.token) {
       await AsyncStorage.setItem('token', response.data.token);
-      await AsyncStorage.setItem('user', JSON.stringify(response.data.user));
+
+      // Crea un objeto `user` básico con el username proporcionado
+      const user = { id: 'unknown', username };
+      await AsyncStorage.setItem('user', JSON.stringify(user));
+
+      return { token: response.data.token, user };
+    } else {
+      throw new Error('Respuesta inválida del servidor: falta el token');
     }
-    
-    return response.data;
   } catch (error: any) {
     console.error('Error en login:', error.response?.data?.message || error.message);
     throw new Error(error.response?.data?.message || 'Error en el login');
