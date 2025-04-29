@@ -10,13 +10,14 @@ import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import ChatScreen from './src/screens/ChatScreen';
 import { RootStackParamList } from './src/types/react-navigation.d';
+import MoodTrackerScreen from 'src/screens/MoodTrackerScreen';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 function AuthStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Login" component={MoodTrackerScreen} />
       <Stack.Screen name="Register" component={RegisterScreen} />
       <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
     </Stack.Navigator>
