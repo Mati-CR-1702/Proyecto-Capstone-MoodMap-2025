@@ -1,0 +1,130 @@
+{/*  return (
+
+    //HEADER
+    <View style={loginloginStyles.screen} accessibilityLabel='Login-Screen'>
+      <Text style={loginloginStyles.MoodTitle}>MOODMAP</Text>
+
+      <View style={headerloginStyles.screen} accessibilityLabel='Chat-Screen'>
+        <View style={{ flex: 1 }} accessibilityLabel='Chat-Area'>
+          <View style={chatloginStyles.ChatArea} accessibilityLabel='Chat-Area'>
+            <View style={chatloginStyles.Header} accessibilityLabel='Header'>
+              <View style={headerloginStyles.header}>
+                <Text style={headerloginStyles.icon}>⚙️</Text>
+                <Text style={headerloginStyles.icon}>Buenos días Mandy👤</Text>
+                <Text style={headerloginStyles.avatar}>😆</Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+
+    //FORMULARIO
+      <TextInput
+        style={styles.input}
+        placeholder="Username"
+        placeholderTextColor="#999999"
+        value={username}
+        onChangeText={setUsername}
+        keyboardType="email-address"
+        autoCapitalize="none"
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Contraseña"
+        placeholderTextColor="#999999"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+      />
+
+      <TouchableOpacity
+        style={styles.primaryButton}
+        onPress={handleLogin}
+        disabled={loading}
+      >
+        {loading ? (
+          <ActivityIndicator color="#FFFFFF" />
+        ) : (
+          <Text style={styles.buttonText}>Iniciar Sesión</Text>
+        )}
+      </TouchableOpacity>
+
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>¿No tienes cuenta? </Text>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Register' as never)}
+          disabled={loading}
+        >
+          <Text style={styles.linkText}>Regístrate aquí</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+}*/}
+
+
+{/*  return (
+
+    //HEADER
+    <View style={loginloginStyles.screen} accessibilityLabel='Login-Screen'>
+      <Text style={loginloginStyles.MoodTitle}>MOODMAP</Text>
+
+      <View style={headerloginStyles.screen} accessibilityLabel='Chat-Screen'>
+        <View style={{ flex: 1 }} accessibilityLabel='Chat-Area'>
+          <View style={chatloginStyles.ChatArea} accessibilityLabel='Chat-Area'>
+            <View style={chatloginStyles.Header} accessibilityLabel='Header'>
+              <View style={headerloginStyles.header}>
+                <Text style={headerloginStyles.icon}>⚙️</Text>
+                <Text style={headerloginStyles.icon}>Buenos días Mandy👤</Text>
+                <Text style={headerloginStyles.avatar}>😆</Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+
+    //FORMULARIO
+      <TextInput
+        style={styles.input}
+        placeholder="Username"
+        placeholderTextColor="#999999"
+        value={username}
+        onChangeText={setUsername}
+        keyboardType="email-address"
+        autoCapitalize="none"
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Contraseña"
+        placeholderTextColor="#999999"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+      />
+
+      <TouchableOpacity
+        style={styles.primaryButton}
+        onPress={handleLogin}
+        disabled={loading}
+      >
+        {loading ? (
+          <ActivityIndicator color="#FFFFFF" />
+        ) : (
+          <Text style={styles.buttonText}>Iniciar Sesión</Text>
+        )}
+      </TouchableOpacity>
+
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>¿No tienes cuenta? </Text>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Register' as never)}
+          disabled={loading}
+        >
+          <Text style={styles.linkText}>Regístrate aquí</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+*/}

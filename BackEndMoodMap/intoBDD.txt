@@ -1,0 +1,7 @@
+Clave	Valor
+Base de datos	postgres (la default de PostgreSQL)
+Usuario	postgres
+Contraseña	postgres
+Puerto	5432
+Host	localhost
+Modo de creación	update (crea tablas si no existen, las actualiza si cambian)
