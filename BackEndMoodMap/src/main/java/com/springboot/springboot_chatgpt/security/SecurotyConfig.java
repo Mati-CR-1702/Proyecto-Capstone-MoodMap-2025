@@ -36,18 +36,16 @@ public class SecurotyConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-            .cors(Customizer.withDefaults())
-            .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**")) // permitir CSRF para h2-console
-            .headers(headers -> headers.frameOptions().sameOrigin()) // permitir frames desde el mismo origen (requerido por H2)
-            .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/register", "/login",
-                            "/auth/secret-question",
-                            "/auth/reset-password",
-                            "/h2-console/**").permitAll() // permitir h2-console
-                    .anyRequest().authenticated()
-            )
-            .addFilterBefore(jwtAuthFilter, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class)
-            .build();
+                .cors(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/register", "/login",
+                                "/auth/secret-question",
+                                "/auth/reset-password").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .addFilterBefore(jwtAuthFilter, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class)
+                .build();
     }
 
 

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from '../styles/homeStyles';
 import { Ionicons } from '@expo/vector-icons';
@@ -29,6 +29,7 @@ export default function HomeScreen() {
           onPress={() => navigation.navigate('PersonalDiary')}
         >
           <Text style={styles.cardTitle}>Diario Personal</Text>
+          <Image source={require('../../assets/fondo1.png')} style={styles.cardIcon} resizeMode="contain"/>
           <Ionicons name="leaf-outline" size={40} color="#ffffff99" style={styles.cardIcon} />
         </TouchableOpacity>
 

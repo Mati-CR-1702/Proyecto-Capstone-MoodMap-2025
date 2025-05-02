@@ -6,7 +6,7 @@ import axios from 'axios';
 import { styles } from '../styles/forgotPasswordStyles';
 import { Ionicons } from '@expo/vector-icons';
 
-const API_URL = 'http://192.168.0.9:9001';
+const API_URL = 'http://localhost:9001'; //cambiar a ip local en caso de pruebas de smartphone
 
 export default function ForgotPasswordScreen() {
   const [username, setUsername] = useState('');

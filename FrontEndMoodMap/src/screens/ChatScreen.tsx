@@ -12,7 +12,7 @@ interface Message {
   timestamp: string;
 }
 
-const API_URL = 'http://192.168.0.9:9001/api/chat'; // Ajusta si tu endpoint cambia
+const API_URL = 'http://localhost:9001/api/chat'; // //cambiar a ip local en caso de pruebas de smartphone
 
 export default function ChatScreen({ navigation }: any) {
   const [messages, setMessages] = useState<Message[]>([]);

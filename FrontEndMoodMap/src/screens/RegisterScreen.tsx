@@ -9,7 +9,7 @@ import { Ionicons } from '@expo/vector-icons'; // Asegúrate de tener expo/vecto
 interface FormData {
   firstName: string;
   lastName: string;
-  username: string;
+  username: string;  
   password: string;
   secretQuestion: string;
   secretAnswer: string;

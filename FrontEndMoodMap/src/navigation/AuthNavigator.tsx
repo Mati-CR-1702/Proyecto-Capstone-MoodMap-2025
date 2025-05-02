@@ -1,7 +1,7 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const API_URL = 'http://192.168.0.9:9001'; // Asegúrate que coincida con tu backend
+const API_URL = 'http://localhost:9001'; //cambiar a ip local en caso de pruebas de smartphone
 
 interface UserData {
   firstName: string;
