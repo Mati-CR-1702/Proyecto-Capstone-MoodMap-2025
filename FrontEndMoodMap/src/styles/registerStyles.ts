@@ -57,7 +57,7 @@ export const styles = StyleSheet.create({
     color: '#000',
   },
   errorText: {
-    color: 'red',
+    color: 'firebrick',
     fontSize: 12,
     marginBottom: 10,
     marginLeft: 12,

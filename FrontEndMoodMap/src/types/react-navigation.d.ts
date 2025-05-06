@@ -1,3 +1,5 @@
+//C:\Users\fabio\OneDrive\Escritorio\Proyecto-Capstone-MoodMap-2025-main\Fase 2\Evidencias Proyecto MoodMap\FrontEndMoodMap\src\types\react-navigation.d.ts
+
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 declare global {
@@ -12,6 +14,7 @@ export type RootStackParamList = {
   ForgotPassword: undefined;
   Home: undefined;
   ChatAi:undefined
+  Ajustes: undefined;
 };
 
 export type LoginScreenProps = NativeStackScreenProps<RootStackParamList, 'Login'>;
@@ -19,3 +22,4 @@ export type RegisterScreenProps = NativeStackScreenProps<RootStackParamList, 'Re
 export type ForgotPasswordScreenProps = NativeStackScreenProps<RootStackParamList, 'ForgotPassword'>;
 export type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
 export type ChatScreenProps = NativeStackScreenProps<RootStackParamList, 'ChatAi'>;
+export type AjusteScreenProps = NativeStackScreenProps<RootStackParamList, 'Ajustes'>;

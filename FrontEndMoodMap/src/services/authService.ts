@@ -1,3 +1,5 @@
+//C:\Users\fabio\OneDrive\Escritorio\Proyecto-Capstone-MoodMap-2025-main\Fase 2\Evidencias Proyecto MoodMap\FrontEndMoodMap\src\services\authService.ts
+
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -34,7 +36,7 @@ export const register = async (userData: UserData) => {
   try {
     console.log('Enviando datos de registro:', JSON.stringify(userData, null, 2));
     
-    const response = await api.post('/register', userData);
+    const response = await api.post('/auth/register', userData);
 
     console.log('Registro exitoso:', response.data);
     return response.data;
@@ -80,6 +82,6 @@ export const login = async (username: string, password: string): Promise<LoginRe
     }
   } catch (error: any) {
     console.error('Error en login:', error.response?.data?.message || error.message);
-    throw new Error(error.response?.data?.message || 'Error en el login');
+    throw error;
   }
 };

@@ -1,3 +1,4 @@
+//C:\Users\fabio\OneDrive\Escritorio\Proyecto-Capstone-MoodMap-2025-main\Fase 2\Evidencias Proyecto MoodMap\BackEndMoodMap\src\main\java\com\springboot\springboot_chatgpt\security\SecurotyConfig.java
 package com.springboot.springboot_chatgpt.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +40,9 @@ public class SecurotyConfig {
                 .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/register", "/login",
+                        .requestMatchers("/register", "/login", "/auth/register",
                                 "/auth/secret-question",
-                                "/auth/reset-password").permitAll()
+                                "/auth/reset-password","/api/chat").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class)

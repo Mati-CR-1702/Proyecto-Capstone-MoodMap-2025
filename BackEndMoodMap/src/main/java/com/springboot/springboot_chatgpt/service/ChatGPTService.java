@@ -30,7 +30,7 @@ public class ChatGPTService {
     public String getChatResponse(PromptRequest promptRequest){
 
         ChatGPTRequest chatGPTRequest = new ChatGPTRequest(
-                model,
+                promptRequest.getModel(),
                 List.of(
                         new ChatGPTRequest.Message("system", systemPrompt),
                         new ChatGPTRequest.Message("user", promptRequest.getMessages().get(0).getContent()) 

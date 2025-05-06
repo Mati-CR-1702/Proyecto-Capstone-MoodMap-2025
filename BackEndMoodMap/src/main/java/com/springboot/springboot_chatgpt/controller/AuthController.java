@@ -2,7 +2,7 @@ package com.springboot.springboot_chatgpt.controller;
 
 import com.springboot.springboot_chatgpt.dto.request.login.LoginRequest;
 import com.springboot.springboot_chatgpt.dto.request.login.ResetPasswordRequest;
-import com.springboot.springboot_chatgpt.dto.response.auth.AuthResponse;
+//import com.springboot.springboot_chatgpt.dto.response.auth.AuthResponse;
 import com.springboot.springboot_chatgpt.entity.User;
 import com.springboot.springboot_chatgpt.repository.UserRepository;
 import com.springboot.springboot_chatgpt.util.JwtUtil;
@@ -51,6 +51,19 @@ public class AuthController {
         ));
 
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/auth/register")
+    public ResponseEntity<String> register(@RequestBody User request) {
+        if (userRepository.findByUsername(request.getUsername()) != null) {
+            return ResponseEntity.status(400).body("El nombre de usuario ya existe");
+        }
+
+        request.setPassword(bCryptPasswordEncoder.encode(request.getPassword()));
+        request.setSecretAnswer(bCryptPasswordEncoder.encode(request.getSecretAnswer())); // si lo estás encriptando
+
+        userRepository.save(request);
+        return ResponseEntity.ok("Usuario registrado exitosamente");
     }
 
     @GetMapping("/auth/secret-question")

@@ -1,19 +1,24 @@
+//C:\Users\fabio\OneDrive\Escritorio\Proyecto-Capstone-MoodMap-2025-main\Fase 2\Evidencias Proyecto MoodMap\FrontEndMoodMap\src\screens\HomeScreen.tsx
+
 import React, { useContext } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from '../styles/homeStyles';
 import { Ionicons } from '@expo/vector-icons';
 import { AuthContext } from '../context/AuthContext'; // Importante: importamos el contexto
+import ScreenWrapper from '../../src/components/ScreenWrapper';
+
 
 export default function HomeScreen() {
   const navigation = useNavigation();
   const { logout } = useContext(AuthContext); // Agarramos logout del contexto
 
   return (
+    <ScreenWrapper>
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.navigate('Options')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Ajustes')}>
           <Ionicons name="settings-outline" size={30} color="#2D2D2D" />
         </TouchableOpacity>
 
@@ -29,7 +34,6 @@ export default function HomeScreen() {
           onPress={() => navigation.navigate('PersonalDiary')}
         >
           <Text style={styles.cardTitle}>Diario Personal</Text>
-          <Image source={require('../../assets/fondo1.png')} style={styles.cardIcon} resizeMode="contain"/>
           <Ionicons name="leaf-outline" size={40} color="#ffffff99" style={styles.cardIcon} />
         </TouchableOpacity>
 
@@ -55,5 +59,6 @@ export default function HomeScreen() {
         <Text style={styles.logoutButtonText}>Cerrar Sesión</Text>
       </TouchableOpacity>
     </View>
+    </ScreenWrapper>
   );
 }

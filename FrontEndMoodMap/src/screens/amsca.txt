@@ -1,130 +1,94 @@
-{/*  return (
+@Override
+protected void doFilterInternal(HttpServletRequest request,
+                                HttpServletResponse response,
+                                FilterChain filterChain) throws ServletException, IOException {
+    String path = request.getServletPath();
 
-    //HEADER
-    <View style={loginloginStyles.screen} accessibilityLabel='Login-Screen'>
-      <Text style={loginloginStyles.MoodTitle}>MOODMAP</Text>
+    // ✅ Ignora rutas públicas (las que no requieren token)
+    if (path.equals("/login") || path.equals("/register") ||
+        path.equals("/auth/secret-question") || path.equals("/auth/reset-password")) {
+        filterChain.doFilter(request, response);
+        return;
+    }
 
-      <View style={headerloginStyles.screen} accessibilityLabel='Chat-Screen'>
-        <View style={{ flex: 1 }} accessibilityLabel='Chat-Area'>
-          <View style={chatloginStyles.ChatArea} accessibilityLabel='Chat-Area'>
-            <View style={chatloginStyles.Header} accessibilityLabel='Header'>
-              <View style={headerloginStyles.header}>
-                <Text style={headerloginStyles.icon}>⚙️</Text>
-                <Text style={headerloginStyles.icon}>Buenos días Mandy👤</Text>
-                <Text style={headerloginStyles.avatar}>😆</Text>
-              </View>
-            </View>
-          </View>
-        </View>
-      </View>
+    String authHeader = request.getHeader("Authorization");
 
-    //FORMULARIO
-      <TextInput
-        style={styles.input}
-        placeholder="Username"
-        placeholderTextColor="#999999"
-        value={username}
-        onChangeText={setUsername}
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
+    if (authHeader != null && authHeader.startsWith("Bearer ")) {
+        String jwt = authHeader.substring(7);
+        String username = jwtUtil.extractUsername(jwt);
 
-      <TextInput
-        style={styles.input}
-        placeholder="Contraseña"
-        placeholderTextColor="#999999"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-      <TouchableOpacity
-        style={styles.primaryButton}
-        onPress={handleLogin}
-        disabled={loading}
-      >
-        {loading ? (
-          <ActivityIndicator color="#FFFFFF" />
-        ) : (
-          <Text style={styles.buttonText}>Iniciar Sesión</Text>
-        )}
-      </TouchableOpacity>
+            if (jwtUtil.isTokenValid(jwt)) {
+                UsernamePasswordAuthenticationToken authToken =
+                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authToken);
+            }
+        }
+    }
 
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>¿No tienes cuenta? </Text>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Register' as never)}
-          disabled={loading}
-        >
-          <Text style={styles.linkText}>Regístrate aquí</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
-}*/}
+    filterChain.doFilter(request, response);
+}
 
+@CrossOrigin("*")
+@RestController
+@RequestMapping("/api/chat")
+public class ChatGPTController {
 
-{/*  return (
+    private final ChatGPTService chatGPTService;
 
-    //HEADER
-    <View style={loginloginStyles.screen} accessibilityLabel='Login-Screen'>
-      <Text style={loginloginStyles.MoodTitle}>MOODMAP</Text>
+    public ChatGPTController(ChatGPTService chatGPTService){
+        this.chatGPTService = chatGPTService;
+    }
+    @PostMapping
+    public String chat (@RequestBody PromptRequest promptRequest){
+        return chatGPTService.getChatResponse(promptRequest);
+    }
+}
 
-      <View style={headerloginStyles.screen} accessibilityLabel='Chat-Screen'>
-        <View style={{ flex: 1 }} accessibilityLabel='Chat-Area'>
-          <View style={chatloginStyles.ChatArea} accessibilityLabel='Chat-Area'>
-            <View style={chatloginStyles.Header} accessibilityLabel='Header'>
-              <View style={headerloginStyles.header}>
-                <Text style={headerloginStyles.icon}>⚙️</Text>
-                <Text style={headerloginStyles.icon}>Buenos días Mandy👤</Text>
-                <Text style={headerloginStyles.avatar}>😆</Text>
-              </View>
-            </View>
-          </View>
-        </View>
-      </View>
+//C:\Users\fabio\OneDrive\Escritorio\Proyecto-Capstone-MoodMap-2025-main\Fase 2\Evidencias Proyecto MoodMap\BackEndMoodMap\src\main\java\com\springboot\springboot_chatgpt\util\JwtUtil.java
+package com.springboot.springboot_chatgpt.util;
 
-    //FORMULARIO
-      <TextInput
-        style={styles.input}
-        placeholder="Username"
-        placeholderTextColor="#999999"
-        value={username}
-        onChangeText={setUsername}
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
+import com.springboot.springboot_chatgpt.entity.User;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+import org.springframework.stereotype.Component;
 
-      <TextInput
-        style={styles.input}
-        placeholder="Contraseña"
-        placeholderTextColor="#999999"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
+import java.security.Key;
+import java.util.Date;
 
-      <TouchableOpacity
-        style={styles.primaryButton}
-        onPress={handleLogin}
-        disabled={loading}
-      >
-        {loading ? (
-          <ActivityIndicator color="#FFFFFF" />
-        ) : (
-          <Text style={styles.buttonText}>Iniciar Sesión</Text>
-        )}
-      </TouchableOpacity>
+@Component
+public class JwtUtil {
 
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>¿No tienes cuenta? </Text>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Register' as never)}
-          disabled={loading}
-        >
-          <Text style={styles.linkText}>Regístrate aquí</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
-*/}
+    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    private final long expiration = 1000 * 60 * 60 * 24; // 24h
+
+    public String generateToken(User user) {
+        return Jwts.builder()
+                .setSubject(user.getUsername())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + expiration))
+                .signWith(key)
+                .compact();
+    }
+
+    public String extractUsername(String token) {
+        return Jwts.parserBuilder().setSigningKey(key).build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+    }
+
+    public boolean isTokenValid(String token) {
+        try {
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            return true;
+        } catch (JwtException e) {
+            return false;
+        }
+    }
+}

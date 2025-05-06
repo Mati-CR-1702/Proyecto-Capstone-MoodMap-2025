@@ -1,3 +1,5 @@
+//C:\Users\fabio\OneDrive\Escritorio\Proyecto-Capstone-MoodMap-2025-main\Fase 2\Evidencias Proyecto MoodMap\FrontEndMoodMap\src\screens\RegisterScreen.tsx
+
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import { useForm, Controller, FieldError } from 'react-hook-form';
@@ -5,6 +7,7 @@ import { styles } from '../styles/registerStyles';
 import { register as registerUser } from '../services/authService';
 import { RegisterScreenProps } from '../types/react-navigation.d';
 import { Ionicons } from '@expo/vector-icons'; // Asegúrate de tener expo/vector-icons instalado
+import ScreenWrapper from 'src/components/ScreenWrapper';
 
 interface FormData {
   firstName: string;
@@ -51,6 +54,7 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
   ];
 
   return (
+    <ScreenWrapper>
     <View style={styles.container}>
       {/* Parte superior */}
       <View style={styles.headerBackground}>
@@ -82,7 +86,7 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
                     style={styles.input}
                     placeholder={placeholder}
                     placeholderTextColor="#A0A0A0"
-                    value={value}
+                    value={value ?? ''}
                     onChangeText={onChange}
                     onBlur={onBlur}
                     secureTextEntry={secure && !show}
@@ -126,5 +130,6 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
         </View>
       </View>
     </View>
+    </ScreenWrapper>
   );
 }

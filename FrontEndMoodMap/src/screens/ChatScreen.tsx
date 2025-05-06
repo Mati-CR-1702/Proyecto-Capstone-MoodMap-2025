@@ -1,9 +1,13 @@
+//C:\Users\fabio\OneDrive\Escritorio\Proyecto-Capstone-MoodMap-2025-main\Fase 2\Evidencias Proyecto MoodMap\FrontEndMoodMap\src\screens\ChatScreen.tsx
+
 import axios from 'axios';
 import React, { useState, useRef } from 'react';
 import { View, Text, TextInput, TouchableOpacity, FlatList, KeyboardAvoidingView, Platform } from 'react-native';
 import { styles } from '../styles/chatStyles';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ScreenWrapper from '../../src/components/ScreenWrapper';
+
 
 interface Message {
   id: number;
@@ -49,13 +53,15 @@ export default function ChatScreen({ navigation }: any) {
         return;
       }
 
+      console.log("TOKEN ENVIADO:", token);
+
       const response = await axios.post(API_URL,
         {
-          model: "gpt-4o-mini",
+          model: "gpt-4o",
           messages: [
             {
               role: "user",
-              content: newUserMessage.text
+              content: newUserMessage.text,
             }
           ],
           temperature: 0.7
@@ -106,6 +112,7 @@ export default function ChatScreen({ navigation }: any) {
   );
 
   return (
+    <ScreenWrapper>
     <View style={styles.container}>
       {/* Encabezado */}
       <View style={styles.header}>
@@ -153,5 +160,6 @@ export default function ChatScreen({ navigation }: any) {
         </View>
       </KeyboardAvoidingView>
     </View>
+    </ScreenWrapper>
   );
 }
