@@ -1,6 +1,7 @@
 package com.springboot.springboot_chatgpt.service;
 
 
+import com.springboot.springboot_chatgpt.dto.request.profile.UpdateProfileRequest;
 import com.springboot.springboot_chatgpt.entity.User;
 import com.springboot.springboot_chatgpt.repository.UserRepository;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -53,5 +54,28 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
+    public User updateUserProfile(String currentUsername, UpdateProfileRequest request) {
+        User user = userRepository.findByUsername(currentUsername);
+
+        if (user == null) {
+            throw new UsernameNotFoundException("Usuario no encontrado");
+        }
+
+        if (request.getFirstName() != null) user.setFirstName(request.getFirstName());
+        if (request.getLastName() != null) user.setLastName(request.getLastName());
+        if (request.getUsername() != null) user.setUsername(request.getUsername());
+
+        if (request.getPassword() != null && !request.getPassword().isEmpty()) {
+            user.setPassword(bCryptPasswordEncoder.encode(request.getPassword()));
+        }
+
+        if (request.getSecretQuestion() != null) user.setSecretQuestion(request.getSecretQuestion());
+
+        if (request.getSecretAnswer() != null && !request.getSecretAnswer().isEmpty()) {
+            user.setSecretAnswer(bCryptPasswordEncoder.encode(request.getSecretAnswer()));
+        }
+
+        return userRepository.save(user);
+    }
 
 }

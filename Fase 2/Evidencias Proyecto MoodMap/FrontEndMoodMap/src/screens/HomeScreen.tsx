@@ -13,7 +13,7 @@ export default function HomeScreen() {
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.navigate('Options')}>
+        <TouchableOpacity onPress={() => navigation.navigate('UpdateProfile')}>
           <Ionicons name="settings-outline" size={30} color="#2D2D2D" />
         </TouchableOpacity>
 

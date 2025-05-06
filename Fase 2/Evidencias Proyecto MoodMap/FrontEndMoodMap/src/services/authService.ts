@@ -2,7 +2,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Asegúrate que esta URL coincida exactamente con tu backend
-const API_URL = 'http://192.168.0.9:9001';
+const API_URL = 'http://localhost:9001';
 
 interface UserData {
   firstName: string;

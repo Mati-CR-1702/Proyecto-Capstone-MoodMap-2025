@@ -9,6 +9,7 @@ import RegisterScreen from './src/screens/RegisterScreen';
 import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import ChatScreen from './src/screens/ChatScreen';
+import UpdateProfileScreen from 'src/screens/UpdateProfileScreen';
 import { RootStackParamList } from './src/types/react-navigation.d';
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -36,7 +37,13 @@ function AppStack() {
         component={ChatScreen} 
         options={{ headerShown: false }}
       />
-    </Stack.Navigator>   
+       <Stack.Screen 
+        name="UpdateProfile" 
+        component={UpdateProfileScreen} 
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+       
   );
 }
 

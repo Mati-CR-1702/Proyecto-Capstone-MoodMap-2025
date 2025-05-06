@@ -42,7 +42,6 @@ public class AuthController {
 
         String token = jwtUtil.generateToken(user);
 
-        // Incluye información del usuario en la respuesta
         Map<String, Object> response = new HashMap<>();
         response.put("token", token);
         response.put("user", Map.of(
