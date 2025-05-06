@@ -13,13 +13,14 @@ import { RootStackParamList } from './src/types/react-navigation.d';
 import MoodTrackerScreen from 'src/screens/MoodTrackerScreen';
 import ExercisesScreen from 'src/screens/ExercisesScreen';
 import EmotionJournalScreen from 'src/screens/EmotionJournalScreen';
+import ReportScreen from 'src/screens/ReportScreen';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 function AuthStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Login" component={EmotionJournalScreen} />
+      <Stack.Screen name="Login" component={ForgotPasswordScreen} />
       <Stack.Screen name="Register" component={RegisterScreen} />
       <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
     </Stack.Navigator>
