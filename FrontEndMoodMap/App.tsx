@@ -15,6 +15,7 @@ import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import ChatScreen from './src/screens/ChatScreen';
 import AjusteScreen from 'src/screens/AjusteScreen';
+import MoodTrackerScreen from 'src/screens/MoodtrackerScreen';
 import { RootStackParamList } from './src/types/react-navigation.d';
 
 
@@ -32,7 +33,12 @@ function AuthStack() {
 
 function AppStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Moodtracker">
+      <Stack.Screen 
+        name="Moodtracker" 
+        component={MoodTrackerScreen} 
+        options={{ headerShown: false }}
+      />
       <Stack.Screen 
         name="Home" 
         component={HomeScreen} 
@@ -46,8 +52,8 @@ function AppStack() {
       <Stack.Screen 
         name="Ajustes"
         component={AjusteScreen}
-        options={{headerShown: false}}
-        />
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>   
   );
 }

@@ -1,12 +1,13 @@
 //C:\Users\fabio\OneDrive\Escritorio\Proyecto-Capstone-MoodMap-2025-main\Fase 2\Evidencias Proyecto MoodMap\FrontEndMoodMap\src\screens\ChatScreen.tsx
 
 import axios from 'axios';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import { View, Text, TextInput, TouchableOpacity, FlatList, KeyboardAvoidingView, Platform } from 'react-native';
 import { styles } from '../styles/chatStyles';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ScreenWrapper from '../../src/components/ScreenWrapper';
+import { AuthContext } from '../context/AuthContext';
 
 
 interface Message {
@@ -23,6 +24,7 @@ export default function ChatScreen({ navigation }: any) {
   const [inputText, setInputText] = useState('');
   const [loadingResponse, setLoadingResponse] = useState(false);
   const flatListRef = useRef<FlatList>(null);
+  const { selectedMood } = useContext(AuthContext);
 
   // Mueve la función getTimeNow aquí
   const getTimeNow = () => {
@@ -116,13 +118,18 @@ export default function ChatScreen({ navigation }: any) {
     <View style={styles.container}>
       {/* Encabezado */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.navigate('Options')}>
-          <Ionicons name="settings-outline" size={30} color="#2D2D2D" />
-        </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+            <Ionicons name="arrow-back-circle-outline" size={30} color="#2D2D2D" />
+          </TouchableOpacity>
         <Text style={styles.title}>Chat Bot</Text>
-        <TouchableOpacity>
-          <Text style={styles.faceEmoji}>😆</Text>
-        </TouchableOpacity>
+        {/* EMOCION */}
+          <TouchableOpacity onPress={() => navigation.navigate('Moodtracker')}>
+            {selectedMood && (
+            <Text style={{ fontSize: 18, marginTop: 10 }}>
+              {selectedMood.face} {selectedMood.name}
+            </Text>
+            )}
+          </TouchableOpacity>
       </View>
       <Text style={styles.subtitle}>En línea</Text>
 

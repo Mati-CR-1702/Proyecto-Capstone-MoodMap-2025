@@ -1,3 +1,5 @@
+//FrontEndMoodMap\src\screens\LoginScreen.tsx
+
 import React, { useState, useContext } from 'react';
 import { View, TextInput, TouchableOpacity, Text, ActivityIndicator, Alert } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';

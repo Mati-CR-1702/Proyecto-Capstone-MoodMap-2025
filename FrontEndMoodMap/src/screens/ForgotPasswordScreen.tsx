@@ -1,3 +1,5 @@
+//FrontEndMoodMap\src\screens\ForgotPasswordScreen.tsx
+
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';

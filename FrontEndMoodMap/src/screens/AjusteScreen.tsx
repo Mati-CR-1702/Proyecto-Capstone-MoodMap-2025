@@ -1,3 +1,5 @@
+//FrontEndMoodMap\src\screens\AjusteScreen.tsx
+
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, TextInput } from 'react-native';
 import ScreenWrapper from 'src/components/ScreenWrapper';
@@ -41,7 +43,12 @@ const AjusteScreen = () => {
   return (
     <View style={stylesAjustes.container}>
     <ScreenWrapper>
-      <Text style={stylesAjustes.title}>Ajustes</Text>
+      <View style={styles.header}>
+                <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+                  <Ionicons name="arrow-back-circle-outline" size={30} color="#2D2D2D" />
+                </TouchableOpacity>
+                <Text style={stylesAjustes.title}>Ajustes</Text>
+            </View>
 
       <View style={styles.content}>
       <TouchableOpacity
@@ -81,7 +88,9 @@ const AjusteScreen = () => {
   </TouchableOpacity>
 
   {/* Modal */} 
+  
   <Modal visible={modalVisible} animationType="slide" transparent={true}>
+  <ScreenWrapper>
     <View style={modalStyles.modalContainer}>
       <View style={modalStyles.modalContent}>
         <Text style={modalStyles.modalTitle}>Editar Usuario</Text>
@@ -90,7 +99,7 @@ const AjusteScreen = () => {
           <TextInput
             key={field}
             style={modalStyles.input}
-            placeholder={field.replace(/_/g, ' ')}
+            placeholder={field.replace(/_/, ' ')}
             secureTextEntry={field.includes('password') || field.includes('answer')}
             value={userData[field as keyof typeof userData]}
             onChangeText={(text) => handleChange(field, text)}
@@ -107,7 +116,9 @@ const AjusteScreen = () => {
         </View>
       </View>
     </View>
+    </ScreenWrapper>
   </Modal>
+  
 
 </ScreenWrapper>
 </View>
