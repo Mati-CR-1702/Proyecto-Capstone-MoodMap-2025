@@ -27136,5 +27136,6 @@
     "IS_DEBUG" : "N",
     "IS_DETERMINISTIC" : "Y",
     "LANGUAGE" : "SQL"
-  } ]
+  } ],
+  "SEQUENCES" : [ ]
 }

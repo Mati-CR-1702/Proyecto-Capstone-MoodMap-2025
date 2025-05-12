@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from '../styles/homeStyles';
 import { Ionicons } from '@expo/vector-icons';
@@ -13,7 +13,7 @@ export default function HomeScreen() {
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.navigate('UpdateProfile')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Ajustes')}>
           <Ionicons name="settings-outline" size={30} color="#2D2D2D" />
         </TouchableOpacity>
 
@@ -25,27 +25,45 @@ export default function HomeScreen() {
       {/* Cards */}
       <View style={styles.content}>
         <TouchableOpacity
-          style={[styles.card, styles.cardOrange]}
-          onPress={() => navigation.navigate('PersonalDiary')}
+          style={styles.card}
+          onPress={() => navigation.navigate('Reportes')}
         >
-          <Text style={styles.cardTitle}>Diario Personal</Text>
-          <Ionicons name="leaf-outline" size={40} color="#ffffff99" style={styles.cardIcon} />
+          <ImageBackground
+            source={require('../../assets/fondo1.png')} // Ruta corregida
+            style={styles.cardBackground}
+            imageStyle={styles.cardImage}
+          >
+            <Text style={styles.cardTitle}>Diario Personal</Text>
+            <Ionicons name="leaf-outline" size={40} color="#ffffff99" style={styles.cardIcon} />
+          </ImageBackground>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.card, styles.cardGreen]}
+          style={styles.card}
           onPress={() => navigation.navigate('ChatAi')}
         >
-          <Text style={styles.cardTitle}>Chat Bot</Text>
-          <Ionicons name="chatbubbles-outline" size={40} color="#ffffff99" style={styles.cardIcon} />
+          <ImageBackground
+            source={require('../../assets/fondo2.png')} // Ruta corregida
+            style={styles.cardBackground}
+            imageStyle={styles.cardImage}
+          >
+            <Text style={styles.cardTitle}>Chat Bot</Text>
+            <Ionicons name="chatbubbles-outline" size={40} color="#ffffff99" style={styles.cardIcon} />
+          </ImageBackground>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.card, styles.cardBlue]}
+          style={styles.card}
           onPress={() => navigation.navigate('Exercises')}
         >
-          <Text style={styles.cardTitle}>Tipos de Ejercicios</Text>
-          <Ionicons name="fitness-outline" size={40} color="#ffffff99" style={styles.cardIcon} />
+          <ImageBackground
+            source={require('../../assets/fondo3.png')} // Ruta corregida
+            style={styles.cardBackground}
+            imageStyle={styles.cardImage}
+          >
+            <Text style={styles.cardTitle}>Tipos de Ejercicios</Text>
+            <Ionicons name="fitness-outline" size={40} color="#ffffff99" style={styles.cardIcon} />
+          </ImageBackground>
         </TouchableOpacity>
       </View>
 

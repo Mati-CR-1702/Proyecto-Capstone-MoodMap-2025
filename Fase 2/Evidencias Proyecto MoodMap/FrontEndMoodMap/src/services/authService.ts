@@ -73,7 +73,7 @@ export const login = async (username: string, password: string): Promise<LoginRe
 
     if (response.data.token && response.data.user) {
       await AsyncStorage.setItem('token', response.data.token);
-      await AsyncStorage.setItem('user', JSON.stringify(response.data.user));
+      await AsyncStorage.setItem('userId', response.data.user.id);
       return response.data;
     } else {
       throw new Error('Respuesta inválida del servidor');

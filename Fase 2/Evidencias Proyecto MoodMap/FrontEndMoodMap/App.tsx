@@ -10,6 +10,9 @@ import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import ChatScreen from './src/screens/ChatScreen';
 import UpdateProfileScreen from 'src/screens/UpdateProfileScreen';
+import ExercisesScreen from './src/screens/ExercisesScreen';
+import AjusteScreen from 'src/screens/AjusteScreen';
+import ReportScreen from 'src/screens/ReportScreen';
 import { RootStackParamList } from './src/types/react-navigation.d';
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -42,6 +45,21 @@ function AppStack() {
         component={UpdateProfileScreen} 
         options={{ headerShown: false }}
       />
+      <Stack.Screen 
+          name="Exercises" 
+          component={ExercisesScreen} 
+          options={{ headerShown: false }} 
+        />
+      <Stack.Screen 
+          name="Ajustes" 
+          component={AjusteScreen} 
+          options={{ headerShown: false }} 
+        />
+      <Stack.Screen 
+          name="Reportes" 
+          component={ReportScreen} 
+          options={{ headerShown: false }}
+        />
     </Stack.Navigator>
        
   );

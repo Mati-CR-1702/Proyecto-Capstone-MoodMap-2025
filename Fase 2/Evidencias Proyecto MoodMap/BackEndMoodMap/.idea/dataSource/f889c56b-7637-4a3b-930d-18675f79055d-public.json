@@ -1,9 +1,5 @@
 {
   "name" : "public",
-  "TABLES" : [ {
-    "TABLE_NAME" : "users",
-    "IS_TEMPORARY" : "N"
-  } ],
   "VIEWS" : [ ],
   "SEQUENCES" : [ ],
   "FUNCTIONS" : [ ],
@@ -230,5 +226,18 @@
     "IS_UNIQUE_KEY" : "N",
     "IS_IDENTITY" : "N"
   } ],
-  "DATASET_TRIGGERS" : [ ]
+  "DATASET_TRIGGERS" : [ ],
+  "TABLES" : [ {
+    "TABLE_NAME" : "chat_message",
+    "IS_TEMPORARY" : "N"
+  }, {
+    "TABLE_NAME" : "chat_report",
+    "IS_TEMPORARY" : "N"
+  }, {
+    "TABLE_NAME" : "chat_session",
+    "IS_TEMPORARY" : "N"
+  }, {
+    "TABLE_NAME" : "users",
+    "IS_TEMPORARY" : "N"
+  } ]
 }

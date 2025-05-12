@@ -1,6 +1,16 @@
 import axios from 'axios';
 import React, { useState, useRef } from 'react';
-import { View, Text, TextInput, TouchableOpacity, FlatList, KeyboardAvoidingView, Platform } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  FlatList,
+  KeyboardAvoidingView,
+  Platform,
+  Alert,
+  ActivityIndicator
+} from 'react-native';
 import { styles } from '../styles/chatStyles';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -12,15 +22,16 @@ interface Message {
   timestamp: string;
 }
 
-const API_URL = 'http://localhost:9001/api/chat'; // Ajusta si tu endpoint cambia
+const API_URL = 'http://localhost:9001/api/chat';
 
 export default function ChatScreen({ navigation }: any) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');
   const [loadingResponse, setLoadingResponse] = useState(false);
+  const [sessionId, setSessionId] = useState<number | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false); // 🆕 Modal de carga
   const flatListRef = useRef<FlatList>(null);
 
-  // Mueve la función getTimeNow aquí
   const getTimeNow = () => {
     const date = new Date();
     return `${date.getHours()}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()} am`;
@@ -33,7 +44,7 @@ export default function ChatScreen({ navigation }: any) {
       id: Date.now(),
       text: inputText,
       sender: 'user',
-      timestamp: getTimeNow(), // Ahora no hay problema al usar getTimeNow
+      timestamp: getTimeNow(),
     };
 
     setMessages(prev => [...prev, newUserMessage]);
@@ -42,23 +53,26 @@ export default function ChatScreen({ navigation }: any) {
 
     try {
       const token = await AsyncStorage.getItem('token');
-      console.log('TOKEN:', token);
+      const userId = await AsyncStorage.getItem('userId');
 
-      if (!token) {
-        console.error("Token no encontrado, debes hacer login primero");
+      if (!token || !userId) {
+        console.error("Token o userId no encontrado, debes hacer login primero");
         return;
       }
 
-      const response = await axios.post(API_URL,
+      const response = await axios.post(
+        API_URL,
         {
+          userId: parseInt(userId),
+          sessionId: sessionId,
           model: "gpt-4o-mini",
+          temperature: 0.7,
           messages: [
             {
               role: "user",
-              content: newUserMessage.text
-            }
+              content: newUserMessage.text,
+            },
           ],
-          temperature: 0.7
         },
         {
           headers: {
@@ -68,13 +82,16 @@ export default function ChatScreen({ navigation }: any) {
         }
       );
 
-      console.log('Respuesta completa del backend:', response.data);
+      const { response: botResponseText, sessionId: newSessionId } = response.data;
 
-      const botResponseText = response.data;
+      if (newSessionId) {
+        setSessionId(newSessionId);
+        await AsyncStorage.setItem('sessionId', newSessionId.toString());
+      }
 
       const botMessage: Message = {
         id: Date.now() + 1,
-        text: botResponseText || 'Lo siento, no entendí eso.',
+        text: botResponseText,
         sender: 'bot',
         timestamp: getTimeNow(),
       };
@@ -96,48 +113,77 @@ export default function ChatScreen({ navigation }: any) {
     }
   };
 
-  const renderItem = ({ item }: { item: Message }) => (
-    <View style={[styles.messageBubble, item.sender === 'user' ? styles.userBubble : styles.botBubble]}>
-      <Text style={styles.messageText}>{item.text}</Text>
-      <Text style={styles.timestamp}>
-        {item.sender === 'user' ? 'Tú' : 'Bot'} {item.timestamp}
-      </Text>
-    </View>
-  );
+  const endChatSession = async () => {
+    try {
+      setIsGenerating(true); // Mostrar modal
+
+      const token = await AsyncStorage.getItem('token');
+      const storedSessionId = await AsyncStorage.getItem('sessionId');
+
+      if (!token || !storedSessionId) {
+        setIsGenerating(false);
+        Alert.alert('Error', 'No se encontró el token o la sesión.');
+        return;
+      }
+
+      const sessionId = parseInt(storedSessionId, 10);
+
+      await axios.post(
+        `${API_URL}/cerrar-sesion/${sessionId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      await AsyncStorage.removeItem('sessionId');
+      setSessionId(null);
+
+      setIsGenerating(false); // Ocultar modal
+      navigation.navigate('Home');
+
+    } catch (error) {
+      console.error('Error al cerrar la sesión del chat:', error);
+      setIsGenerating(false);
+      Alert.alert('Error', 'No se pudo cerrar la sesión del chat.');
+    }
+  };
 
   return (
     <View style={styles.container}>
-      {/* Encabezado */}
+      {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.navigate('Options')}>
           <Ionicons name="settings-outline" size={30} color="#2D2D2D" />
         </TouchableOpacity>
         <Text style={styles.title}>Chat Bot</Text>
-        <TouchableOpacity>
-          <Text style={styles.faceEmoji}>😆</Text>
+        <TouchableOpacity style={styles.endChatButton} onPress={endChatSession}>
+          <Ionicons name="exit-outline" size={30} color="#FF5252" />
         </TouchableOpacity>
       </View>
       <Text style={styles.subtitle}>En línea</Text>
 
-      {/* Lista de Mensajes */}
+      {/* Chat */}
       <FlatList
         ref={flatListRef}
         data={messages}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={renderItem}
+        renderItem={({ item }) => (
+          <View style={[styles.messageBubble, item.sender === 'user' ? styles.userBubble : styles.botBubble]}>
+            <Text style={styles.messageText}>{item.text}</Text>
+            <Text style={styles.timestamp}>
+              {item.sender === 'user' ? 'Tú' : 'Bot'} {item.timestamp}
+            </Text>
+          </View>
+        )}
         contentContainerStyle={styles.messagesContainer}
         onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
       />
 
-      {/* Loading mientras espera respuesta */}
-      {loadingResponse && (
-        <View style={[styles.messageBubble, styles.botBubble]}>
-          <Text style={styles.messageText}>...</Text>
-          <Text style={styles.timestamp}>Bot {getTimeNow()}</Text>
-        </View>
-      )}
-
-      {/* Input de mensaje */}
+      {/* Input */}
       <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : undefined}>
         <View style={styles.inputContainer}>
           <TextInput
@@ -152,6 +198,16 @@ export default function ChatScreen({ navigation }: any) {
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
+
+      {/* Modal de carga */}
+      {isGenerating && (
+        <View style={styles.loadingOverlay}>
+          <View style={styles.loadingBox}>
+            <ActivityIndicator size="large" color="#2D2D2D" />
+            <Text style={styles.loadingText}>Generando reporte...</Text>
+          </View>
+        </View>
+      )}
     </View>
   );
 }

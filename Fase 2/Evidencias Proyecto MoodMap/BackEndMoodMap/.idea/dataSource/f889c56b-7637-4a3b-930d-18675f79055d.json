@@ -38,5 +38,14 @@
     "DISPLAY_NAME" : "UTF8",
     "IS_DEPRECATED" : "N",
     "MAX_LENGTH" : -1
+  } ],
+  "USER_PRIVILEGES" : [ {
+    "USER_NAME" : "PUBLIC",
+    "GRANTED_PRIVILEGE_NAME" : "USAGE",
+    "IS_ADMIN_OPTION" : "NO"
+  }, {
+    "USER_NAME" : "postgres",
+    "GRANTED_PRIVILEGE_NAME" : "USAGE",
+    "IS_ADMIN_OPTION" : "YES"
   } ]
 }

@@ -20,7 +20,7 @@ import java.util.List;
 
 @EnableWebSecurity
 @Configuration
-public class SecurotyConfig {
+public class SecurityConfig {
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder(){

@@ -1,4 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+const { width } = Dimensions.get('window'); // Obtén el ancho de la pantalla
 
 export const styles = StyleSheet.create({
   container: {
@@ -20,27 +22,32 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   card: {
-    height: 120,
+    height: 120, // Ajusta la altura del botón
+    width: width * 0.9, // Ajusta el ancho al 90% de la pantalla
     borderRadius: 20,
-    padding: 20,
     marginBottom: 20,
-    justifyContent: 'center',
     overflow: 'hidden',
+    alignSelf: 'center', // Centra los botones horizontalmente
+    backgroundColor: '#FFF', // Fondo blanco para evitar problemas de transparencia
   },
-  cardOrange: {
-    backgroundColor: '#E7B58F',
+  cardBackground: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  cardGreen: {
-    backgroundColor: '#A6D6A7',
-  },
-  cardBlue: {
-    backgroundColor: '#B3CCE6',
+  cardImage: {
+    resizeMode: 'cover', // Asegúrate de que la imagen cubra todo el botón
+    width: '100%',
+    height: '100%',
   },
   cardTitle: {
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#2D2D2D',
     fontFamily: 'sans-serif',
+    textAlign: 'center',
+    position: 'absolute', // Coloca el texto sobre la imagen
+    top: '40%', // Ajusta la posición vertical del texto
   },
   cardIcon: {
     position: 'absolute',
