@@ -1,59 +1,79 @@
-package com.springboot.springboot_chatgpt.dto.request.chatAi;
+    package com.springboot.springboot_chatgpt.dto.request.chatAi;
 
-import java.util.List;
+    import java.util.List;
 
 
-public class PromptRequest {
+    public class PromptRequest {
 
-    private String model;
-    private List<Message> messages;
-    private double temperature;
+        private String model;
+        private List<Message> messages;
+        private double temperature;
 
-    public String getModel() {
-        return model;
-    }
 
-    public void setModel(String model) {
-        this.model = model;
-    }
+        private Integer userId;
+        private Long sessionId;
 
-    public List<Message> getMessages() {
-        return messages;
-    }
-
-    public void setMessages(List<Message> messages) {
-        this.messages = messages;
-    }
-
-    public double getTemperature() {
-        return temperature;
-    }
-
-    public void setTemperature(double temperature) {
-        this.temperature = temperature;
-    }
-
-    public static class Message {
-        private String role;
-        private String content;
-
-        // Getters y Setters
-        public String getRole() {
-            return role;
+        public String getModel() {
+            return model;
         }
 
-        public void setRole(String role) {
-            this.role = role;
+        public void setModel(String model) {
+            this.model = model;
         }
 
-        public String getContent() {
-            return content;
+        public List<Message> getMessages() {
+            return messages;
         }
 
-        public void setContent(String content) {
-            this.content = content;
+        public void setMessages(List<Message> messages) {
+            this.messages = messages;
         }
+
+        public double getTemperature() {
+            return temperature;
+        }
+
+        public void setTemperature(double temperature) {
+            this.temperature = temperature;
+        }
+
+        public Integer getUserId() {
+            return userId;
+        }
+
+        public void setUserId(Integer userId) {
+            this.userId = userId;
+        }
+
+        public Long getSessionId() {
+            return sessionId;
+        }
+
+        public void setSessionId(Long sessionId) {
+            this.sessionId = sessionId;
+        }
+
+        public static class Message {
+            private String role;
+            private String content;
+
+
+            public String getRole() {
+                return role;
+            }
+
+            public void setRole(String role) {
+                this.role = role;
+            }
+
+            public String getContent() {
+                return content;
+            }
+
+            public void setContent(String content) {
+                this.content = content;
+            }
+        }
+
+
     }
-
-
-}

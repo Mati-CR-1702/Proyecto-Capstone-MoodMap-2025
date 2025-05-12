@@ -1,9 +1,9 @@
-//C:\Users\fabio\OneDrive\Escritorio\Proyecto-Capstone-MoodMap-2025-main\Fase 2\Evidencias Proyecto MoodMap\BackEndMoodMap\src\main\java\com\springboot\springboot_chatgpt\entity\User.java
-
 package com.springboot.springboot_chatgpt.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @Entity
@@ -13,6 +13,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String firstName;
     private String lastName;
 
@@ -22,4 +23,7 @@ public class User {
     private String password;
     private String secretQuestion;
     private String secretAnswer;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ChatSession> chatSessions;
 }

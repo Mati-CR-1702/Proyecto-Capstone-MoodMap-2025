@@ -1,5 +1,3 @@
-//C:\Users\fabio\OneDrive\Escritorio\Proyecto-Capstone-MoodMap-2025-main\Fase 2\Evidencias Proyecto MoodMap\BackEndMoodMap\src\main\java\com\springboot\springboot_chatgpt\security\JwtAuthFilter.java
-
 package com.springboot.springboot_chatgpt.security;
 
 import com.springboot.springboot_chatgpt.repository.UserRepository;
@@ -32,15 +30,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");
-        String path = request.getServletPath();
-
-        //ignorar rutas publicas
-        if (path.equals("/login") || path.equals("/auth/register") ||
-        path.equals("/auth/secret-question") || path.equals("/auth/reset-password") || 
-        path.equals("/api/chat")) {
-        filterChain.doFilter(request, response);
-        return;
-    }
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String jwt = authHeader.substring(7);
