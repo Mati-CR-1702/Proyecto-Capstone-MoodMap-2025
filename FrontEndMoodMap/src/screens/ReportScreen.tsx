@@ -11,6 +11,7 @@ import {
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
 import { styles } from '../styles/reportStyles';
 
 interface Report {
@@ -72,6 +73,9 @@ export default function ReportScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>📝 Reportes Generados</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+            <Ionicons name="arrow-back-circle-outline" size={30} color="#2D2D2D" />
+          </TouchableOpacity>
 
       <FlatList
         data={reports}

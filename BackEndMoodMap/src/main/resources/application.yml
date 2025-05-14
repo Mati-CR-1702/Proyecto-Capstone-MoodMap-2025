@@ -1,6 +1,6 @@
 openapi:
   api:
-    key: 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
+    key: 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
     model: gpt-4o-mini
     prompt: >
       Eres un terapeuta virtual especializado en salud mental y bienestar emocional. Tu propósito es acompañar a los usuarios con orientación empática, sugerencias de ejercicios terapéuticos y recursos de autocuidado emocional. Siempre debes aclarar que este chat no reemplaza la atención médica ni psicológica profesional. Si un usuario presenta síntomas graves, anímalo a buscar ayuda de un terapeuta certificado o acudir a un centro de salud mental.

@@ -8,6 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ScreenWrapper from '../../src/components/ScreenWrapper';
 import { AuthContext } from '../context/AuthContext';
+import AnimatedCard from 'src/components/AnimatedCard';
 
 
 interface Message {
@@ -118,18 +119,18 @@ export default function ChatScreen({ navigation }: any) {
     <View style={styles.container}>
       {/* Encabezado */}
       <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+          <AnimatedCard onPress={() => navigation.navigate('Home')}>
             <Ionicons name="arrow-back-circle-outline" size={30} color="#2D2D2D" />
-          </TouchableOpacity>
+          </AnimatedCard>
         <Text style={styles.title}>Chat Bot</Text>
         {/* EMOCION */}
-          <TouchableOpacity onPress={() => navigation.navigate('Moodtracker')}>
+          <AnimatedCard onPress={() => navigation.navigate('Moodtracker')}>
             {selectedMood && (
-            <Text style={{ fontSize: 18, marginTop: 10 }}>
-              {selectedMood.face} {selectedMood.name}
+            <Text style={styles.Mood}>
+              {selectedMood.face}
             </Text>
             )}
-          </TouchableOpacity>
+          </AnimatedCard>
       </View>
       <Text style={styles.subtitle}>En línea</Text>
 
@@ -161,9 +162,9 @@ export default function ChatScreen({ navigation }: any) {
             value={inputText}
             onChangeText={setInputText}
           />
-          <TouchableOpacity onPress={sendMessage}>
+          <AnimatedCard onPress={sendMessage}>
             <Ionicons name="send-outline" size={24} color="#2D2D2D" />
-          </TouchableOpacity>
+          </AnimatedCard>
         </View>
       </KeyboardAvoidingView>
     </View>

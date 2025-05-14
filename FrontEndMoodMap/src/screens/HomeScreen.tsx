@@ -8,26 +8,28 @@ import { Ionicons } from '@expo/vector-icons';
 import { AuthContext } from '../context/AuthContext'; 
 import ScreenWrapper from '../../src/components/ScreenWrapper';
 import { RootStackParamList } from 'src/types/react-navigation';
+import AnimatedCard from 'src/components/AnimatedCard';
 
 export default function HomeScreen() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const { logout } = useContext(AuthContext);
   const { selectedMood } = useContext(AuthContext);
-
+  const { user } = useContext(AuthContext);
 
   return (
     <ScreenWrapper>
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
+      <Text style={styles.Saludo} >Hola, {user?.firstName}👋</Text>
         {/* EMOCION */}
         <TouchableOpacity onPress={() => navigation.navigate('Moodtracker')}>
         {selectedMood && (
-          <TouchableOpacity onPress={() => navigation.navigate('Moodtracker')}>
-            <Text style={{ fontSize: 18, marginTop: 10 }}>
-              {selectedMood.face} {selectedMood.name}
+          <AnimatedCard onPress={() => navigation.navigate('Moodtracker')}>
+            <Text style={styles.Mood}>
+              {selectedMood.face}
             </Text>
-          </TouchableOpacity>
+          </AnimatedCard>
         )}
 
         </TouchableOpacity>
@@ -35,43 +37,43 @@ export default function HomeScreen() {
 
       {/* Cards */}
       <View style={styles.content}>
-        <TouchableOpacity
+        <AnimatedCard
           style={[styles.card, styles.cardOrange]}
-          onPress={() => navigation.navigate('Ajustes')}
+          onPress={() => navigation.navigate('Reportes')}
         >
           <Text style={styles.cardTitle}>Diario Personal</Text>
           <Ionicons name="leaf-outline" size={40} color="#ffffff99" style={styles.cardIcon} />
-        </TouchableOpacity>
+        </AnimatedCard>
 
-        <TouchableOpacity
+        <AnimatedCard
           style={[styles.card, styles.cardGreen]}
           onPress={() => navigation.navigate('ChatAi')}
         >
           <Text style={styles.cardTitle}>Chat Bot</Text>
           <Ionicons name="chatbubbles-outline" size={40} color="#ffffff99" style={styles.cardIcon} />
-        </TouchableOpacity>
+        </AnimatedCard>
 
-        <TouchableOpacity
-          style={[styles.card, styles.cardBlue]}
-          onPress={() => navigation.navigate('Ajustes')}
+        <AnimatedCard
+          style={[styles.card, styles.cardRed]}
+          onPress={() => navigation.navigate('Exercises')}
         >
           <Text style={styles.cardTitle}>Tipos de Ejercicios</Text>
           <Ionicons name="fitness-outline" size={40} color="#ffffff99" style={styles.cardIcon} />
-        </TouchableOpacity>
+        </AnimatedCard>
 
-        <TouchableOpacity
+        <AnimatedCard
           style={[styles.card, styles.cardBlue]}
           onPress={() => navigation.navigate('Ajustes')}
         >
           <Text style={styles.cardTitle}>Ajustes</Text>
           <Ionicons name="settings-outline" size={40} color="#ffffff99" style={styles.cardIcon} />
-        </TouchableOpacity>
+        </AnimatedCard>
       </View>
 
       {/* Botón de Cerrar Sesión */}
-      <TouchableOpacity style={styles.logoutButton} onPress={logout}>
+      <AnimatedCard style={styles.logoutButton} onPress={logout}>
         <Text style={styles.logoutButtonText}>Cerrar Sesión</Text>
-      </TouchableOpacity>
+      </AnimatedCard>
     </View>
     </ScreenWrapper>
   );

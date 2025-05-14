@@ -11,6 +11,20 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 20,
     alignItems: 'center',
+    borderRadius: 5,
+    paddingBottom: 20,
+    paddingTop: 50,
+    marginTop: -50,
+    backgroundColor: '#F4E9E2',
+    
+    // Sombra para iOS
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 6,
+
+    // Sombra para Android
+    elevation: 6,
   },
   faceEmoji: {
     fontSize: 28,
@@ -75,5 +89,22 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'sans-serif',
     color: '#2D2D2D',
+  },
+  Mood:{
+    fontSize: 20, 
+    marginTop: 10,
+    borderBlockColor: 'black',
+    borderRadius: 50, 
+    padding: 5,
+    backgroundColor:'white',
+
+    // Sombra para iOS
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 6,
+
+    // Sombra para Android
+    elevation: 6,
   },
 });

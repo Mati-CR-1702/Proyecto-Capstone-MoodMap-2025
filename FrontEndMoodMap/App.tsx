@@ -16,6 +16,8 @@ import HomeScreen from './src/screens/HomeScreen';
 import ChatScreen from './src/screens/ChatScreen';
 import AjusteScreen from 'src/screens/AjusteScreen';
 import MoodTrackerScreen from 'src/screens/MoodtrackerScreen';
+import ExercisesScreen from './src/screens/ExercisesScreen';
+import ReportScreen from 'src/screens/ReportScreen';
 import { RootStackParamList } from './src/types/react-navigation.d';
 
 
@@ -54,6 +56,16 @@ function AppStack() {
         component={AjusteScreen}
         options={{ headerShown: false }}
       />
+       <Stack.Screen 
+          name="Exercises" 
+          component={ExercisesScreen} 
+          options={{ headerShown: false }} 
+        />
+       <Stack.Screen 
+          name="Reportes" 
+          component={ReportScreen} 
+          options={{ headerShown: false }}
+        /> 
     </Stack.Navigator>   
   );
 }
@@ -83,22 +95,3 @@ export default function App() {
     </AuthProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ecc395',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  switchButton: {
-    marginTop: 20,
-    padding: 10,
-  },
-  switchText: {
-    color: '#4a4e69',
-    fontSize: 16,
-    fontWeight: 'bold',
-    textDecorationLine: 'underline',
-  },
-});

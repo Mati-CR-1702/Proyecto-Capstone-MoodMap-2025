@@ -1,3 +1,5 @@
+//C:\Users\fabio\OneDrive\Escritorio\Proyecto-Capstone-MoodMap-2025-gaboRama\FrontEndMoodMap\src\styles\ajusteStyles.ts
+
 import { StyleSheet } from 'react-native';
 import React, { useRef } from 'react';
 import { Animated, TouchableWithoutFeedback } from 'react-native';
@@ -20,8 +22,8 @@ export const styles = StyleSheet.create({
     marginLeft: -20,
     marginRight: -20,
     paddingBottom: 20,
-    paddingRight: 20,
-    paddingLeft: 20,
+    paddingRight: 65,
+    paddingLeft: 65,
     backgroundColor: '#F4E9E2',
     
     // Sombra para iOS
@@ -135,5 +137,10 @@ export const styles = StyleSheet.create({
   },
   Saludo:{
     fontSize: 20,
-  }
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#2D2D2D',
+  }  
 });

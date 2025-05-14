@@ -3,10 +3,15 @@ import { View, Text, FlatList, TouchableOpacity, Image, Modal, ScrollView } from
 import { exercises } from '../data/exercises';
 import { Exercise } from '../types/exercise';
 import { styles } from '../styles/exerciseStyles';
+import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+
+
 
 const categories = ['ira', 'estrés', 'tristeza', 'ansiedad', 'felicidad'];
 
 const ExercisesScreen = () => {
+  const navigation = useNavigation();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null);
 
@@ -16,6 +21,10 @@ const ExercisesScreen = () => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+        <Ionicons name="arrow-back-circle-outline" size={30} color="#2D2D2D" />
+      </TouchableOpacity>
+
       <Text style={styles.header}>Tipos de ejercicios</Text>
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.slider}>
