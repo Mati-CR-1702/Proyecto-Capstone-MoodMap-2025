@@ -16,6 +16,8 @@ export type RootStackParamList = {
   Exercises: undefined;
   Ajustes: undefined;
   Reportes: undefined;
+  Moodtracker: undefined;
+
 };
 
 export type LoginScreenProps = NativeStackScreenProps<RootStackParamList, 'Login'>;
@@ -27,4 +29,6 @@ export type UpdateProfileProps = NativeStackScreenProps<RootStackParamList, 'Upd
 export type ExercisesProps = NativeStackScreenProps<RootStackParamList, 'Exercises'>;
 export type AjusteScreenProps = NativeStackScreenProps<RootStackParamList, 'Ajustes'>;
 export type ReportScreenProps = NativeStackScreenProps<RootStackParamList, 'Reportes'>;
+export type MoodtrackerScreen = NativeStackScreenProps<RootStackParamList, 'Moodtracker'>;
+
 

@@ -17,7 +17,7 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="f889c56b-7637-4a3b-930d-18675f79055d">
-      <console name="MoodMap" type="STANDARD" schema="" session="Main"><![CDATA[SELECT * FROM chat_session;]]></console>
+      <console name="MoodMap" type="STANDARD" schema="" session="Main"><![CDATA[SELECT * FROM users;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">

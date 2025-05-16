@@ -5,6 +5,8 @@ import { ForgotPasswordScreenProps } from '../types/react-navigation.d';
 import axios from 'axios';
 import { styles } from '../styles/forgotPasswordStyles';
 import { Ionicons } from '@expo/vector-icons';
+import ScreenWrapper from '../components/ScreenWrapper';
+
 
 const API_URL = 'http://localhost:9001';
 
@@ -64,6 +66,7 @@ export default function ForgotPasswordScreen() {
   };
 
   return (
+    <ScreenWrapper>
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.headerBackground}>
@@ -150,7 +153,8 @@ export default function ForgotPasswordScreen() {
         >
           <Text style={styles.backButtonText}>Volver al inicio de sesión</Text>
         </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </ScreenWrapper>
   );
 }

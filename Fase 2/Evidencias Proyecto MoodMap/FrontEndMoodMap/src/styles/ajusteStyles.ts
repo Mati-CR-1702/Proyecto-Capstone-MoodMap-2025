@@ -3,47 +3,49 @@ import { StyleSheet } from 'react-native';
 export const stylesAjustes = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF6F0', // Fondo similar a otras pantallas
+    backgroundColor: '#FDF7F2',
+  },
+  headerBackground: {
+    height: 160, // Aumentamos un poco
+    backgroundColor: '#E7B58F',
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40,
     paddingHorizontal: 20,
     paddingTop: 50,
+    justifyContent: 'center',
     alignItems: 'center',
+    position: 'relative',
   },
-  title: {
-    fontSize: 24,
+  backIcon: {
+    position: 'absolute',
+    top: 50,
+    left: 20,
+  },
+  headerTitle: {
+    fontSize: 28,
+    color: '#FFFFFF',
     fontWeight: 'bold',
-    color: '#4B4B4B',
-    marginBottom: 20,
     textAlign: 'center',
   },
-  button: {
-    width: '100%',
-    paddingVertical: 15,
-    borderRadius: 20,
-    alignItems: 'center',
-    marginBottom: 15,
+  cardContainer: {
+    marginTop: 30, // 🔽 Bajamos los botones
+    paddingHorizontal: 20,
   },
-  buttonPrimary: {
-    backgroundColor: '#E0BBE4',
+  card: {
+    backgroundColor: '#FFFBF5',
+    borderRadius: 25,
+    paddingVertical: 18,
+    paddingHorizontal: 20,
+    marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.15,
+    shadowRadius: 5,
+    elevation: 4,
   },
-  buttonSecondary: {
-    backgroundColor: '#EEE',
-  },
-  buttonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#4B4B4B',
-  },
-  backButton: {
-    backgroundColor: '#E7B58F',
-    margin: 20,
-    paddingVertical: 14,
-    borderRadius: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  backButtonText: {
-    color: '#FFF',
-    fontWeight: 'bold',
-    fontSize: 16,
+  cardText: {
+    fontSize: 18,
+    color: '#2D2D2D',
+    fontWeight: '600',
   },
 });

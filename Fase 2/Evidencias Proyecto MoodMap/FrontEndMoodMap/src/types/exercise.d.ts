@@ -3,7 +3,7 @@ export interface Exercise {
     title: string;
     description: string;         // ✅ Esta es la correcta
     fullDescription: string;
-    category: 'ira' | 'estrés' | 'tristeza' | 'ansiedad' | 'felicidad';
+    category: 'ira' | 'estrés' | 'tristeza' | 'ansiedad' ;
     image?: any;
     gif?: any;
   }

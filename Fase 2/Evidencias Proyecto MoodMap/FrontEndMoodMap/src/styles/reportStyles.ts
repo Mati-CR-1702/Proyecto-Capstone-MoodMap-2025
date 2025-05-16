@@ -97,5 +97,12 @@ backButtonText: {
   fontSize: 16,
 },
 
+backIcon: {
+  position: 'absolute',
+  top: 50,
+  left: 20,
+  zIndex: 10,
+},
+
 
 });

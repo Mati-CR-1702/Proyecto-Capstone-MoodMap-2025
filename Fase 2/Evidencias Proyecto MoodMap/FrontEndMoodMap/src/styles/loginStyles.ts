@@ -94,4 +94,9 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 14,
   },
+  error: {
+    color: 'firebrick',
+    marginBottom: 10,
+    marginLeft: 5,
+  },  
 });

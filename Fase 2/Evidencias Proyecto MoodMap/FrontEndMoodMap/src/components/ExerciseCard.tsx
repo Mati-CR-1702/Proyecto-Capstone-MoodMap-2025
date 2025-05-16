@@ -11,8 +11,12 @@ interface Props {
 const ExerciseCard: React.FC<Props> = ({ exercise, onPress }) => {
   return (
     <TouchableOpacity style={styles.card} onPress={onPress}>
-      <Image source={exercise.image || require('../../assets/placeholder.png')} style={styles.cardImage} />
-      <Text style={styles.cardText}>{exercise.title}</Text>
+      <Image
+        source={exercise.image}
+        style={styles.cardImage}
+      />
+      <Text style={styles.cardTitle}>{exercise.title}</Text>
+      <Text style={styles.cardDesc}>{exercise.description}</Text>
     </TouchableOpacity>
   );
 };

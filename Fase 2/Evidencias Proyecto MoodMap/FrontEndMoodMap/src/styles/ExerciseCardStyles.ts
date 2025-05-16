@@ -1,24 +1,34 @@
+// src/styles/ExerciseCardStyles.ts
 import { StyleSheet } from 'react-native';
 
 const ExerciseCardStyles = StyleSheet.create({
   card: {
     width: '47%',
-    marginVertical: 8,
-    padding: 12,
+    marginBottom: 16,
+    backgroundColor: '#F9F1ED',
     borderRadius: 16,
+    padding: 16,
     alignItems: 'center',
-    backgroundColor: '#FCE5CD', // cambia según categoría si lo deseas
-    elevation: 3,
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowRadius: 6,
+    elevation: 2,
   },
   cardImage: {
-    width: 50,
-    height: 50,
-    marginBottom: 8,
+    width: 60,
+    height: 60,
+    marginBottom: 10,
   },
-  cardText: {
+  cardTitle: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#4A4A4A',
+    color: '#4B4B4B',
+    textAlign: 'center',
+    marginBottom: 4,
+  },
+  cardDesc: {
+    fontSize: 12,
+    color: '#6B6B6B',
     textAlign: 'center',
   },
 });

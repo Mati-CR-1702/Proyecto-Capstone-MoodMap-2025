@@ -13,6 +13,7 @@ import UpdateProfileScreen from 'src/screens/UpdateProfileScreen';
 import ExercisesScreen from './src/screens/ExercisesScreen';
 import AjusteScreen from 'src/screens/AjusteScreen';
 import ReportScreen from 'src/screens/ReportScreen';
+import MoodTrackerScreen from 'src/screens/MoodtrackerScreen';
 import { RootStackParamList } from './src/types/react-navigation.d';
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -29,7 +30,12 @@ function AuthStack() {
 
 function AppStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Moodtracker">
+      <Stack.Screen 
+        name="Moodtracker" 
+        component={MoodTrackerScreen} 
+        options={{ headerShown: false }}
+      />
       <Stack.Screen 
         name="Home" 
         component={HomeScreen} 

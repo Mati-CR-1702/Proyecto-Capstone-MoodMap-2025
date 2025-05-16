@@ -2,11 +2,21 @@
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
+interface Mood {
+  id: number;
+  name: string;
+  face: string;
+  color: string;
+}
+
 interface AuthContextType {
   isLoggedIn: boolean;
   isLoading: boolean;
   login: (token: string, user: any) => Promise<void>;
   logout: () => Promise<void>;
+  selectedMood: Mood | null;
+  setSelectedMood: (mood: Mood | null) => void;
 }
 
 export const AuthContext = createContext<AuthContextType>({
@@ -14,11 +24,14 @@ export const AuthContext = createContext<AuthContextType>({
   isLoading: true,
   login: async () => {},
   logout: async () => {},
+  selectedMood: null,
+  setSelectedMood: () => {},
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedMood, setSelectedMood] = useState<Mood | null>(null);
 
   useEffect(() => {
     const checkToken = async () => {
@@ -44,10 +57,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     await AsyncStorage.removeItem('token');
     await AsyncStorage.removeItem('user');
     setIsLoggedIn(false);
+    setSelectedMood(null);
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, isLoading, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, isLoading, login, logout, selectedMood, setSelectedMood }}>
       {children}
     </AuthContext.Provider>
   );

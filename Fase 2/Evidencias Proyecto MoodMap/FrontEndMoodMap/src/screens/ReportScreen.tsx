@@ -11,7 +11,10 @@ import {
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
 import { styles } from '../styles/reportStyles';
+import ScreenWrapper from '../components/ScreenWrapper';
+
 
 interface Report {
   sessionId: number;
@@ -70,7 +73,16 @@ export default function ReportScreen() {
   );
 
   return (
+    <ScreenWrapper>
     <View style={styles.container}>
+      {/* Botón de retroceso con ícono */}
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={styles.backIcon}
+      >
+        <Ionicons name="arrow-back-circle-outline" size={30} color="#2D2D2D" />
+      </TouchableOpacity>
+
       <Text style={styles.header}>📝 Reportes Generados</Text>
 
       <FlatList
@@ -79,12 +91,6 @@ export default function ReportScreen() {
         renderItem={renderItem}
         contentContainerStyle={styles.list}
       />
-      <Pressable
-        style={styles.backButton}
-        onPress={() => navigation.navigate('Home')}
-      >
-        <Text style={styles.backButtonText}>Volver al inicio</Text>
-      </Pressable>
 
       {/* MODAL */}
       <Modal
@@ -113,5 +119,6 @@ export default function ReportScreen() {
         </View>
       </Modal>
     </View>
+    </ScreenWrapper>
   );
 }

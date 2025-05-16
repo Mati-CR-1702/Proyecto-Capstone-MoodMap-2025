@@ -16,6 +16,7 @@ export const styles = StyleSheet.create({
     marginBottom: 30,
   },
   faceEmoji: {
+    fontWeight: 'bold',
     fontSize: 28,
   },
   content: {

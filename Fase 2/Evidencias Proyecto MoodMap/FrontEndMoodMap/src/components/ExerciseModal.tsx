@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, View, Text, Image, TouchableOpacity } from 'react-native';
+import { Modal, View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import styles from '../styles/ExerciseModalStyles';
 import { Exercise } from '../types/exercise';
 
@@ -16,14 +16,21 @@ const ExerciseModal: React.FC<Props> = ({ visible, onClose, exercise }) => {
     <Modal visible={visible} transparent animationType="slide">
       <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
-          <Text style={styles.modalTitle}>{exercise.title}</Text>
-          <Image source={exercise.image || require('../../assets/placeholder.png')} style={styles.modalImage} />
-          <Text style={styles.modalDescription}>{exercise.fullDescription}</Text>
-          <Text style={styles.modalCategory}>Categoría: {exercise.category}</Text>
-          <Image source={exercise.gif} style={styles.modalGif} />
-          <TouchableOpacity style={styles.modalClose} onPress={onClose}>
-            <Text style={styles.modalCloseText}>Cerrar</Text>
-          </TouchableOpacity>
+          <ScrollView contentContainerStyle={styles.scrollContent}>
+            <Text style={styles.modalTitle}>{exercise.title}</Text>
+            <Image
+              source={exercise.image}
+              style={styles.modalImage}
+            />
+            <Text style={styles.modalCategory}>Categoría: {exercise.category}</Text>
+            {exercise.gif && (
+              <Image source={exercise.gif} style={styles.modalGif} />
+            )}
+            <Text style={styles.modalDescription}>{exercise.fullDescription}</Text>
+            <TouchableOpacity style={styles.modalClose} onPress={onClose}>
+              <Text style={styles.modalCloseText}>Cerrar</Text>
+            </TouchableOpacity>
+          </ScrollView>
         </View>
       </View>
     </Modal>

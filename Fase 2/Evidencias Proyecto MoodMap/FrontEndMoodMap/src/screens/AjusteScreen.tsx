@@ -1,44 +1,54 @@
 import React from 'react';
-import { View, Text, TouchableOpacity,Pressable } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { stylesAjustes } from '../styles/ajusteStyles'; 
+import { Ionicons } from '@expo/vector-icons';
+import { stylesAjustes } from '../styles/ajusteStyles';
+import ScreenWrapper from '../components/ScreenWrapper';
+
 
 const AjusteScreen = () => {
   const navigation = useNavigation();
 
   return (
+    <ScreenWrapper>
     <View style={stylesAjustes.container}>
-      <Text style={stylesAjustes.title}>Ajustes</Text>
+      {/* Header estilizado */}
+      <View style={stylesAjustes.headerBackground}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={stylesAjustes.backIcon}
+        >
+          <Ionicons name="arrow-back-circle-outline" size={32} color="#FFFFFF" />
+        </TouchableOpacity>
+        <Text style={stylesAjustes.headerTitle}>Ajustes</Text>
+      </View>
 
-      <TouchableOpacity
-        style={[stylesAjustes.button, stylesAjustes.buttonPrimary]}
-        onPress={() => navigation.navigate('UpdateProfile')}
-      >
-        <Text style={stylesAjustes.buttonText}>Modificar Perfil</Text>
-      </TouchableOpacity>
+      {/* Cards de Ajustes */}
+      <View style={stylesAjustes.cardContainer}>
+        <TouchableOpacity
+          style={stylesAjustes.card}
+          onPress={() => navigation.navigate('UpdateProfile')}
+        >
+          <Text style={stylesAjustes.cardText}>Modificar Perfil</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-        style={[stylesAjustes.button, stylesAjustes.buttonSecondary]}
-        onPress={() => alert('Función en desarrollo')}
-      >
-        <Text style={stylesAjustes.buttonText}>Configuración</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={stylesAjustes.card}
+          onPress={() => alert('Función en desarrollo')}
+        >
+          <Text style={stylesAjustes.cardText}>Configuración</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-        style={[stylesAjustes.button, stylesAjustes.buttonSecondary]}
-        onPress={() => alert('Función en desarrollo')}
-      >
-        <Text style={stylesAjustes.buttonText}>Modo Oscuro</Text>
-      </TouchableOpacity>
-      <Pressable
-              style={stylesAjustes.backButton}
-              onPress={() => navigation.navigate('Home')}
-            >
-              <Text style={stylesAjustes.backButtonText}>Volver al inicio</Text>
-            </Pressable>
-      
+        <TouchableOpacity
+          style={stylesAjustes.card}
+          onPress={() => alert('Función en desarrollo')}
+        >
+          <Text style={stylesAjustes.cardText}>Modo Oscuro</Text>
+        </TouchableOpacity>
+      </View>
     </View>
+    </ScreenWrapper>
   );
 };
 
-export default AjusteScreen; 
+export default AjusteScreen;

@@ -6,6 +6,8 @@ import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 import { getUserProfile, updateUserProfile } from '../services/profileService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ScreenWrapper from '../components/ScreenWrapper';
+
 
 interface FormData {
     firstName: string;
@@ -97,6 +99,7 @@ export default function UpdateProfileScreen({ navigation }: { navigation: any })
     ];
 
     return (
+        <ScreenWrapper>
         <View style={styles.container}>
             <View style={styles.headerBackground}>
                 <Text style={styles.title}>MOODMAP</Text>
@@ -168,5 +171,6 @@ export default function UpdateProfileScreen({ navigation }: { navigation: any })
                 </TouchableOpacity>
             </View>
         </View>
+        </ScreenWrapper>
     );
 }

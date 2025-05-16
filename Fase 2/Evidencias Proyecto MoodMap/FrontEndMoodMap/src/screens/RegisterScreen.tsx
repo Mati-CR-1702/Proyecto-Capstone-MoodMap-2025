@@ -4,7 +4,8 @@ import { useForm, Controller, FieldError } from 'react-hook-form';
 import { styles } from '../styles/registerStyles';
 import { register as registerUser } from '../services/authService';
 import { RegisterScreenProps } from '../types/react-navigation.d';
-import { Ionicons } from '@expo/vector-icons'; // Asegúrate de tener expo/vector-icons instalado
+import ScreenWrapper from '../components/ScreenWrapper';
+import { Ionicons } from '@expo/vector-icons';
 
 interface FormData {
   firstName: string;
@@ -51,7 +52,8 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
   ];
 
   return (
-    <View style={styles.container}>
+    <ScreenWrapper>
+      <View style={styles.container}>
       {/* Parte superior */}
       <View style={styles.headerBackground}>
         <Text style={styles.title}>MOODMAP</Text>
@@ -126,5 +128,6 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
         </View>
       </View>
     </View>
-  );
+    </ScreenWrapper>  
+    );
 }

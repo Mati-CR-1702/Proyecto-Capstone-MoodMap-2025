@@ -7,98 +7,55 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 40,
   },
+  headerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
   header: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#4B4B4B',
-    marginBottom: 12,
-    textAlign: 'center',
   },
-  slider: {
-    marginBottom: 20,
-  },
-  categoryButton: {
-    backgroundColor: '#EEE',
-    borderRadius: 20,
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-    marginHorizontal: 5,
-  },
-  categoryButtonActive: {
-    backgroundColor: '#E0BBE4',
-  },
-  categoryText: {
-    color: '#4B4B4B',
-    fontWeight: '600',
+  filterIcon: {
+    padding: 8,
+    backgroundColor: '#F0E1E9',
+    borderRadius: 12,
   },
   row: {
     justifyContent: 'space-between',
   },
-  card: {
-    backgroundColor: '#F9F1ED',
-    borderRadius: 20,
-    padding: 12,
-    marginBottom: 16,
-    width: '48%',
-    alignItems: 'center',
-  },
-  image: {
-    width: 60,
-    height: 60,
-    marginBottom: 8,
-  },
-  cardTitle: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#4B4B4B',
-    textAlign: 'center',
-  },
-  cardDesc: {
-    fontSize: 12,
-    color: '#6B6B6B',
-    textAlign: 'center',
-  },
-  modalContainer: {
+
+  // Modal overlay and content styles
+  modalOverlay: {
     flex: 1,
-    backgroundColor: '#00000099',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+    justifyContent: 'flex-end',
   },
   modalContent: {
     backgroundColor: '#FFF',
-    borderRadius: 20,
     padding: 20,
-    width: '90%',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    elevation: 10,
   },
   modalTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 8,
-  },
-  modalCategory: {
-    fontSize: 14,
-    marginBottom: 8,
-    color: '#888',
-  },
-  modalGif: {
-    width: '100%',
-    height: 150,
-    resizeMode: 'contain',
     marginBottom: 12,
+    color: '#4B4B4B',
   },
-  modalDescription: {
-    fontSize: 14,
-    color: '#444',
-    marginBottom: 12,
+  modalItem: {
+    paddingVertical: 12,
+    paddingHorizontal: 8,
+    borderRadius: 10,
   },
-  closeButton: {
-    backgroundColor: '#E0BBE4',
-    paddingVertical: 10,
-    borderRadius: 12,
-    alignItems: 'center',
+  modalItemActive: {
+    backgroundColor: '#D8B4E2',
   },
-  closeButtonText: {
-    fontWeight: 'bold',
-    color: '#fff',
+  modalItemText: {
+    fontSize: 16,
+    color: '#4B4B4B',
   },
 });

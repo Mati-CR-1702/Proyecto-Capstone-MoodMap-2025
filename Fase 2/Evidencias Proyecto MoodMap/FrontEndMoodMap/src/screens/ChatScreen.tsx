@@ -14,6 +14,8 @@ import {
 import { styles } from '../styles/chatStyles';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ScreenWrapper from '../components/ScreenWrapper';
+
 
 interface Message {
   id: number;
@@ -153,6 +155,7 @@ export default function ChatScreen({ navigation }: any) {
   };
 
   return (
+    <ScreenWrapper>
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
@@ -209,5 +212,6 @@ export default function ChatScreen({ navigation }: any) {
         </View>
       )}
     </View>
+    </ScreenWrapper>
   );
 }

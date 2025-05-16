@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../context/AuthContext';
 import { login as loginService } from '../services/authService';
 import { styles } from '../styles/loginStyles';
+import ScreenWrapper from '../components/ScreenWrapper';
 import { Ionicons } from '@expo/vector-icons'; // Asegúrate de instalar expo/vector-icons si no lo tienes
 
 export default function LoginScreen() {
@@ -33,7 +34,8 @@ export default function LoginScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <ScreenWrapper>
+      <View style={styles.container}>
       {/* Parte superior */}
       <View style={styles.headerBackground}>
         <Text style={styles.title}>MOODMAP</Text>
@@ -108,5 +110,6 @@ export default function LoginScreen() {
         </View>
       </View>
     </View>
+  </ScreenWrapper>
   );
 }
