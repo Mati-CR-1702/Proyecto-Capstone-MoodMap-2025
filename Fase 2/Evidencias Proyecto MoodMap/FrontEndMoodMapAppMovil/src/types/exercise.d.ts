@@ -1,7 +1,7 @@
 export interface Exercise {
     id: string;
     title: string;
-    description: string;         // ✅ Esta es la correcta
+    description: string;         
     fullDescription: string;
     category: 'ira' | 'estrés' | 'tristeza' | 'ansiedad' ;
     image?: any;

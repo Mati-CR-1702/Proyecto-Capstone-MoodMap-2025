@@ -1,4 +1,4 @@
-package com.springboot.springboot_chatgpt.dto.response;
+package com.springboot.springboot_chatgpt.dto.response.chat;
 
 public class ChatResponseWithSession {
     private String response;

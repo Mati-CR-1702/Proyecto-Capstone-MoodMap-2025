@@ -1,7 +1,7 @@
 package com.springboot.springboot_chatgpt.controller;
 
 import com.springboot.springboot_chatgpt.dto.request.chatAi.PromptRequest;
-import com.springboot.springboot_chatgpt.dto.response.ChatResponseWithSession;
+import com.springboot.springboot_chatgpt.dto.response.chat.ChatResponseWithSession;
 import com.springboot.springboot_chatgpt.service.ChatGPTService;
 import org.springframework.web.bind.annotation.*;
 

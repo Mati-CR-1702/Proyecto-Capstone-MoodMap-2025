@@ -3,7 +3,7 @@ package com.springboot.springboot_chatgpt.service;
 import com.springboot.springboot_chatgpt.dto.request.chatAi.ChatGPTRequest;
 import com.springboot.springboot_chatgpt.dto.request.chatAi.ChatGPTResponse;
 import com.springboot.springboot_chatgpt.dto.request.chatAi.PromptRequest;
-import com.springboot.springboot_chatgpt.dto.response.ChatResponseWithSession;
+import com.springboot.springboot_chatgpt.dto.response.chat.ChatResponseWithSession;
 import com.springboot.springboot_chatgpt.entity.ChatMessage;
 import com.springboot.springboot_chatgpt.entity.ChatReport;
 import com.springboot.springboot_chatgpt.entity.ChatSession;

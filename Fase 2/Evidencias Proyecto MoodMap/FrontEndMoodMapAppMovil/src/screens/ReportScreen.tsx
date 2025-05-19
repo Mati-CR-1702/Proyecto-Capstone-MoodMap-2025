@@ -1,0 +1,122 @@
+import React, { useEffect, useState } from 'react';
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  Modal,
+  Pressable,
+  ScrollView,
+} from 'react-native';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
+import { styles } from '../styles/reportStyles';
+import ScreenWrapper from '../components/ScreenWrapper';
+
+
+interface Report {
+  sessionId: number;
+  summary: string;
+  generatedAt: string;
+}
+
+export default function ReportScreen() {
+  const [reports, setReports] = useState<Report[]>([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedReport, setSelectedReport] = useState<Report | null>(null);
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    const fetchReports = async () => {
+      try {
+        const token = await AsyncStorage.getItem('token');
+        const userId = await AsyncStorage.getItem('userId');
+
+        if (!token || !userId) return;
+
+        const response = await axios.get(
+          `http://10.0.2.2:9001/api/reportes/usuario/${userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        setReports(response.data);
+      } catch (error) {
+        console.error('Error al obtener reportes:', error);
+      }
+    };
+
+    fetchReports();
+  }, []);
+
+  const renderItem = ({ item }: { item: Report }) => (
+    <TouchableOpacity
+      style={styles.card}
+      onPress={() => {
+        setSelectedReport(item);
+        setModalVisible(true);
+      }}
+    >
+      <Text style={styles.cardTitle}>Sesión #{item.sessionId}</Text>
+      <Text style={styles.cardDate}>
+        Generado: {new Date(item.generatedAt).toLocaleDateString()}
+      </Text>
+      <Text style={styles.cardPreview} numberOfLines={2}>
+        {item.summary}
+      </Text>
+    </TouchableOpacity>
+  );
+
+  return (
+    <View style={styles.container}>
+      {/* Botón de retroceso con ícono */}
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={styles.backIcon}
+      >
+        <Ionicons name="arrow-back-circle-outline" size={30} color="#2D2D2D" />
+      </TouchableOpacity>
+
+      <Text style={styles.header}>📝 Reportes Generados</Text>
+
+      <FlatList
+        data={reports}
+        keyExtractor={(item) => item.sessionId.toString()}
+        renderItem={renderItem}
+        contentContainerStyle={styles.list}
+      />
+
+      {/* MODAL */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalBox}>
+            <ScrollView>
+              <Text style={styles.modalTitle}>
+                🗂 Sesión #{selectedReport?.sessionId}
+              </Text>
+              <Text style={styles.modalContent}>
+                {selectedReport?.summary}
+              </Text>
+            </ScrollView>
+            <Pressable
+              style={styles.modalButton}
+              onPress={() => setModalVisible(false)}
+            >
+              <Text style={styles.modalButtonText}>Cerrar</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+    </View>
+  );
+}

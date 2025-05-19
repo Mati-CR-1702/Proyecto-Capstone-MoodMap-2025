@@ -1,20 +1,16 @@
 {
   "expo": {
-    "name": "MoodMap",
-    "slug": "MoodMap",
+    "name": "FrontEndMoodMapAppMovil",
+    "slug": "FrontEndMoodMapAppMovil",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "newArchEnabled": false,
-    "jsEngine": "jsc",
+    "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
-    },
-    "extra": {
-      "apiUrl": "http://192.168.1.92:9001/api/auth"
     },
     "ios": {
       "supportsTablet": true
@@ -24,7 +20,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "usesCleartextTraffic": true
+      "edgeToEdgeEnabled": true
     },
     "web": {
       "favicon": "./assets/favicon.png"

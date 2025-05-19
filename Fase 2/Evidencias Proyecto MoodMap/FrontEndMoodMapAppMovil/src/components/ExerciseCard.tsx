@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
-import styles from '../styles/ExerciseCardStyles';
+import styles from '../styles/exerciseCardStyles';
 import { Exercise } from '../types/exercise';
 
 interface Props {

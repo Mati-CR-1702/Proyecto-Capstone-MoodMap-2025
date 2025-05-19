@@ -14,7 +14,7 @@ import ExerciseCard from '../components/ExerciseCard';
 import ExerciseModal from '../components/ExerciseModal';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import ScreenWrapper from '../components/ScreenWrapper';
+//import ScreenWrapper from '../components/ScreenWrapper';
 
 
 const categories = ['ira', 'estrés', 'tristeza', 'ansiedad'];
@@ -24,14 +24,14 @@ const ExercisesScreen = () => {
   const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null);
   const [filterModalVisible, setFilterModalVisible] = useState(false);
 
-  const navigation = useNavigation(); // ✅ Hook para navegación
+  const navigation = useNavigation(); 
 
   const filteredExercises = selectedCategory
     ? exercises.filter((e) => e.category === selectedCategory)
     : exercises;
 
   return (
-    <ScreenWrapper>
+    
     <View style={styles.container}>
       {/* Header con botón de retroceso */}
       <View style={styles.headerRow}>
@@ -96,7 +96,6 @@ const ExercisesScreen = () => {
         </Pressable>
       </Modal>
     </View>
-    </ScreenWrapper>
   );
 };
 

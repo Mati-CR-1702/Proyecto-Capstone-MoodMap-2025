@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
-import styles from '../styles/ExerciseModalStyles';
+import styles from '../styles/exerciseModalStyles';
 import { Exercise } from '../types/exercise';
 
 interface Props {
