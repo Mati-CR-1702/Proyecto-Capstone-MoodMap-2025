@@ -48,7 +48,9 @@ public class AuthController {
         response.put("token", token);
         response.put("user", Map.of(
                 "id", user.getId(),
-                "username", user.getUsername()
+                "username", user.getUsername(),
+                "firstName", user.getFirstName(),
+                "lastName", user.getLastName()
         ));
 
         return ResponseEntity.ok(response);

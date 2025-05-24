@@ -60,18 +60,19 @@ export const login = async (username: string, password: string): Promise<LoginRe
       password: String(password).trim()
     });
 
-    // Conversión segura de tipos
     const responseData = {
       token: String(response.data.token),
       user: {
         id: String(response.data.user?.id || ''),
-        username: String(response.data.user?.username || '')
+        username: String(response.data.user?.username || ''),
+        firstName: String(response.data.user?.firstName || ''),
+        lastName: String(response.data.user?.lastName || '')
       }
     };
 
     await AsyncStorage.multiSet([
       ['token', responseData.token],
-      ['userId', responseData.user.id]
+      ['user', JSON.stringify(responseData.user)]
     ]);
 
     return responseData;

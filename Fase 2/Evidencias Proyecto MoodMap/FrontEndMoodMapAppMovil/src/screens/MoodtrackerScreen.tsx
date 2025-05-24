@@ -20,7 +20,7 @@ const MoodTracker: React.FC = () => {
   const navigation = useNavigation();
   const { selectedMood, setSelectedMood, user } = useContext(AuthContext);
   const [weekDates, setWeekDates] = useState<{ day: number; weekday: string; isToday: boolean }[]>([]);
-  
+
 
   // Lista de estados de ánimo
 
@@ -81,7 +81,7 @@ const MoodTracker: React.FC = () => {
         )}
       </View>
 
-     {/* Saludo personalizado */}
+      {/* Saludo personalizado */}
       <Text style={styles.greeting}>
         Hola {user?.firstName ? user.firstName : 'Usuario'}
       </Text>
