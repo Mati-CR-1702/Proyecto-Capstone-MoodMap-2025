@@ -18,7 +18,8 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+        String normalizedUsername = username.trim().toLowerCase(); // 👈
+        User user = userRepository.findByUsername(normalizedUsername);
 
         if (user == null) {
             throw new UsernameNotFoundException("This user does not exist in the database");

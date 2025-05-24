@@ -6,7 +6,6 @@ import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 import { getUserProfile, updateUserProfile } from '../services/profileService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import ScreenWrapper from '../components/ScreenWrapper';
 
 
 interface FormData {

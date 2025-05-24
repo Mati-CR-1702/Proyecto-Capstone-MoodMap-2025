@@ -13,7 +13,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from '../styles/reportStyles';
-import ScreenWrapper from '../components/ScreenWrapper';
 
 
 interface Report {

@@ -21,6 +21,8 @@ export const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+    paddingTop: 25,
+
   },
   card: {
     height: 120, // Ajusta la altura del botón
@@ -46,9 +48,11 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#2D2D2D',
     fontFamily: 'sans-serif',
-    textAlign: 'center',
-    position: 'absolute', // Coloca el texto sobre la imagen
-    top: '40%', // Ajusta la posición vertical del texto
+    textAlign: 'left',
+    position: 'absolute', 
+    top: '40%',           
+    left: 20,             
+    right: 60,            
   },
   cardIcon: {
     position: 'absolute',
@@ -56,7 +60,7 @@ export const styles = StyleSheet.create({
     right: 10,
   },
   logoutButton: {
-    backgroundColor: '#FF5252',
+    backgroundColor: 'firebrick',
     paddingVertical: 15,
     borderRadius: 20,
     alignItems: 'center',
@@ -67,4 +71,5 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
+  
 });

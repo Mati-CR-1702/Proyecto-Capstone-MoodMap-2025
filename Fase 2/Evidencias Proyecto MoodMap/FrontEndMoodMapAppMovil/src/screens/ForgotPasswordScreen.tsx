@@ -5,7 +5,6 @@ import { ForgotPasswordScreenProps } from '../types/react-navigation.d';
 import axios from 'axios';
 import { styles } from '../styles/forgotPasswordStyles';
 import { Ionicons } from '@expo/vector-icons';
-import ScreenWrapper from '../components/ScreenWrapper';
 
 
 const API_URL = 'http://10.0.2.2:9001';

@@ -26,4 +26,12 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ChatSession> chatSessions;
+
+    @PrePersist
+    @PreUpdate
+    private void normalizeUsername() {
+        if (this.username != null) {
+            this.username = this.username.trim().toLowerCase();
+        }
+    }
 }

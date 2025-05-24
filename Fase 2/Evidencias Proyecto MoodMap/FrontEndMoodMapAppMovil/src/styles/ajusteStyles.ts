@@ -48,4 +48,16 @@ export const stylesAjustes = StyleSheet.create({
     color: '#2D2D2D',
     fontWeight: '600',
   },
+  logoutButton: {
+    backgroundColor: '#FF5252',
+    paddingVertical: 15,
+    borderRadius: 20,
+    alignItems: 'center',
+    marginVertical: 20,
+  },
+  logoutButtonText: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
 });

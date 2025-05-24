@@ -121,14 +121,19 @@ public class ChatGPTService {
                 .collect(Collectors.joining("\n"));
 
         String prompt = """
-            Resume la siguiente conversación entre un usuario y una IA, destacando:
-            - Emociones expresadas
-            - Temas principales
-            - Palabras o frases que puedan indicar alerta emocional
-            - Un posible diagnóstico preliminar o recomendación general
+        Resume la siguiente conversación entre un usuario y una IA, destacando de forma estructurada:
 
-            Conversación:
-            """ + fullChat;
+        1. Tema o temas principales abordados.
+        2. Emociones clave expresadas por el usuario.
+        3. Síntomas mencionados o manifestaciones emocionales relevantes.
+        4. Frases o palabras que puedan representar una alerta emocional.
+        5. Un posible diagnóstico preliminar o hipótesis general (sin reemplazar una evaluación profesional).
+        6. Una recomendación general o sugerencia para el bienestar del usuario.
+
+        Presenta el resumen de forma clara, empática y profesional, sin juicios ni interpretaciones forzadas.
+
+        Conversación:
+        """ + fullChat;
 
         String resumen = openAiSummarize(prompt);
 

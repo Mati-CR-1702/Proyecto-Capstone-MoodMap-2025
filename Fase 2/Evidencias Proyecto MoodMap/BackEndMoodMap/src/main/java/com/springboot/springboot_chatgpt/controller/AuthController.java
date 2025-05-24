@@ -34,7 +34,9 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-        User user = userRepository.findByUsername(request.getUsername());
+        String normalizedUsername = request.getUsername().trim().toLowerCase();
+
+        User user = userRepository.findByUsername(normalizedUsername);
 
         if (user == null || !bCryptPasswordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new BadCredentialsException("Usuario o contraseña incorrecta");
@@ -54,7 +56,7 @@ public class AuthController {
 
     @GetMapping("/auth/secret-question")
     public ResponseEntity<String> getSecretQuestion(@RequestParam String username) {
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username.trim().toLowerCase());
         if (user == null) {
             return ResponseEntity.notFound().build();
         }
@@ -63,7 +65,7 @@ public class AuthController {
 
     @PostMapping("/auth/reset-password")
     public ResponseEntity<String> resetPassword(@RequestBody ResetPasswordRequest request) {
-        User user = userRepository.findByUsername(request.getUsername());
+        User user = userRepository.findByUsername(request.getUsername().trim().toLowerCase());
 
         if (user == null) {
             return ResponseEntity.status(404).body("Usuario no encontrado");

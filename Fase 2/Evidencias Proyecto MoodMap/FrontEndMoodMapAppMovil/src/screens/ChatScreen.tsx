@@ -14,7 +14,6 @@ import {
 import { styles } from '../styles/chatStyles';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import ScreenWrapper from '../components/ScreenWrapper';
 
 
 interface Message {

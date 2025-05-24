@@ -82,7 +82,6 @@ export const styles = StyleSheet.create({
     backgroundColor: '#FFEBEB',
   },
 
-  // 🌀 NUEVOS estilos del modal de carga
   loadingOverlay: {
     position: 'absolute',
     top: 0,

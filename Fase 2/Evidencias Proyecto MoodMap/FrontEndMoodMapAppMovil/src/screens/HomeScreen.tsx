@@ -1,9 +1,8 @@
 import React, { useContext } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ImageBackground, Image } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from '../styles/homeStyles';
-import ScreenWrapper from '../../src/components/ScreenWrapper';
 import { AuthContext } from '../context/AuthContext';
 import { RootStackParamList } from '../types/react-navigation';
 
@@ -12,59 +11,78 @@ export default function HomeScreen() {
   const { logout, selectedMood } = useContext(AuthContext);
 
   return (
-      <View style={styles.container}>
+    <View style={styles.container}>
 
-        {/* Header */}
-        <View style={styles.header}>
-          {/* Botón de Ajustes */}
-          <TouchableOpacity onPress={() => navigation.navigate('Ajustes')}>
-            <Ionicons name="settings-outline" size={30} color="#2D2D2D" />
+      {/* Header */}
+      <View style={styles.header}>
+        {/* Botón de Ajustes */}
+        <TouchableOpacity onPress={() => navigation.navigate('Ajustes')}>
+          <Ionicons name="settings-outline" size={30} color="#2D2D2D" />
+        </TouchableOpacity>
+
+        {/* EMOCIÓN seleccionada */}
+        {selectedMood ? (
+          <TouchableOpacity onPress={() => navigation.navigate('Moodtracker')}>
+            <Image
+              source={selectedMood.image}
+              style={{ width: 40, height: 40 }}
+            />
           </TouchableOpacity>
+        ) : (
+          <TouchableOpacity onPress={() => navigation.navigate('Moodtracker')}>
+            <Image
+              source={require('../../assets/emoji 3.png')}
+              style={{ width: 40, height: 40 }}
+            />
+          </TouchableOpacity>
+        )}
+      </View>
 
-          {/* EMOCIÓN seleccionada */}
-          {selectedMood ? (
-            <TouchableOpacity onPress={() => navigation.navigate('Moodtracker')}>
-              <Text style={styles.faceEmoji}>
-                {selectedMood.face} {selectedMood.name}
-              </Text>
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity onPress={() => navigation.navigate('Moodtracker')}>
-              <Text style={styles.faceEmoji}>😆</Text>
-            </TouchableOpacity>
-          )}
-        </View>
-
-        {/* Cards sin imágenes */}
-        <View style={styles.content}>
-          <TouchableOpacity
-            style={styles.card}
-            onPress={() => navigation.navigate('Reportes')}
+      {/* Cards sin imágenes */}
+      <View style={styles.content}>
+        <TouchableOpacity
+          style={styles.card}
+          onPress={() => navigation.navigate('Reportes')}
+        >
+          <ImageBackground
+            source={require('../../assets/fondo1.png')}
+            style={styles.cardBackground}
+            imageStyle={styles.cardImage}
           >
             <Text style={styles.cardTitle}>Diario Personal</Text>
-            <Ionicons name="leaf-outline" size={40} color="#2D2D2D" style={styles.cardIcon} />
-          </TouchableOpacity>
+          </ImageBackground>
+        </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.card}
-            onPress={() => navigation.navigate('ChatAi')}
+        <TouchableOpacity
+          style={styles.card}
+          onPress={() => navigation.navigate('ChatAi')}
+        >
+          <ImageBackground
+            source={require('../../assets/fondo2.png')}
+            style={styles.cardBackground}
+            imageStyle={styles.cardImage}
           >
-            <Text style={styles.cardTitle}>Chat Bot</Text>
-            <Ionicons name="chatbubbles-outline" size={40} color="#2D2D2D" style={styles.cardIcon} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.card}
-            onPress={() => navigation.navigate('Exercises')}
+            <Text style={styles.cardTitle}>Chat Clara</Text>
+          </ImageBackground>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.card}
+          onPress={() => navigation.navigate('Exercises')}
+        >
+          <ImageBackground
+            source={require('../../assets/fondo3.png')}
+            style={styles.cardBackground}
+            imageStyle={styles.cardImage}
           >
             <Text style={styles.cardTitle}>Tipos de Ejercicios</Text>
-            <Ionicons name="leaf-outline" size={40} color="#2D2D2D" style={styles.cardIcon} />
-          </TouchableOpacity>
-        </View>
-
-        {/* Botón de Cerrar Sesión */}
-        <TouchableOpacity style={styles.logoutButton} onPress={logout}>
-          <Text style={styles.logoutButtonText}>Cerrar Sesión</Text>
+          </ImageBackground>
         </TouchableOpacity>
       </View>
+      
+      <TouchableOpacity style={styles.logoutButton} onPress={logout}>
+          <Text style={styles.logoutButtonText}>Cerrar Sesión</Text>
+        </TouchableOpacity>
+    </View>
   );
 }

@@ -4,7 +4,6 @@ import { useForm, Controller, FieldError } from 'react-hook-form';
 import { styles } from '../styles/registerStyles';
 import { register as registerUser } from '../services/authService';
 import { RegisterScreenProps } from '../types/react-navigation.d';
-import ScreenWrapper from '../components/ScreenWrapper';
 import { Ionicons } from '@expo/vector-icons';
 
 interface FormData {

@@ -3,8 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { stylesAjustes } from '../styles/ajusteStyles';
-//import ScreenWrapper from '../components/ScreenWrapper';
-
+import { logout } from '../navigation/AuthNavigator';
 
 const AjusteScreen = () => {
   const navigation = useNavigation();
@@ -44,6 +43,10 @@ const AjusteScreen = () => {
           onPress={() => alert('Función en desarrollo')}
         >
           <Text style={stylesAjustes.cardText}>Modo Oscuro</Text>
+        </TouchableOpacity>
+        {/* Botón de Cerrar Sesión */}
+        <TouchableOpacity style={stylesAjustes.logoutButton} onPress={logout}>
+          <Text style={stylesAjustes.logoutButtonText}>Cerrar Sesión</Text>
         </TouchableOpacity>
       </View>
     </View>

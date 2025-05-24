@@ -35,13 +35,13 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   moodItem: {
-    width: '30%',
-    aspectRatio: 1,
-    borderRadius: 15,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 15,
-  },
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginBottom: 15,
+  width: '30%', // <-- Esto fuerza 3 por fila
+  // marginHorizontal: 8, // Puedes ajustar o quitar esto si quieres menos espacio lateral
+},
+
   moodFace: {
     fontSize: 28,
   },

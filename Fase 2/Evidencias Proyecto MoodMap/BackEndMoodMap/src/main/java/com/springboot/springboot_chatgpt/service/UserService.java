@@ -33,8 +33,10 @@ public class UserService {
     }
 
     public User addUser(User user) {
+        user.setUsername(user.getUsername().trim().toLowerCase());
+
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        
+
         if (user.getSecretAnswer() != null) {
             user.setSecretAnswer(bCryptPasswordEncoder.encode(user.getSecretAnswer()));
         }
@@ -63,7 +65,9 @@ public class UserService {
 
         if (request.getFirstName() != null) user.setFirstName(request.getFirstName());
         if (request.getLastName() != null) user.setLastName(request.getLastName());
-        if (request.getUsername() != null) user.setUsername(request.getUsername());
+        if (request.getUsername() != null) {
+            user.setUsername(request.getUsername().trim().toLowerCase());
+        }
 
         if (request.getPassword() != null && !request.getPassword().isEmpty()) {
             user.setPassword(bCryptPasswordEncoder.encode(request.getPassword()));

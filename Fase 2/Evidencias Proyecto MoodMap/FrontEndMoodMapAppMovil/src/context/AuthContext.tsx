@@ -4,14 +4,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 interface Mood {
   id: number;
   name: string;
-  face: string;
+  image: any;
   color: string;
 }
 
 interface User {
-  id: string; // Aseguramos que id sea string
+  id: string; 
   username: string;
-  // Agrega más campos si es necesario
+  firstName?: string; 
+  lastName?: string;
+
 }
 
 interface AuthContextType {

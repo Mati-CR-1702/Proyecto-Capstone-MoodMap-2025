@@ -1,38 +1,39 @@
 //C:\Users\fabio\OneDrive\Escritorio\Proyecto-Capstone-MoodMap-2025-gaboRama\FrontEndMoodMap\src\screens\MoodtrackerScreen.tsx
 
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, SafeAreaView, StyleSheet, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from '../styles/MoodtrackerStyles';
-import ScreenWrapper from '../components/ScreenWrapper';
 import { AuthContext } from '../context/AuthContext';
 
 // Tipos para los estados de ánimo
 interface Mood {
   id: number;
   name: string;
-  face: string;
+  image: any;
   color: string;
 }
 
 // Componente principal
 const MoodTracker: React.FC = () => {
   const navigation = useNavigation();
-  const { selectedMood, setSelectedMood } = useContext(AuthContext);
+  const { selectedMood, setSelectedMood, user } = useContext(AuthContext);
   const [weekDates, setWeekDates] = useState<{ day: number; weekday: string; isToday: boolean }[]>([]);
+  
 
   // Lista de estados de ánimo
+
   const moods: Mood[] = [
-    { id: 1, name: 'Enojado', face: '😠', color: '#F28B82' },
-    { id: 2, name: 'Calmado', face: '😐', color: '#FFD6A5' },
-    { id: 3, name: 'Contento', face: '😊', color: '#FDFFB6' },
-    { id: 4, name: 'Enamorado', face: '😍', color: '#FFADAD' },
-    { id: 5, name: 'Abatido', face: '😔', color: '#E6E6EA' },
-    { id: 6, name: 'Con energía', face: '😄', color: '#CAFFBF' },
-    { id: 7, name: 'Deprimido', face: '☹️', color: '#D0C4DF' },
-    { id: 8, name: 'Triste', face: '😢', color: '#B5D0E6' },
-    { id: 9, name: 'Ansioso', face: '😬', color: '#C3E2B5' },
+    { id: 1, name: 'Enojado', image: require('../../assets/emoji 1.png'), color: '#F28B82' },
+    { id: 2, name: 'Calmado', image: require('../../assets/emoji 2.png'), color: '#FFD6A5' },
+    { id: 3, name: 'Contento', image: require('../../assets/emoji 3.png'), color: '#FDFFB6' },
+    { id: 4, name: 'Enamorado', image: require('../../assets/emoji 4.png'), color: '#FFADAD' },
+    { id: 5, name: 'No se', image: require('../../assets/emoji 5.png'), color: '#E6E6EA' },
+    { id: 6, name: 'Con energía', image: require('../../assets/emoji 6.png'), color: '#CAFFBF' },
+    { id: 7, name: 'Deprimido', image: require('../../assets/emoji 7.png'), color: '#D0C4DF' },
+    { id: 8, name: 'Triste', image: require('../../assets/emoji 8.png'), color: '#B5D0E6' },
+    { id: 9, name: 'Ansioso', image: require('../../assets/emoji 9.png'), color: '#C3E2B5' },
   ];
 
   // Función para obtener la semana actual desde hoy
@@ -70,24 +71,41 @@ const MoodTracker: React.FC = () => {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        {selectedMood && (
-          <Text style={styles.selectedEmoji}>{selectedMood.face}</Text>
+        {selectedMood ? (
+          <Image
+            source={selectedMood.image}
+            style={{ width: 70, height: 70 }}
+          />
+        ) : (
+          <View style={{ width: 70, height: 70 }} />
         )}
       </View>
 
-      {/* Saludo */}
-      <Text style={styles.greeting}>Hola Usuario Pepe </Text>
+     {/* Saludo personalizado */}
+      <Text style={styles.greeting}>
+        Hola {user?.firstName ? user.firstName : 'Usuario'}
+      </Text>
       <Text style={styles.question}>¿Cómo te sientes hoy?</Text>
+
 
       {/* Estados de ánimo */}
       <View style={styles.moodGrid}>
         {moods.map((mood) => (
           <TouchableOpacity
             key={mood.id}
-            style={[styles.moodItem, { backgroundColor: mood.color }]}
+            style={styles.moodItem}
             onPress={() => handleMoodSelect(mood)}
+            activeOpacity={0.7}
           >
-            <Text style={styles.moodFace}>{mood.face}</Text>
+            <Image
+              source={mood.image}
+              style={{
+                width: 70,
+                height: 70,
+                borderWidth: selectedMood?.id === mood.id ? 3 : 0,
+                borderColor: selectedMood?.id === mood.id ? '#E7B58F' : 'transparent',
+              }}
+            />
             <Text style={styles.moodName}>{mood.name}</Text>
           </TouchableOpacity>
         ))}
