@@ -1,5 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Alert,
+  ActivityIndicator,
+  Modal,
+  FlatList,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import { useForm, Controller, FieldError } from 'react-hook-form';
 import { styles } from '../styles/registerStyles';
 import { register as registerUser } from '../services/authService';
@@ -17,19 +27,41 @@ interface FormData {
 
 type FormFields = keyof FormData;
 
+const secretQuestions = [
+  '¿Nombre de tu primera mascota?',
+  '¿Nombre de tu escuela primaria?',
+  '¿Ciudad donde naciste?',
+  '¿Nombre de tu mejor amigo/a de la infancia?',
+];
+
 export default function RegisterScreen({ navigation }: RegisterScreenProps) {
-  const { control, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormData>({
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors, isSubmitting },
+  } = useForm<FormData>({
     defaultValues: {
       firstName: '',
       lastName: '',
       username: '',
       password: '',
       secretQuestion: '',
-      secretAnswer: ''
-    }
+      secretAnswer: '',
+    },
   });
+
   const [showPassword, setShowPassword] = useState(false);
   const [showSecretAnswer, setShowSecretAnswer] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const selectedQuestion = watch('secretQuestion');
+
+  const onSelectQuestion = (question: string) => {
+    setValue('secretQuestion', question);
+    setModalVisible(false);
+  };
 
   const onSubmit = async (data: FormData) => {
     try {
@@ -41,18 +73,68 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
     }
   };
 
-  const fields: { name: FormFields; placeholder: string; secure?: boolean; toggleSecure?: () => void; show?: boolean }[] = [
+  const fields: {
+    name: FormFields;
+    placeholder: string;
+    secure?: boolean;
+    toggleSecure?: () => void;
+    show?: boolean;
+    isQuestion?: boolean;
+  }[] = [
     { name: 'firstName', placeholder: 'Nombre' },
     { name: 'lastName', placeholder: 'Apellido' },
     { name: 'username', placeholder: 'Correo electrónico' },
-    { name: 'password', placeholder: 'Contraseña', secure: true, toggleSecure: () => setShowPassword(!showPassword), show: showPassword },
-    { name: 'secretQuestion', placeholder: 'Pregunta secreta (ej. Nombre de tu mascota)' },
-    { name: 'secretAnswer', placeholder: 'Respuesta secreta', secure: true, toggleSecure: () => setShowSecretAnswer(!showSecretAnswer), show: showSecretAnswer }
+    {
+      name: 'password',
+      placeholder: 'Contraseña',
+      secure: true,
+      toggleSecure: () => setShowPassword(!showPassword),
+      show: showPassword,
+    },
+    { name: 'secretQuestion', placeholder: 'Pregunta secreta', isQuestion: true },
+    {
+      name: 'secretAnswer',
+      placeholder: 'Respuesta secreta',
+      secure: true,
+      toggleSecure: () => setShowSecretAnswer(!showSecretAnswer),
+      show: showSecretAnswer,
+    },
   ];
 
+  const renderModal = () => (
+    <Modal
+      transparent
+      animationType="fade"
+      visible={modalVisible}
+      onRequestClose={() => setModalVisible(false)}
+    >
+      <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+        <View style={styles.modalOverlay}>
+          <TouchableWithoutFeedback>
+            <View style={styles.modalContainer}>
+              <FlatList
+                data={secretQuestions}
+                keyExtractor={(item) => item}
+                ItemSeparatorComponent={() => <View style={styles.modalSeparator} />}
+                renderItem={({ item }) => (
+                  <TouchableOpacity
+                    style={styles.modalItem}
+                    onPress={() => onSelectQuestion(item)}
+                  >
+                    <Text style={styles.modalItemText}>{item}</Text>
+                  </TouchableOpacity>
+                )}
+              />
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
+      </TouchableWithoutFeedback>
+    </Modal>
+  );
+
   return (
-      <View style={styles.container}>
-      {/* Parte superior */}
+    <View style={styles.container}>
+      {/* Encabezado */}
       <View style={styles.headerBackground}>
         <Text style={styles.title}>MOODMAP</Text>
       </View>
@@ -61,38 +143,73 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
       <View style={styles.registerCard}>
         <Text style={styles.registerTitle}>Crear Cuenta</Text>
 
-        {fields.map(({ name, placeholder, secure, toggleSecure, show }) => (
+        {fields.map(({ name, placeholder, secure, toggleSecure, show, isQuestion }) => (
           <View key={name}>
             <View style={styles.inputWrapper}>
               <Ionicons name="person-outline" size={24} color="#000" style={styles.icon} />
-              <Controller
-                control={control}
-                name={name}
-                rules={{
-                  required: `${placeholder} es requerido`,
-                  ...(name === 'password' && {
-                    minLength: {
-                      value: 6,
-                      message: 'Mínimo 6 caracteres',
-                    }
-                  })
-                }}
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <TextInput
-                    style={styles.input}
-                    placeholder={placeholder}
-                    placeholderTextColor="#A0A0A0"
-                    value={value}
-                    onChangeText={onChange}
-                    onBlur={onBlur}
-                    secureTextEntry={secure && !show}
-                    autoCapitalize="none"
-                  />
-                )}
-              />
-              {secure && (
+
+              {isQuestion ? (
+                <>
+                  <TouchableOpacity
+                    style={styles.inputTouchable}
+                    onPress={() => setModalVisible(true)}
+                  >
+                    <TextInput
+                      style={[
+                        styles.input,
+                        { color: selectedQuestion ? '#000' : '#A0A0A0' },
+                      ]}
+                      placeholder={placeholder}
+                      placeholderTextColor="#A0A0A0"
+                      value={selectedQuestion}
+                      editable={false}
+                      pointerEvents="none"
+                    />
+                    <Ionicons name="chevron-down-outline" size={24} color="#000" />
+                  </TouchableOpacity>
+                  {renderModal()}
+                </>
+              ) : (
+                <Controller
+                  control={control}
+                  name={name}
+                  rules={{
+                    required: `${placeholder} es requerido`,
+                    ...(name === 'password' && {
+                      minLength: {
+                        value: 6,
+                        message: 'Mínimo 6 caracteres',
+                      },
+                    }),
+                    ...(name === 'secretAnswer' && {
+                      minLength: {
+                        value: 1,
+                        message: 'Debes responder la pregunta secreta',
+                      },
+                    }),
+                  }}
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInput
+                      style={styles.input}
+                      placeholder={placeholder}
+                      placeholderTextColor="#A0A0A0"
+                      value={value}
+                      onChangeText={onChange}
+                      onBlur={onBlur}
+                      secureTextEntry={secure && !show}
+                      autoCapitalize="none"
+                    />
+                  )}
+                />
+              )}
+
+              {secure && !isQuestion && (
                 <TouchableOpacity onPress={toggleSecure}>
-                  <Ionicons name={show ? 'eye-off-outline' : 'eye-outline'} size={24} color="#000" />
+                  <Ionicons
+                    name={show ? 'eye-off-outline' : 'eye-outline'}
+                    size={24}
+                    color="#000"
+                  />
                 </TouchableOpacity>
               )}
             </View>
@@ -125,6 +242,6 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
           </TouchableOpacity>
         </View>
       </View>
-    </View> 
-    );
+    </View>
+  );
 }

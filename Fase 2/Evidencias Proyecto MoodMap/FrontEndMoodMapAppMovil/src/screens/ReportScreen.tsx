@@ -5,7 +5,6 @@ import {
   FlatList,
   TouchableOpacity,
   Modal,
-  Pressable,
   ScrollView,
 } from 'react-native';
 import axios from 'axios';
@@ -13,7 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from '../styles/reportStyles';
-
+import { API_URL } from '../services/apiConfig';
 
 interface Report {
   sessionId: number;
@@ -36,7 +35,7 @@ export default function ReportScreen() {
         if (!token || !userId) return;
 
         const response = await axios.get(
-          `http://10.0.2.2:9001/api/reportes/usuario/${userId}`,
+          `${API_URL}/api/reportes/usuario/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -81,7 +80,7 @@ export default function ReportScreen() {
         <Ionicons name="arrow-back-circle-outline" size={30} color="#2D2D2D" />
       </TouchableOpacity>
 
-      <Text style={styles.header}>📝 Reportes Generados</Text>
+      <Text style={styles.header}>Bitacora Personal</Text>
 
       <FlatList
         data={reports}
@@ -92,27 +91,38 @@ export default function ReportScreen() {
 
       {/* MODAL */}
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalBox}>
+            {/* X roja en la esquina superior derecha */}
+            <TouchableOpacity
+              style={{
+                position: 'absolute',
+                top: 12,
+                right: 12,
+                backgroundColor: '#FFEBEB',
+                borderRadius: 20,
+                padding: 6,
+                zIndex: 2,
+              }}
+              onPress={() => setModalVisible(false)}
+            >
+              <Ionicons name="close" size={24} color="#FF5252" />
+            </TouchableOpacity>
             <ScrollView>
               <Text style={styles.modalTitle}>
-                🗂 Sesión #{selectedReport?.sessionId}
+                 Sesión {selectedReport?.sessionId}
               </Text>
               <Text style={styles.modalContent}>
                 {selectedReport?.summary}
               </Text>
             </ScrollView>
-            <Pressable
-              style={styles.modalButton}
-              onPress={() => setModalVisible(false)}
-            >
-              <Text style={styles.modalButtonText}>Cerrar</Text>
-            </Pressable>
+            <View style={styles.modalButtonRow}>
+            </View>
           </View>
         </View>
       </Modal>

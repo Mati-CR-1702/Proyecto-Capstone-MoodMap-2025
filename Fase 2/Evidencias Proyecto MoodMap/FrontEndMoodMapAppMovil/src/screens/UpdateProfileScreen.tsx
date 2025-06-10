@@ -87,14 +87,6 @@ export default function UpdateProfileScreen({ navigation }: { navigation: any })
             toggleSecure: () => setShowPassword(!showPassword),
             show: showPassword,
         },
-        { name: 'secretQuestion', placeholder: 'Pregunta secreta (ej. Nombre de tu mascota)' },
-        {
-            name: 'secretAnswer',
-            placeholder: 'Respuesta secreta',
-            secure: true,
-            toggleSecure: () => setShowSecretAnswer(!showSecretAnswer),
-            show: showSecretAnswer,
-        },
     ];
 
     return (

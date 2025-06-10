@@ -17,6 +17,7 @@ export type RootStackParamList = {
   Ajustes: undefined;
   Reportes: undefined;
   Moodtracker: undefined;
+  Guider: { exercise: any }; 
 
 };
 
@@ -30,5 +31,6 @@ export type ExercisesProps = NativeStackScreenProps<RootStackParamList, 'Exercis
 export type AjusteScreenProps = NativeStackScreenProps<RootStackParamList, 'Ajustes'>;
 export type ReportScreenProps = NativeStackScreenProps<RootStackParamList, 'Reportes'>;
 export type MoodtrackerScreen = NativeStackScreenProps<RootStackParamList, 'Moodtracker'>;
+export type GuiderScreenProps = NativeStackScreenProps<RootStackParamList, 'Guider'>;
 
 

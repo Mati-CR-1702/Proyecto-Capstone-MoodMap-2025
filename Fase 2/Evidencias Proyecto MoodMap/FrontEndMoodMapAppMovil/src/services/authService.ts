@@ -1,8 +1,8 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { API_URL } from './apiConfig';
 
-// Configuración para Android (usar IP local si no es localhost)
-const API_URL = 'http://10.0.2.2:9001'; // Para Android Emulator
+// Ya NO necesitas definir de nuevo la constante API_URL aquí
 
 interface UserData {
   firstName: string;
@@ -18,10 +18,13 @@ interface LoginResponse {
   user: {
     id: string;
     username: string;
+    firstName?: string;
+    lastName?: string;
   };
 }
 
-const api = axios.create({
+// Instancia global de axios usando la URL base centralizada
+export const api = axios.create({
   baseURL: API_URL,
   timeout: 15000,
   headers: {
@@ -72,7 +75,8 @@ export const login = async (username: string, password: string): Promise<LoginRe
 
     await AsyncStorage.multiSet([
       ['token', responseData.token],
-      ['user', JSON.stringify(responseData.user)]
+      ['user', JSON.stringify(responseData.user)],
+      ['userId', responseData.user.id]
     ]);
 
     return responseData;

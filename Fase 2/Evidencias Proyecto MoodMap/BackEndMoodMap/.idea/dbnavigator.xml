@@ -24,9 +24,7 @@
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="f889c56b-7637-4a3b-930d-18675f79055d" object-ref="consoles/MoodMap" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="f889c56b-7637-4a3b-930d-18675f79055d" />

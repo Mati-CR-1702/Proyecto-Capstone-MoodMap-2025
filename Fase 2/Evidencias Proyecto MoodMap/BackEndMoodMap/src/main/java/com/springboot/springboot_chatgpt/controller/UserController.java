@@ -82,4 +82,12 @@ public class UserController {
                 "secretAnswer", ""
         ));
     }
+
+    @DeleteMapping("/user/profile")
+    public ResponseEntity<?> deleteOwnAccount(Authentication authentication) {
+        String username = authentication.getName();
+        userService.deleteUserByUsername(username);
+        return ResponseEntity.ok(Map.of("message", "Cuenta eliminada exitosamente"));
+    }
+
 }

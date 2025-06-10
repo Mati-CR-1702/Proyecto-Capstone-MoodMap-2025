@@ -56,6 +56,12 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     color: '#000',
   },
+  inputTouchable: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   errorText: {
     color: 'red',
     fontSize: 12,
@@ -86,5 +92,31 @@ export const styles = StyleSheet.create({
     color: '#2D2D2D',
     fontWeight: 'bold',
     fontSize: 14,
+  },
+  
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContainer: {
+    width: '80%',
+    maxHeight: '50%',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 15,
+  },
+  modalItem: {
+    paddingVertical: 14,
+    paddingHorizontal: 20,
+  },
+  modalItemText: {
+    fontSize: 16,
+    color: '#000',
+  },
+  modalSeparator: {
+    height: 1,
+    backgroundColor: '#DDD',
+    marginHorizontal: 20,
   },
 });

@@ -58,4 +58,29 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     color: '#4B4B4B',
   },
+  categoryRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 18,
+    marginHorizontal: 4,
+  },
+  categoryButton: {
+    borderWidth: 2,
+    borderColor: '#E7B58F',
+    borderRadius: 18,
+    paddingVertical: 8,
+    paddingHorizontal: 18,
+    marginHorizontal: 4,
+    backgroundColor: '#FFF',
+  },
+  categoryButtonActive: {
+    backgroundColor: '#FFF6F0',
+    borderColor: '#E7B58F',
+  },
+  categoryButtonText: {
+    color: '#E7B58F',
+    fontWeight: 'bold',
+    fontSize: 15,
+    textTransform: 'capitalize',
+  },
 });

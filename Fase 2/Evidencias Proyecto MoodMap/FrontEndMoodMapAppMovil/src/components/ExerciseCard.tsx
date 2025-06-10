@@ -1,3 +1,5 @@
+//C:\Moodmap\src\components\ExerciseCard.tsx
+
 import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import styles from '../styles/exerciseCardStyles';

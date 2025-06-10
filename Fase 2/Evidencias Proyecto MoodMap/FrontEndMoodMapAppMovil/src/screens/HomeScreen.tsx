@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { styles } from '../styles/homeStyles';
 import { AuthContext } from '../context/AuthContext';
 import { RootStackParamList } from '../types/react-navigation';
+import AnimatedCard from '../components/AnimatedCard'
 
 export default function HomeScreen() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -16,31 +17,31 @@ export default function HomeScreen() {
       {/* Header */}
       <View style={styles.header}>
         {/* Botón de Ajustes */}
-        <TouchableOpacity onPress={() => navigation.navigate('Ajustes')}>
+        <AnimatedCard onPress={() => navigation.navigate('Ajustes')}>
           <Ionicons name="settings-outline" size={30} color="#2D2D2D" />
-        </TouchableOpacity>
+        </AnimatedCard>
 
         {/* EMOCIÓN seleccionada */}
         {selectedMood ? (
-          <TouchableOpacity onPress={() => navigation.navigate('Moodtracker')}>
+          <AnimatedCard onPress={() => navigation.navigate('Moodtracker')}>
             <Image
               source={selectedMood.image}
               style={{ width: 40, height: 40 }}
             />
-          </TouchableOpacity>
+          </AnimatedCard>
         ) : (
-          <TouchableOpacity onPress={() => navigation.navigate('Moodtracker')}>
+          <AnimatedCard onPress={() => navigation.navigate('Moodtracker')}>
             <Image
               source={require('../../assets/emoji 3.png')}
               style={{ width: 40, height: 40 }}
             />
-          </TouchableOpacity>
+          </AnimatedCard>
         )}
       </View>
 
       {/* Cards sin imágenes */}
       <View style={styles.content}>
-        <TouchableOpacity
+        <AnimatedCard
           style={styles.card}
           onPress={() => navigation.navigate('Reportes')}
         >
@@ -49,11 +50,11 @@ export default function HomeScreen() {
             style={styles.cardBackground}
             imageStyle={styles.cardImage}
           >
-            <Text style={styles.cardTitle}>Diario Personal</Text>
+            <Text style={styles.cardTitle}>Bitacora Personal</Text>
           </ImageBackground>
-        </TouchableOpacity>
+        </AnimatedCard>
 
-        <TouchableOpacity
+        <AnimatedCard
           style={styles.card}
           onPress={() => navigation.navigate('ChatAi')}
         >
@@ -64,9 +65,9 @@ export default function HomeScreen() {
           >
             <Text style={styles.cardTitle}>Chat Clara</Text>
           </ImageBackground>
-        </TouchableOpacity>
+        </AnimatedCard>
 
-        <TouchableOpacity
+        <AnimatedCard
           style={styles.card}
           onPress={() => navigation.navigate('Exercises')}
         >
@@ -77,12 +78,8 @@ export default function HomeScreen() {
           >
             <Text style={styles.cardTitle}>Tipos de Ejercicios</Text>
           </ImageBackground>
-        </TouchableOpacity>
+        </AnimatedCard>
       </View>
-      
-      <TouchableOpacity style={styles.logoutButton} onPress={logout}>
-          <Text style={styles.logoutButtonText}>Cerrar Sesión</Text>
-        </TouchableOpacity>
     </View>
   );
 }

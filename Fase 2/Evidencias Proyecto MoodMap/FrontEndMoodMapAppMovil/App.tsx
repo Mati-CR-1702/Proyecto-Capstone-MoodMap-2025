@@ -17,6 +17,7 @@ import ReportScreen from './src/screens/ReportScreen';
 import ExercisesScreen from './src/screens/ExerciseScreen';
 
 import { RootStackParamList } from './src/types/react-navigation.d';
+import GuiderScreen from './src/screens/GuiderScreen';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -40,6 +41,7 @@ function AppStack() {
       { <Stack.Screen name="Ajustes" component={AjusteScreen} /> }
       { <Stack.Screen name="Reportes" component={ReportScreen} /> }
       { <Stack.Screen name="Exercises" component={ExercisesScreen} /> }
+      { <Stack.Screen name="Guider" component={GuiderScreen} /> }
     </Stack.Navigator>
   );
 }

@@ -69,61 +69,65 @@ const MoodTracker: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        {selectedMood ? (
-          <Image
-            source={selectedMood.image}
-            style={{ width: 70, height: 70 }}
-          />
-        ) : (
-          <View style={{ width: 70, height: 70 }} />
-        )}
-      </View>
-
-      {/* Saludo personalizado */}
-      <Text style={styles.greeting}>
-        Hola {user?.firstName ? user.firstName : 'Usuario'}
-      </Text>
-      <Text style={styles.question}>¿Cómo te sientes hoy?</Text>
-
-
-      {/* Estados de ánimo */}
-      <View style={styles.moodGrid}>
-        {moods.map((mood) => (
-          <TouchableOpacity
-            key={mood.id}
-            style={styles.moodItem}
-            onPress={() => handleMoodSelect(mood)}
-            activeOpacity={0.7}
-          >
+      {/* Contenido principal */}
+      <View style={{ flex: 1 }}>
+        {/* Header */}
+        <View style={[styles.header, { marginTop: 30 }]}>
+          {selectedMood ? (
             <Image
-              source={mood.image}
-              style={{
-                width: 70,
-                height: 70,
-                borderWidth: selectedMood?.id === mood.id ? 3 : 0,
-                borderColor: selectedMood?.id === mood.id ? '#E7B58F' : 'transparent',
-              }}
+              source={selectedMood.image}
+              style={{ width: 70, height: 70 }}
             />
-            <Text style={styles.moodName}>{mood.name}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
+          ) : (
+            <View style={{ width: 90, height: 90 }} />
+          )}
+        </View>
 
-      {/* Calendario */}
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        <View style={styles.calendar}>
-          {weekDates.map((item, index) => (
-            <View key={index} style={styles.dayContainer}>
-              <View style={[styles.dayCircle, item.isToday && styles.today]}>
-                <Text style={styles.dayText}>{item.day}</Text>
-              </View>
-              <Text style={styles.weekdayText}>{item.weekday}</Text>
-            </View>
+        {/* Saludo personalizado */}
+        <Text style={styles.greeting}>
+          Hola {user?.firstName ? user.firstName : 'Usuario'}
+        </Text>
+        <Text style={styles.question}>¿Cómo te sientes hoy?</Text>
+
+        {/* Estados de ánimo */}
+        <View style={styles.moodGrid}>
+          {moods.map((mood) => (
+            <TouchableOpacity
+              key={mood.id}
+              style={styles.moodItem}
+              onPress={() => handleMoodSelect(mood)}
+              activeOpacity={0.7}
+            >
+              <Image
+                source={mood.image}
+                style={{
+                  width: 70,
+                  height: 70,
+                  borderWidth: selectedMood?.id === mood.id ? 3 : 0,
+                  borderColor: selectedMood?.id === mood.id ? '#E7B58F' : 'transparent',
+                }}
+              />
+              <Text style={styles.moodName}>{mood.name}</Text>
+            </TouchableOpacity>
           ))}
         </View>
-      </ScrollView>
+      </View>
+
+      {/* Calendario fijo abajo */}
+      <View style={styles.calendarWrapper}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <View style={styles.calendar}>
+            {weekDates.map((item, index) => (
+              <View key={index} style={styles.dayContainer}>
+                <View style={[styles.dayCircle, item.isToday && styles.today]}>
+                  <Text style={styles.dayText}>{item.day}</Text>
+                </View>
+                <Text style={styles.weekdayText}>{item.weekday}</Text>
+              </View>
+            ))}
+          </View>
+        </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };

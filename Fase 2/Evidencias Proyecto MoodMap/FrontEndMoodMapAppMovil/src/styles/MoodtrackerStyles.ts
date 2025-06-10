@@ -19,6 +19,12 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 5,
   },
+  mainContent: {
+    flex: 1,
+    justifyContent: 'center', // centra verticalmente
+    paddingTop: 20,           // puedes ajustar este valor
+    paddingBottom: 10,        // para separar del calendario
+  },
   greetingBold: {
     fontWeight: 'bold',
     color: '#2D2D2D',
@@ -77,5 +83,17 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     color: '#4B4B4B',
     marginTop: 4,
+  },
+  calendarWrapper: {
+    paddingVertical: 12,
+    backgroundColor: '#FFF6F0',
+    borderTopLeftRadius: 18,
+    borderTopRightRadius: 18,
+    shadowColor: '#E7B58F',
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: -2 },
+    marginBottom: 16, // <-- sube el calendario
+    marginTop: 300,     // <-- puedes ajustar si quieres más separación
   },
 });

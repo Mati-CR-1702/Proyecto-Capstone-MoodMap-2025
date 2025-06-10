@@ -1,8 +1,6 @@
-// services/profileService.ts
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-const API_URL = 'http://10.0.2.2:9001';
+import { API_URL } from './apiConfig';
 
 export interface UserProfileData {
   firstName: string;
@@ -13,9 +11,19 @@ export interface UserProfileData {
   secretAnswer: string;
 }
 
+// Instancia global de axios usando la URL base centralizada
+const api = axios.create({
+  baseURL: API_URL,
+  timeout: 15000,
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  }
+});
+
 export const getUserProfile = async (): Promise<UserProfileData> => {
   const token = await AsyncStorage.getItem('token');
-  const response = await axios.get<UserProfileData>(`${API_URL}/user/profile`, {
+  const response = await api.get<UserProfileData>('/user/profile', {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -26,7 +34,7 @@ export const getUserProfile = async (): Promise<UserProfileData> => {
 
 export const updateUserProfile = async (data: UserProfileData): Promise<void> => {
   const token = await AsyncStorage.getItem('token');
-  await axios.put(`${API_URL}/user/profile`, data, {
+  await api.put('/user/profile', data, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

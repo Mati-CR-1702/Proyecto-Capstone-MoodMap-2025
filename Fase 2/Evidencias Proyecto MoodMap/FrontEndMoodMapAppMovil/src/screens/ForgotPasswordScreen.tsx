@@ -2,12 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { ForgotPasswordScreenProps } from '../types/react-navigation.d';
-import axios from 'axios';
+import { api } from '../services/authService'; // Usa la instancia global de axios
 import { styles } from '../styles/forgotPasswordStyles';
 import { Ionicons } from '@expo/vector-icons';
-
-
-const API_URL = 'http://10.0.2.2:9001';
 
 export default function ForgotPasswordScreen() {
   const [username, setUsername] = useState('');
@@ -26,7 +23,7 @@ export default function ForgotPasswordScreen() {
 
     setLoading(true);
     try {
-      const response = await axios.get(`${API_URL}/auth/secret-question`, {
+      const response = await api.get('/auth/secret-question', {
         params: { username }
       });
       setSecretQuestion(response.data.secretQuestion);
@@ -49,7 +46,7 @@ export default function ForgotPasswordScreen() {
     }
     setLoading(true);
     try {
-      await axios.post(`${API_URL}/auth/reset-password`, {
+      await api.post('/auth/reset-password', {
         username,
         secretAnswer,
         newPassword
@@ -151,7 +148,7 @@ export default function ForgotPasswordScreen() {
         >
           <Text style={styles.backButtonText}>Volver al inicio de sesión</Text>
         </TouchableOpacity>
-        </View>
       </View>
+    </View>
   );
 }

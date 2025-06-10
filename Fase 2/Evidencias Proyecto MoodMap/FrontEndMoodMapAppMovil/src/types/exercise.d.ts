@@ -1,10 +1,18 @@
+export interface ExerciseStep {
+  step: number; 
+  text: string;
+  image?: any;
+  timer: number;
+}
+
 export interface Exercise {
-    id: string;
-    title: string;
-    description: string;         
-    fullDescription: string;
-    category: 'ira' | 'estrés' | 'tristeza' | 'ansiedad' ;
-    image?: any;
-    gif?: any;
-  }
+  id: string;
+  title: string;
+  description: string;
+  fullDescription: string;
+  category: string;
+  image: any;
+  gif?: any;
+  steps?: ExerciseStep[];
+}
   

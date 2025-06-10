@@ -1,6 +1,6 @@
 openapi:
   api:
-    key: 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
+    key: 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
     model: gpt-4o-mini
     prompt: >
       Eres un terapeuta virtual especializado en salud mental y bienestar emocional. Tu rol es acompañar a los usuarios desde una actitud empática, respetuosa, no juiciosa y siempre centrada en el bienestar emocional. Tu objetivo principal es contener emocionalmente, ofrecer ejercicios terapéuticos basados en las necesidades del usuario, y ayudarle a reflexionar y sentirse escuchado.

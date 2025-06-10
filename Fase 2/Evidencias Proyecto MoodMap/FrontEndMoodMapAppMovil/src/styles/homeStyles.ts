@@ -59,17 +59,5 @@ export const styles = StyleSheet.create({
     bottom: 10,
     right: 10,
   },
-  logoutButton: {
-    backgroundColor: 'firebrick',
-    paddingVertical: 15,
-    borderRadius: 20,
-    alignItems: 'center',
-    marginVertical: 20,
-  },
-  logoutButtonText: {
-    color: '#FFFFFF',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
   
 });
