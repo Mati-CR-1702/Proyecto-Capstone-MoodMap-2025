@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -9,6 +9,11 @@ import {
   Modal,
   FlatList,
   TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Keyboard,
+  SafeAreaView
 } from 'react-native';
 import { useForm, Controller, FieldError } from 'react-hook-form';
 import { styles } from '../styles/registerStyles';
@@ -55,6 +60,25 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [showSecretAnswer, setShowSecretAnswer] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+
+  // Manejo del teclado similar al ChatScreen
+  useEffect(() => {
+    const showSub = Keyboard.addListener('keyboardDidShow', (e) => {
+      if (Platform.OS === 'android') {
+        setKeyboardHeight(e.endCoordinates.height);
+      }
+    });
+    const hideSub = Keyboard.addListener('keyboardDidHide', () => {
+      if (Platform.OS === 'android') {
+        setKeyboardHeight(0);
+      }
+    });
+    return () => {
+      showSub.remove();
+      hideSub.remove();
+    };
+  }, []);
 
   const selectedQuestion = watch('secretQuestion');
 
@@ -133,115 +157,139 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
   );
 
   return (
-    <View style={styles.container}>
-      {/* Encabezado */}
-      <View style={styles.headerBackground}>
-        <Text style={styles.title}>MOODMAP</Text>
-      </View>
-
-      {/* Card */}
-      <View style={styles.registerCard}>
-        <Text style={styles.registerTitle}>Crear Cuenta</Text>
-
-        {fields.map(({ name, placeholder, secure, toggleSecure, show, isQuestion }) => (
-          <View key={name}>
-            <View style={styles.inputWrapper}>
-              <Ionicons name="person-outline" size={24} color="#000" style={styles.icon} />
-
-              {isQuestion ? (
-                <>
-                  <TouchableOpacity
-                    style={styles.inputTouchable}
-                    onPress={() => setModalVisible(true)}
-                  >
-                    <TextInput
-                      style={[
-                        styles.input,
-                        { color: selectedQuestion ? '#000' : '#A0A0A0' },
-                      ]}
-                      placeholder={placeholder}
-                      placeholderTextColor="#A0A0A0"
-                      value={selectedQuestion}
-                      editable={false}
-                      pointerEvents="none"
-                    />
-                    <Ionicons name="chevron-down-outline" size={24} color="#000" />
-                  </TouchableOpacity>
-                  {renderModal()}
-                </>
-              ) : (
-                <Controller
-                  control={control}
-                  name={name}
-                  rules={{
-                    required: `${placeholder} es requerido`,
-                    ...(name === 'password' && {
-                      minLength: {
-                        value: 6,
-                        message: 'Mínimo 6 caracteres',
-                      },
-                    }),
-                    ...(name === 'secretAnswer' && {
-                      minLength: {
-                        value: 1,
-                        message: 'Debes responder la pregunta secreta',
-                      },
-                    }),
-                  }}
-                  render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
-                      style={styles.input}
-                      placeholder={placeholder}
-                      placeholderTextColor="#A0A0A0"
-                      value={value}
-                      onChangeText={onChange}
-                      onBlur={onBlur}
-                      secureTextEntry={secure && !show}
-                      autoCapitalize="none"
-                    />
-                  )}
-                />
-              )}
-
-              {secure && !isQuestion && (
-                <TouchableOpacity onPress={toggleSecure}>
-                  <Ionicons
-                    name={show ? 'eye-off-outline' : 'eye-outline'}
-                    size={24}
-                    color="#000"
-                  />
-                </TouchableOpacity>
-              )}
-            </View>
-            {errors[name] && (
-              <Text style={styles.errorText}>
-                {(errors[name] as FieldError)?.message}
-              </Text>
-            )}
-          </View>
-        ))}
-
-        {/* Botón de registro */}
-        <TouchableOpacity
-          style={styles.registerButton}
-          onPress={handleSubmit(onSubmit)}
-          disabled={isSubmitting}
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FDF7F2' }}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 0}
+      >
+        <ScrollView
+          contentContainerStyle={{ 
+            flexGrow: 1,
+            // Agregar padding bottom cuando el teclado está visible en Android
+            paddingBottom: Platform.OS === 'android' ? keyboardHeight : 0 
+          }}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
         >
-          {isSubmitting ? (
-            <ActivityIndicator color="#fff" />
-          ) : (
-            <Text style={styles.registerButtonText}>Registrarse</Text>
-          )}
-        </TouchableOpacity>
+          <View style={styles.container}>
+            {/* Encabezado */}
+            <View style={styles.headerBackground}>
+              <Text style={styles.title}>MOODMAP</Text>
+            </View>
 
-        {/* Link para ir al login */}
-        <View style={styles.loginLinkContainer}>
-          <Text style={styles.loginLinkText}>¿Ya tienes cuenta? </Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-            <Text style={styles.loginLinkButton}>Iniciar sesión</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </View>
+            {/* Card */}
+            <View style={[
+              styles.registerCard,
+              // Reducir margin bottom cuando el teclado está visible
+              Platform.OS === 'android' && keyboardHeight > 0 && { marginBottom: 10 }
+            ]}>
+              <Text style={styles.registerTitle}>Crear Cuenta</Text>
+
+              {fields.map(({ name, placeholder, secure, toggleSecure, show, isQuestion }) => (
+                <View key={name}>
+                  <View style={styles.inputWrapper}>
+                    <Ionicons name="person-outline" size={24} color="#000" style={styles.icon} />
+
+                    {isQuestion ? (
+                      <>
+                        <TouchableOpacity
+                          style={styles.inputTouchable}
+                          onPress={() => setModalVisible(true)}
+                        >
+                          <TextInput
+                            style={[
+                              styles.input,
+                              { color: selectedQuestion ? '#000' : '#A0A0A0' },
+                            ]}
+                            placeholder={placeholder}
+                            placeholderTextColor="#A0A0A0"
+                            value={selectedQuestion}
+                            editable={false}
+                            pointerEvents="none"
+                          />
+                          <Ionicons name="chevron-down-outline" size={24} color="#000" />
+                        </TouchableOpacity>
+                        {renderModal()}
+                      </>
+                    ) : (
+                      <Controller
+                        control={control}
+                        name={name}
+                        rules={{
+                          required: `${placeholder} es requerido`,
+                          ...(name === 'password' && {
+                            minLength: {
+                              value: 6,
+                              message: 'Mínimo 6 caracteres',
+                            },
+                          }),
+                          ...(name === 'secretAnswer' && {
+                            minLength: {
+                              value: 1,
+                              message: 'Debes responder la pregunta secreta',
+                            },
+                          }),
+                        }}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                          <TextInput
+                            style={styles.input}
+                            placeholder={placeholder}
+                            placeholderTextColor="#A0A0A0"
+                            value={value}
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+                            secureTextEntry={secure && !show}
+                            autoCapitalize="none"
+                            // Evitar que el teclado se cierre automáticamente
+                            blurOnSubmit={false}
+                          />
+                        )}
+                      />
+                    )}
+
+                    {secure && !isQuestion && (
+                      <TouchableOpacity onPress={toggleSecure}>
+                        <Ionicons
+                          name={show ? 'eye-off-outline' : 'eye-outline'}
+                          size={24}
+                          color="#000"
+                        />
+                      </TouchableOpacity>
+                    )}
+                  </View>
+                  {errors[name] && (
+                    <Text style={styles.errorText}>
+                      {(errors[name] as FieldError)?.message}
+                    </Text>
+                  )}
+                </View>
+              ))}
+
+              {/* Botón de registro */}
+              <TouchableOpacity
+                style={styles.registerButton}
+                onPress={handleSubmit(onSubmit)}
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <ActivityIndicator color="#fff" />
+                ) : (
+                  <Text style={styles.registerButtonText}>Registrarse</Text>
+                )}
+              </TouchableOpacity>
+
+              {/* Link para ir al login */}
+              <View style={styles.loginLinkContainer}>
+                <Text style={styles.loginLinkText}>¿Ya tienes cuenta? </Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                  <Text style={styles.loginLinkButton}>Iniciar sesión</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }

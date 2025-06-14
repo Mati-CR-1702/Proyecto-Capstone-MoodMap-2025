@@ -20,10 +20,17 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.mat.catalan.FrontEndMoodMapAppMovil"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b174d938-9eea-4bb5-a277-49d66491c870"
+      }
+    },
+    "owner": "mat.catalan"
   }
 }

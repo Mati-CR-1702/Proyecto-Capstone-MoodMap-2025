@@ -28,7 +28,12 @@ const ExercisesScreen = () => {
   const filteredExercises = selectedCategory
     ? exercises.filter((e) => e.category === selectedCategory)
     : exercises;
-
+  const categoryIcons: Record<string, { icon: string; color: string }> = {
+    ira: { icon: 'flame', color: '#FF5252' },        // rojo
+    'estrés': { icon: 'alert-circle', color: '#E7B58F' }, // naranja
+    tristeza: { icon: 'rainy', color: '#4B4B4B' },   // gris oscuro
+    ansiedad: { icon: 'cloud-outline', color: '#A084E8' }, // violeta
+  };
   return (
 
     <View style={styles.container}>
@@ -82,12 +87,19 @@ const ExercisesScreen = () => {
                 style={[
                   styles.modalItem,
                   selectedCategory === cat && styles.modalItemActive,
+                  { flexDirection: 'row', alignItems: 'center' }
                 ]}
                 onPress={() => {
                   setSelectedCategory(cat === selectedCategory ? null : cat);
                   setFilterModalVisible(false);
                 }}
               >
+                <Ionicons
+                  name={categoryIcons[cat].icon as any}
+                  size={22}
+                  color={categoryIcons[cat].color}
+                  style={{ marginRight: 10 }}
+                />
                 <Text style={styles.modalItemText}>{cat}</Text>
               </TouchableOpacity>
             ))}

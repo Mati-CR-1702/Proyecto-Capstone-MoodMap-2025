@@ -149,6 +149,17 @@ export default function ChatScreen({ navigation }: any) {
       setIsGenerating(true);
       const token = await AsyncStorage.getItem('token');
       const storedSessionId = await AsyncStorage.getItem('sessionId');
+
+      // Si NO hay mensajes, solo limpia sesión y navega a Home
+      if (!messages || messages.length === 0) {
+        await AsyncStorage.removeItem('sessionId');
+        setSessionId(null);
+        setIsGenerating(false);
+        navigation.navigate('Home');
+        return;
+      }
+
+      // Si hay mensajes, genera el reporte como siempre
       if (!token || !storedSessionId) {
         setIsGenerating(false);
         return;
@@ -183,7 +194,22 @@ export default function ChatScreen({ navigation }: any) {
     >
       <View style={styles.loadingOverlay}>
         <View style={[styles.loadingBox, { width: 320 }]}>
-          <Ionicons name="alert-circle-outline" size={48} color="#FF5252" style={{ marginBottom: 10 }} />
+          {/* Botón X de cierre arriba a la derecha */}
+          <TouchableOpacity
+            onPress={() => setShowExitModal(false)}
+            style={{
+              position: 'absolute',
+              top: 10,
+              right: 10,
+              zIndex: 10,
+              padding: 6,
+              borderRadius: 16,
+              backgroundColor: '#FFEBEB',
+            }}
+          >
+            <Ionicons name="close" size={28} color="#FF5252" />
+          </TouchableOpacity>
+          <Ionicons name="alert-circle-outline" size={48} color="#FF5252" style={{ marginBottom: 10, marginTop: 18 }} />
           <Text style={[styles.title, { fontSize: 20, marginBottom: 8 }]}>¿Deseas generar un reporte?</Text>
           <Text style={[styles.loadingText, { color: '#666', marginBottom: 18 }]}>
             Puedes guardar esta conversación antes de salir.
@@ -203,7 +229,7 @@ export default function ChatScreen({ navigation }: any) {
                 navigation.navigate('Home');
               }}
             >
-              <Text style={{ color: '#FF5252', fontWeight: 'bold' }}>Cancelar</Text>
+              <Text style={{ color: '#FF5252', fontWeight: 'bold' }}>Volver al Home</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={{
@@ -303,7 +329,11 @@ export default function ChatScreen({ navigation }: any) {
           <View style={styles.loadingOverlay}>
             <View style={styles.loadingBox}>
               <ActivityIndicator size="large" color="#2D2D2D" />
-              <Text style={styles.loadingText}>Generando reporte...</Text>
+              <Text style={styles.loadingText}>
+                {messages.length === 0
+                  ? 'Cerrando sesión...'
+                  : 'Generando reporte...'}
+              </Text>
             </View>
           </View>
         )}
