@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -18,4 +19,10 @@ public class ChatSession {
 
     private LocalDateTime startedAt;
     private LocalDateTime endedAt;
+
+    @OneToMany(mappedBy = "session", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ChatMessage> message;
+
+    @OneToOne(mappedBy = "session", cascade = CascadeType.ALL, orphanRemoval = true)
+    private ChatReport report;
 }

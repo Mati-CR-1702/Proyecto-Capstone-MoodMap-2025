@@ -1,4 +1,3 @@
-//C:\Users\fabio\OneDrive\Escritorio\Proyecto-Capstone-MoodMap-2025-gaboRama\FrontEndMoodMap\src\screens\MoodtrackerScreen.tsx
 
 import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, SafeAreaView, StyleSheet, Image } from 'react-native';
@@ -29,7 +28,7 @@ const MoodTracker: React.FC = () => {
     { id: 2, name: 'Calmado', image: require('../../assets/emoji 2.png'), color: '#FFD6A5' },
     { id: 3, name: 'Contento', image: require('../../assets/emoji 3.png'), color: '#FDFFB6' },
     { id: 4, name: 'Enamorado', image: require('../../assets/emoji 4.png'), color: '#FFADAD' },
-    { id: 5, name: 'No se', image: require('../../assets/emoji 5.png'), color: '#E6E6EA' },
+    { id: 5, name: 'Apático', image: require('../../assets/emoji 5.png'), color: '#E6E6EA' },
     { id: 6, name: 'Con energía', image: require('../../assets/emoji 6.png'), color: '#CAFFBF' },
     { id: 7, name: 'Deprimido', image: require('../../assets/emoji 7.png'), color: '#D0C4DF' },
     { id: 8, name: 'Triste', image: require('../../assets/emoji 8.png'), color: '#B5D0E6' },

@@ -29,10 +29,10 @@ const ExercisesScreen = () => {
     ? exercises.filter((e) => e.category === selectedCategory)
     : exercises;
   const categoryIcons: Record<string, { icon: string; color: string }> = {
-    ira: { icon: 'flame', color: '#FF5252' },        // rojo
-    'estrés': { icon: 'alert-circle', color: '#E7B58F' }, // naranja
-    tristeza: { icon: 'rainy', color: '#4B4B4B' },   // gris oscuro
-    ansiedad: { icon: 'cloud-outline', color: '#A084E8' }, // violeta
+    ira: { icon: 'flame', color: '#FF5252' },        
+    'estrés': { icon: 'alert-circle', color: '#E7B58F' }, 
+    tristeza: { icon: 'rainy', color: '#4B4B4B' },   
+    ansiedad: { icon: 'cloud-outline', color: '#A084E8' }, 
   };
   return (
 

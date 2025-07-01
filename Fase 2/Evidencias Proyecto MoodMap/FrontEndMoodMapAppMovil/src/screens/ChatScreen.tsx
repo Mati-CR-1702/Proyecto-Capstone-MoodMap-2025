@@ -39,25 +39,41 @@ export default function ChatScreen({ navigation }: any) {
   const nav = useNavigation();
   const [showExitModal, setShowExitModal] = useState(false);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
+  
+  // Estado para controlar si la pantalla está activa
+  const [isScreenFocused, setIsScreenFocused] = useState(false);
 
+  // Manejar el enfoque de la pantalla
   useFocusEffect(
     useCallback(() => {
+      setIsScreenFocused(true);
+      
       const onBackPress = () => {
         setShowExitModal(true);
         return true;
       };
+      
       const backHandler = BackHandler.addEventListener('hardwareBackPress', onBackPress);
-      return () => backHandler.remove();
+      
+      return () => {
+        setIsScreenFocused(false);
+        backHandler.remove();
+      };
     }, [])
   );
 
+  // Listener de navegación mejorado
   useEffect(() => {
     const unsubscribe = nav.addListener('beforeRemove', (e) => {
-      e.preventDefault();
-      setShowExitModal(true);
+      // Solo prevenir la navegación si la pantalla está enfocada y activa
+      if (isScreenFocused && !isGenerating) {
+        e.preventDefault();
+        setShowExitModal(true);
+      }
     });
+    
     return unsubscribe;
-  }, [nav]);
+  }, [nav, isScreenFocused, isGenerating]);
 
   useEffect(() => {
     const showSub = Keyboard.addListener('keyboardDidShow', (e) => {
@@ -147,6 +163,9 @@ export default function ChatScreen({ navigation }: any) {
   const endChatSession = async () => {
     try {
       setIsGenerating(true);
+      // Desactivar el listener mientras se procesa la salida
+      setIsScreenFocused(false);
+      
       const token = await AsyncStorage.getItem('token');
       const storedSessionId = await AsyncStorage.getItem('sessionId');
 
@@ -162,6 +181,7 @@ export default function ChatScreen({ navigation }: any) {
       // Si hay mensajes, genera el reporte como siempre
       if (!token || !storedSessionId) {
         setIsGenerating(false);
+        setIsScreenFocused(true); // Reactivar si hay error
         return;
       }
       const sessionId = parseInt(storedSessionId, 10);
@@ -182,7 +202,20 @@ export default function ChatScreen({ navigation }: any) {
     } catch (error) {
       console.error('Error al cerrar la sesión del chat:', error);
       setIsGenerating(false);
+      setIsScreenFocused(true); // Reactivar en caso de error
     }
+  };
+
+  const handleGoHome = () => {
+    // Desactivar el listener antes de navegar
+    setIsScreenFocused(false);
+    setShowExitModal(false);
+    navigation.navigate('Home');
+  };
+
+  const handleGenerateReport = async () => {
+    setShowExitModal(false);
+    await endChatSession();
   };
 
   const ExitModal = () => (
@@ -224,10 +257,7 @@ export default function ChatScreen({ navigation }: any) {
                 alignItems: 'center',
                 marginRight: 6,
               }}
-              onPress={() => {
-                setShowExitModal(false);
-                navigation.navigate('Home');
-              }}
+              onPress={handleGoHome}
             >
               <Text style={{ color: '#FF5252', fontWeight: 'bold' }}>Volver al Home</Text>
             </TouchableOpacity>
@@ -240,10 +270,7 @@ export default function ChatScreen({ navigation }: any) {
                 alignItems: 'center',
                 marginLeft: 6,
               }}
-              onPress={async () => {
-                setShowExitModal(false);
-                await endChatSession();
-              }}
+              onPress={handleGenerateReport}
             >
               <Text style={{ color: '#fff', fontWeight: 'bold' }}>Sí, generar</Text>
             </TouchableOpacity>

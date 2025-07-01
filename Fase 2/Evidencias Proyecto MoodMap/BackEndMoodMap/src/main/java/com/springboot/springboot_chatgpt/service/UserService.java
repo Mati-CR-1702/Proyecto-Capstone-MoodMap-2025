@@ -2,15 +2,15 @@ package com.springboot.springboot_chatgpt.service;
 
 
 import com.springboot.springboot_chatgpt.dto.request.profile.UpdateProfileRequest;
+import com.springboot.springboot_chatgpt.entity.ChatSession;
 import com.springboot.springboot_chatgpt.entity.User;
 import com.springboot.springboot_chatgpt.repository.UserRepository;
-import org.springframework.security.authentication.BadCredentialsException;
+import jakarta.transaction.Transactional;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -81,7 +81,7 @@ public class UserService {
 
         return userRepository.save(user);
     }
-
+    @Transactional
     public void deleteUserByUsername(String username) {
         User user = userRepository.findByUsername(username);
         if (user != null) {
@@ -90,5 +90,6 @@ public class UserService {
             throw new UsernameNotFoundException("Usuario no encontrado");
         }
     }
+
 
 }

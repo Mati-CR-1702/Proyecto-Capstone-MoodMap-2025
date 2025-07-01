@@ -60,4 +60,21 @@ export const stylesAjustes = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContainer: {
+    width: '85%',
+    backgroundColor: '#FFFBF5',
+    borderRadius: 20,
+    padding: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
+    elevation: 5,
+  },
 });

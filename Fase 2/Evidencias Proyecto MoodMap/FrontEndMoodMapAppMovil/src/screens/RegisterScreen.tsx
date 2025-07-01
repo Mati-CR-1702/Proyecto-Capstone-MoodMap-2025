@@ -13,7 +13,7 @@ import {
   Platform,
   ScrollView,
   Keyboard,
-  SafeAreaView
+  SafeAreaView,
 } from 'react-native';
 import { useForm, Controller, FieldError } from 'react-hook-form';
 import { styles } from '../styles/registerStyles';
@@ -60,9 +60,10 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [showSecretAnswer, setShowSecretAnswer] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [termsModalVisible, setTermsModalVisible] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
 
-  // Manejo del teclado similar al ChatScreen
   useEffect(() => {
     const showSub = Keyboard.addListener('keyboardDidShow', (e) => {
       if (Platform.OS === 'android') {
@@ -97,6 +98,58 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
     }
   };
 
+  const toggleTermsAccepted = () => {
+    setTermsAccepted(!termsAccepted);
+  };
+
+  const renderModal = () => (
+    <Modal transparent animationType="fade" visible={modalVisible} onRequestClose={() => setModalVisible(false)}>
+      <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+        <View style={styles.modalOverlay}>
+          <TouchableWithoutFeedback>
+            <View style={styles.modalContainer}>
+              <FlatList
+                data={secretQuestions}
+                keyExtractor={(item) => item}
+                ItemSeparatorComponent={() => <View style={styles.modalSeparator} />}
+                renderItem={({ item }) => (
+                  <TouchableOpacity style={styles.modalItem} onPress={() => onSelectQuestion(item)}>
+                    <Text style={styles.modalItemText}>{item}</Text>
+                  </TouchableOpacity>
+                )}
+              />
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
+      </TouchableWithoutFeedback>
+    </Modal>
+  );
+
+  const renderTermsModal = () => (
+    <Modal transparent visible={termsModalVisible} animationType="fade" onRequestClose={() => setTermsModalVisible(false)}>
+      <TouchableWithoutFeedback onPress={() => setTermsModalVisible(false)}>
+        <View style={styles.modalOverlay}>
+          <TouchableWithoutFeedback>
+            <View style={[styles.modalContainer, { padding: 20 }]}>
+              <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 10 }}>
+                Términos y Condiciones
+              </Text>
+              <ScrollView style={{ maxHeight: 300 }}>
+                <Text style={{ fontSize: 14, color: '#333' }}>
+                  En MoodMap, nos comprometemos a respetar y proteger la privacidad de tus datos personales y toda la información que agregues dentro de nuestra app móvil. 
+                  Tus datos nunca serán compartidos sin tu consentimiento y serán usados únicamente para brindarte una mejor experiencia personalizada. Al continuar, aceptas estos términos y nuestra política de privacidad.
+                </Text>
+              </ScrollView>
+              <TouchableOpacity style={[styles.registerButton, { marginTop: 20 }]} onPress={() => setTermsModalVisible(false)}>
+                <Text style={styles.registerButtonText}>Cerrar</Text>
+              </TouchableOpacity>
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
+      </TouchableWithoutFeedback>
+    </Modal>
+  );
+
   const fields: {
     name: FormFields;
     placeholder: string;
@@ -125,37 +178,6 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
     },
   ];
 
-  const renderModal = () => (
-    <Modal
-      transparent
-      animationType="fade"
-      visible={modalVisible}
-      onRequestClose={() => setModalVisible(false)}
-    >
-      <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
-        <View style={styles.modalOverlay}>
-          <TouchableWithoutFeedback>
-            <View style={styles.modalContainer}>
-              <FlatList
-                data={secretQuestions}
-                keyExtractor={(item) => item}
-                ItemSeparatorComponent={() => <View style={styles.modalSeparator} />}
-                renderItem={({ item }) => (
-                  <TouchableOpacity
-                    style={styles.modalItem}
-                    onPress={() => onSelectQuestion(item)}
-                  >
-                    <Text style={styles.modalItemText}>{item}</Text>
-                  </TouchableOpacity>
-                )}
-              />
-            </View>
-          </TouchableWithoutFeedback>
-        </View>
-      </TouchableWithoutFeedback>
-    </Modal>
-  );
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#FDF7F2' }}>
       <KeyboardAvoidingView
@@ -164,44 +186,30 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
         keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 0}
       >
         <ScrollView
-          contentContainerStyle={{ 
+          contentContainerStyle={{
             flexGrow: 1,
-            // Agregar padding bottom cuando el teclado está visible en Android
-            paddingBottom: Platform.OS === 'android' ? keyboardHeight : 0 
+            paddingBottom: Platform.OS === 'android' ? keyboardHeight : 0,
           }}
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
         >
           <View style={styles.container}>
-            {/* Encabezado */}
             <View style={styles.headerBackground}>
               <Text style={styles.title}>MOODMAP</Text>
             </View>
 
-            {/* Card */}
-            <View style={[
-              styles.registerCard,
-              // Reducir margin bottom cuando el teclado está visible
-              Platform.OS === 'android' && keyboardHeight > 0 && { marginBottom: 10 }
-            ]}>
+            <View style={[styles.registerCard, Platform.OS === 'android' && keyboardHeight > 0 && { marginBottom: 10 }]}>
               <Text style={styles.registerTitle}>Crear Cuenta</Text>
 
               {fields.map(({ name, placeholder, secure, toggleSecure, show, isQuestion }) => (
                 <View key={name}>
                   <View style={styles.inputWrapper}>
                     <Ionicons name="person-outline" size={24} color="#000" style={styles.icon} />
-
                     {isQuestion ? (
                       <>
-                        <TouchableOpacity
-                          style={styles.inputTouchable}
-                          onPress={() => setModalVisible(true)}
-                        >
+                        <TouchableOpacity style={styles.inputTouchable} onPress={() => setModalVisible(true)}>
                           <TextInput
-                            style={[
-                              styles.input,
-                              { color: selectedQuestion ? '#000' : '#A0A0A0' },
-                            ]}
+                            style={[styles.input, { color: selectedQuestion ? '#000' : '#A0A0A0' }]}
                             placeholder={placeholder}
                             placeholderTextColor="#A0A0A0"
                             value={selectedQuestion}
@@ -218,6 +226,12 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
                         name={name}
                         rules={{
                           required: `${placeholder} es requerido`,
+                          ...(name === 'username' && {
+                            pattern: {
+                              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                              message: 'Debes ingresar un correo válido',
+                            },
+                          }),
                           ...(name === 'password' && {
                             minLength: {
                               value: 6,
@@ -241,45 +255,44 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
                             onBlur={onBlur}
                             secureTextEntry={secure && !show}
                             autoCapitalize="none"
-                            // Evitar que el teclado se cierre automáticamente
                             blurOnSubmit={false}
+                            keyboardType={name === 'username' ? 'email-address' : 'default'}
                           />
                         )}
                       />
                     )}
-
                     {secure && !isQuestion && (
                       <TouchableOpacity onPress={toggleSecure}>
-                        <Ionicons
-                          name={show ? 'eye-off-outline' : 'eye-outline'}
-                          size={24}
-                          color="#000"
-                        />
+                        <Ionicons name={show ? 'eye-off-outline' : 'eye-outline'} size={24} color="#000" />
                       </TouchableOpacity>
                     )}
                   </View>
-                  {errors[name] && (
-                    <Text style={styles.errorText}>
-                      {(errors[name] as FieldError)?.message}
-                    </Text>
-                  )}
+                  {errors[name] && <Text style={styles.errorText}>{(errors[name] as FieldError)?.message}</Text>}
                 </View>
               ))}
 
+              {/* Checkbox de términos */}
+              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+                <TouchableOpacity onPress={toggleTermsAccepted} style={{ marginRight: 10 }}>
+                  <Ionicons name={termsAccepted ? 'checkbox-outline' : 'square-outline'} size={24} color="#2D2D2D" />
+                </TouchableOpacity>
+                <Text style={{ color: '#2D2D2D', flex: 1, fontSize: 14 }}>
+                  Acepto los{' '}
+                  <Text style={{ textDecorationLine: 'underline', fontWeight: 'bold' }} onPress={() => setTermsModalVisible(true)}>
+                    términos y condiciones
+                  </Text>
+                </Text>
+              </View>
+
               {/* Botón de registro */}
               <TouchableOpacity
-                style={styles.registerButton}
+                style={[styles.registerButton, { backgroundColor: termsAccepted ? '#2D2D2D' : '#A0A0A0' }]}
                 onPress={handleSubmit(onSubmit)}
-                disabled={isSubmitting}
+                disabled={isSubmitting || !termsAccepted}
               >
-                {isSubmitting ? (
-                  <ActivityIndicator color="#fff" />
-                ) : (
-                  <Text style={styles.registerButtonText}>Registrarse</Text>
-                )}
+                {isSubmitting ? <ActivityIndicator color="#fff" /> : <Text style={styles.registerButtonText}>Registrarse</Text>}
               </TouchableOpacity>
 
-              {/* Link para ir al login */}
               <View style={styles.loginLinkContainer}>
                 <Text style={styles.loginLinkText}>¿Ya tienes cuenta? </Text>
                 <TouchableOpacity onPress={() => navigation.navigate('Login')}>
@@ -288,6 +301,7 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
               </View>
             </View>
           </View>
+          {renderTermsModal()}
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>

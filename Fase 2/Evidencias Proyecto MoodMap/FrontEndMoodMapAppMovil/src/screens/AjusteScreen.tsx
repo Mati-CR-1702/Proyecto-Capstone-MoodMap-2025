@@ -1,5 +1,13 @@
-import React, { useContext } from 'react';
-import { View, Text, TouchableOpacity, Alert } from 'react-native';
+import React, { useContext, useState } from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Alert,
+  Modal,
+  ScrollView,
+  TouchableWithoutFeedback
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { stylesAjustes } from '../styles/ajusteStyles';
@@ -11,6 +19,8 @@ import AnimatedCard from '../components/AnimatedCard';
 const AjusteScreen = () => {
   const navigation = useNavigation();
   const { logout } = useContext(AuthContext);
+
+  const [modalVisible, setModalVisible] = useState(false);
 
   const handleDeleteAccount = async () => {
     Alert.alert(
@@ -29,7 +39,6 @@ const AjusteScreen = () => {
                   Authorization: `Bearer ${token}`
                 }
               });
-
               await logout();
               Alert.alert('Cuenta eliminada', 'Tu cuenta ha sido borrada exitosamente');
             } catch (error) {
@@ -40,6 +49,15 @@ const AjusteScreen = () => {
         }
       ]
     );
+  };
+
+  const handleLogout = async () => {
+    setModalVisible(true);
+  };
+
+  const confirmLogout = async () => {
+    setModalVisible(false);
+    await logout();
   };
 
   return (
@@ -58,10 +76,7 @@ const AjusteScreen = () => {
       {/* Cards de Ajustes */}
       <View style={stylesAjustes.cardContainer}>
         {/* Modificar Perfil */}
-        <AnimatedCard
-          style={stylesAjustes.card}
-          onPress={() => navigation.navigate('UpdateProfile')}
-        >
+        <AnimatedCard style={stylesAjustes.card} onPress={() => navigation.navigate('UpdateProfile')}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Ionicons name="person-circle-outline" size={26} color="#E7B58F" style={{ marginRight: 12 }} />
             <Text style={stylesAjustes.cardText}>Modificar Perfil</Text>
@@ -69,10 +84,7 @@ const AjusteScreen = () => {
         </AnimatedCard>
 
         {/* Eliminar cuenta */}
-        <AnimatedCard
-          style={stylesAjustes.card}
-          onPress={handleDeleteAccount}
-        >
+        <AnimatedCard style={stylesAjustes.card} onPress={handleDeleteAccount}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <MaterialIcons name="delete-forever" size={26} color="#FF5252" style={{ marginRight: 12 }} />
             <Text style={stylesAjustes.cardText}>Eliminar Cuenta</Text>
@@ -80,16 +92,47 @@ const AjusteScreen = () => {
         </AnimatedCard>
 
         {/* Cerrar Sesión */}
-        <AnimatedCard
-          style={stylesAjustes.card}
-          onPress={logout}
-        >
+        <AnimatedCard style={stylesAjustes.card} onPress={handleLogout}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Ionicons name="log-out-outline" size={26} color="#E7B58F" style={{ marginRight: 12 }} />
             <Text style={stylesAjustes.cardText}>Cerrar Sesión</Text>
           </View>
         </AnimatedCard>
       </View>
+
+      {/* Modal informativo de cierre de sesión */}
+      <Modal
+        transparent
+        visible={modalVisible}
+        animationType="fade"
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+          <View style={stylesAjustes.modalOverlay}>
+            <TouchableWithoutFeedback>
+              <View style={[stylesAjustes.modalContainer, { padding: 20 }]}>
+                <ScrollView style={{ maxHeight: 250 }}>
+                  <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 10, color: '#2D2D2D' }}>
+                    Información Importante
+                  </Text>
+                  <Text style={{ fontSize: 14, color: '#2D2D2D' }}>
+                    Esta IA no reemplaza la atención de un profesional de la salud mental. 
+                    Es solo un complemento, no una terapia profesional. 
+                    Para ayuda real, te recomendamos acudir a un especialista.
+                  </Text>
+                </ScrollView>
+
+                <TouchableOpacity
+                  style={[stylesAjustes.logoutButton, { marginTop: 20 }]}
+                  onPress={confirmLogout}
+                >
+                  <Text style={stylesAjustes.logoutButtonText}>Entendido y Cerrar Sesión</Text>
+                </TouchableOpacity>
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
     </View>
   );
 };

@@ -77,7 +77,7 @@ export default function ReportScreen() {
         onPress={() => navigation.goBack()}
         style={styles.backIcon}
       >
-        <Ionicons name="arrow-back-circle-outline" size={30} color="#2D2D2D" />
+        <Ionicons name="arrow-back-circle-outline" size={30} />
       </TouchableOpacity>
 
       <Text style={styles.header}>Bitacora Personal</Text>

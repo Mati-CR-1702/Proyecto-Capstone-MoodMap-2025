@@ -93,7 +93,6 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 14,
   },
-  
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.5)',
@@ -101,8 +100,8 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalContainer: {
-    width: '80%',
-    maxHeight: '50%',
+    width: '85%',
+    maxHeight: '80%',
     backgroundColor: '#FFFFFF',
     borderRadius: 15,
   },

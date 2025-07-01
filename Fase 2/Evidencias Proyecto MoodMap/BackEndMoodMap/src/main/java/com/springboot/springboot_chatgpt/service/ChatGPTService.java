@@ -121,19 +121,39 @@ public class ChatGPTService {
                 .collect(Collectors.joining("\n"));
 
         String prompt = """
-        Resume la siguiente conversación entre un usuario y una IA, destacando de forma estructurada:
-
-        1. Tema o temas principales abordados.
-        2. Emociones clave expresadas por el usuario.
-        3. Síntomas mencionados o manifestaciones emocionales relevantes.
-        4. Frases o palabras que puedan representar una alerta emocional.
-        5. Un posible diagnóstico preliminar o hipótesis general (sin reemplazar una evaluación profesional).
-        6. Una recomendación general o sugerencia para el bienestar del usuario.
-
-        Presenta el resumen de forma clara, empática y profesional, sin juicios ni interpretaciones forzadas.
-
-        Conversación:
-        """ + fullChat;
+Analiza la siguiente conversación entre un usuario y una IA de apoyo emocional y genera un resumen psicológico estructurado en formato de texto plano, sin usar asteriscos, guiones ni caracteres especiales de formato.
+ 
+Estructura el resumen en las siguientes secciones:
+ 
+RESUMEN PSICOLÓGICO
+ 
+1. TEMAS PRINCIPALES ABORDADOS:
+Describe los temas centrales que el usuario discutió durante la sesión.
+ 
+2. EMOCIONES IDENTIFICADAS:
+Lista las emociones predominantes expresadas por el usuario.
+ 
+3. MANIFESTACIONES EMOCIONALES RELEVANTES:
+Detalla síntomas o comportamientos emocionales significativos mencionados.
+ 
+4. FRASES DE ALERTA EMOCIONAL:
+Incluye expresiones textuales del usuario que indiquen estados emocionales de atención.
+ 
+5. HIPÓTESIS PRELIMINAR:
+Proporciona una evaluación general del estado emocional sin establecer diagnósticos definitivos.
+ 
+6. RECOMENDACIONES GENERALES:
+Sugiere acciones o enfoques que puedan beneficiar el bienestar del usuario.
+ 
+IMPORTANTE: 
+- Usa un lenguaje profesional pero empático
+- No incluyas asteriscos, guiones ni símbolos de formato
+- Escribe en párrafos claros y numerados
+- Mantén un tono objetivo pero comprensivo
+- Recuerda que esto es un apoyo complementario, no una evaluación clínica
+ 
+Conversación a analizar:
+""" + fullChat;
 
         String resumen = openAiSummarize(prompt);
 
